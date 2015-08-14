@@ -1,5 +1,7 @@
 package org.projatlas;
 
+import GamePanel;
+
 class Game {
 	public static void main(String[] args) {
 		// Game instance
