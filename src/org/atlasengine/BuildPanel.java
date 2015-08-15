@@ -1,8 +1,8 @@
 package org.atlasengine;
 
 import java.awt.Component;
+import java.awt.Image;
 
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class BuildPanel extends JPanel {
@@ -32,7 +32,7 @@ public class BuildPanel extends JPanel {
 	
 	public void setBackground(Image img) {
 		
-		setBackgroundImage(img);
+		setBackground(img);
 		objects ++;
 	}
 	
