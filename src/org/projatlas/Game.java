@@ -11,10 +11,13 @@ class Game {
 	
 	public boolean isRunning;
 	public boolean gameOver;
+	public Window frame;
+	public GamePanel gamepanel;
 
 	public Game() {	}
 
 	public void run() {
+		
 		initVars();
 
 		long sleepTime = 20;
@@ -23,11 +26,16 @@ class Game {
 			gameUpdate();
 			//gameRender();
 
-			// Threading.thread.sleep(sleepTime);
+			try {
+				Thread.sleep(sleepTime);
+			} catch (InterruptedException e) { 
+				e.printStackTrace(); 
+			}
 		}
 	}
 
 	public void initVars() {
+		
 		isRunning = true;
 		gameOver = false;
 	}

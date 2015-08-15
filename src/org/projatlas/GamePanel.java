@@ -2,12 +2,12 @@ package org.projatlas;
 
 import javax.swing.*;
 
-class GamePanel extends JPanel {
-	public static final int pWIDTH = 800;
-	public static final int pHEIGHT = 600;	
+class GamePanel extends JPanel implements Runnable {
+	
+	int width, height;
 
 	public GamePanel() {
-
+		
 	}
 
 	public void gameRender() {
@@ -16,5 +16,12 @@ class GamePanel extends JPanel {
 
 	public void repaint() {
 
+	}
+	
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 }
