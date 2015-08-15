@@ -53,8 +53,6 @@ public class BuildPanel extends JPanel {
 	public void addComponent(BuildPanel panel, int x, int y) {
 		
 		addToHier(panel);
-		sortHier();
-		
 		panel.setLocation(x, y);
 		add(panel);
 		update();
@@ -87,6 +85,7 @@ public class BuildPanel extends JPanel {
 	
 	public void update() {
 		
+		sortHier();
 		for (int i = 0; i < comps.length; i++)
 			comps[i].setVisible(true);
 		repaint();
