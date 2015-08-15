@@ -12,7 +12,7 @@ class Game {
 	public boolean isRunning;
 	public boolean gameOver;
 	public Window frame;
-	public GamePanel gamePanel;
+	public GamePanel gamePanel, menuPanel;
 
 	public Game() {	}
 
