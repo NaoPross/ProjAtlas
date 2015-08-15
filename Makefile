@@ -1,8 +1,9 @@
 compile:
-	javac -d bin -sourcepath src src/com/projatlas
+	javac -d bin -sourcepath src src/org/atlasengine/*.java
+	javac -d bin -sourcepath src src/org/enginetest/*.java
 
 run:
-	java -cp bin com.prjatlas.Game
+	java -cp bin org.enginetest.Game
 
 vim:
 	vim src/org/
