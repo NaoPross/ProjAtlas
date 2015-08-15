@@ -12,6 +12,7 @@ public class Window extends JFrame {
 	public Window(String title, Dimension d) {
 		this.setTitle(title);
 		this.setSize(d.width, d.height);
+		this.setVisible(true);
 	}
 
 	public void addPanel(BuildPanel p) {
