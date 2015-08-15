@@ -1,6 +1,6 @@
 package org.projatlas;
 
-import GamePanel;
+import org.projatlas.GamePanel;
 
 class Game {
 	public static void main(String[] args) {
@@ -11,8 +11,6 @@ class Game {
 	
 	public boolean isRunning;
 	public boolean gameOver;
-
-	public float 
 
 	public Game() {	}
 
@@ -25,7 +23,7 @@ class Game {
 			gameUpdate();
 			//gameRender();
 
-			Threading.thread.sleep(sleepTime);
+			// Threading.thread.sleep(sleepTime);
 		}
 	}
 

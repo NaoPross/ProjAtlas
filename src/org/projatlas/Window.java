@@ -2,7 +2,7 @@ package org.projatlas;
 
 import javax.swing.*;
 
-import GamePanel;
+import org.projatlas.GamePanel;
 
 class Window extends JFrame {
 	public int fWIDTH = GamePanel.pWIDTH;
