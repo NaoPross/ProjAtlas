@@ -1,21 +1,41 @@
 package org.atlasengine;
 
 import java.awt.Component;
-import java.awt.Image;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import java.awt.image.ImageObserver;
+
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class BuildPanel extends JPanel {
 	
-	public int hierarchy, objects;
+	public int hierarchy, objects, x, y, width, height;
 	private BuildPanel[] comps;
 	
 	public BuildPanel() {
 		
+		this.setLocation(0, 0);
+		this.setSize(200, 200);
 		setLayout(null);
 		setBorder(null);
 		super.setBackground(null);
-		hierarchy = 0;
+		hierarchy = 1;
+		comps = new BuildPanel[0];
+	}
+	
+	public BuildPanel(int x, int y, int width, int height) {
+		
+		this.setLocation(x, y);
+		this.setSize(width, height);
+		setLayout(null);
+		setBorder(null);
+		super.setBackground(null);
+		hierarchy = 1;
+		comps = new BuildPanel[0];
 	}
 	
 	private void addToHier(BuildPanel panel) {
@@ -37,14 +57,16 @@ public class BuildPanel extends JPanel {
 			comps_prov[i] = comps[i];
 		
 		comps = new BuildPanel[comps_prov.length];
+		int i = 0;
+		int j = 0;
 		
-		for (int i = 0; i < comps.length; i++) {
-			for (int j = 0; j < comps.length; i++) {
-				if (comps_prov[j].hierarchy == i) {
-					comps[i] = comps_prov[j];
-					comps_prov[j] = null;
-					break;
-				}
+		while (j < comps.length) {
+			if (comps_prov[j].hierarchy == i) {
+				comps[j] = comps_prov[j];
+				j++;
+				i = 0;
+			} else {
+				i++;
 			}
 		}
 		
@@ -54,13 +76,24 @@ public class BuildPanel extends JPanel {
 		
 		addToHier(panel);
 		panel.setLocation(x, y);
-		add(panel);
 		update();
 	}
 	
-	public void setBackground(Image img) {
+	public void addComponent(BuildPanel panel) {
 		
-		setBackground(img);
+		addToHier(panel);
+		update();
+	}
+	
+	public void setBackground(String file_path) {
+		
+		try {
+			BufferedImage img = ImageIO.read(new File(file_path));
+			Graphics2D g = (Graphics2D) getGraphics();
+			g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+		} catch (IOException e) {
+			System.out.println("File " + file_path + " could not found.");
+		}
 	}
 	
 	public int getObjectNumber() {
@@ -85,10 +118,31 @@ public class BuildPanel extends JPanel {
 	
 	public void update() {
 		
+		for (int i = 0; i < comps.length; i++) {
+			try {
+				remove(comps[i]);
+			} catch (Exception e) {}
+		}
 		sortHier();
 		for (int i = 0; i < comps.length; i++)
-			comps[i].setVisible(true);
+			add(comps[i]);
 		repaint();
+	}
+	
+	@Override
+	public void setLocation(int x, int y) {
+		
+		super.setLocation(x,  y);
+		this.x = x;
+		this.y = y;
+	}
+	
+	@Override
+	public void setSize(int width, int height) {
+		
+		super.setSize(width, height);
+		this.width = width;
+		this.height = height;
 	}
 
 }

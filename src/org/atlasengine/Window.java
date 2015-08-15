@@ -19,5 +19,6 @@ public class Window extends JFrame {
 		this.setSize(d);
 		this.setLayout(cardLayout);
 		this.setVisible(true);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 }
