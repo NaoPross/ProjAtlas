@@ -1,13 +1,12 @@
 package org.atlasengine;
 
-import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Sprite extends Component {
+public class Sprite extends BuildPanel {
 	public File imageFile;
 	
 	public Sprite(File imageFile) {

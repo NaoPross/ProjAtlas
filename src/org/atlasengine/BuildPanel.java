@@ -8,8 +8,7 @@ import javax.swing.JPanel;
 public class BuildPanel extends JPanel {
 	
 	public int hierarchy, objects;
-	BuildPanel[] comps;
-	public String name;
+	private BuildPanel[] comps;
 	
 	public BuildPanel() {
 		
@@ -38,34 +37,32 @@ public class BuildPanel extends JPanel {
 			comps_prov[i] = comps[i];
 		
 		comps = new BuildPanel[comps_prov.length];
+		
 		for (int i = 0; i < comps.length; i++) {
-			for (int j = 0; j < comps.length; j++) {
+			for (int j = 0; j < comps.length; i++) {
 				if (comps_prov[j].hierarchy == i) {
-					comps[i] = comps_prov[i];
+					comps[i] = comps_prov[j];
+					comps_prov[j] = null;
+					break;
 				}
 			}
 		}
+		
 	}
 	
-	public void addSprite(Sprite sprite, int x, int y) {
+	public void addComponent(BuildPanel panel, int x, int y) {
 		
-		addToHier(sprite);
+		addToHier(panel);
 		sortHier();
 		
-		sprite.setLocation(x, y);
-		add(sprite);
-	}
-	
-	public void addSprite(Sprite sprite) {
-		
-		add(sprite);
-		objects ++;
+		panel.setLocation(x, y);
+		add(panel);
+		update();
 	}
 	
 	public void setBackground(Image img) {
 		
 		setBackground(img);
-		objects ++;
 	}
 	
 	public int getObjectNumber() {
@@ -80,9 +77,19 @@ public class BuildPanel extends JPanel {
 		objects --;
 	}
 	
+	@Override
+	public Component add(Component comp) {
+		
+		super.add(comp);
+		objects ++;
+		return comp;
+	}
+	
 	public void update() {
 		
-		
+		for (int i = 0; i < comps.length; i++)
+			comps[i].setVisible(true);
+		repaint();
 	}
 
 }
