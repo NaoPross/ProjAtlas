@@ -5,7 +5,7 @@ run:
 	java -cp bin com.prjatlas.Game
 
 vim:
-	vim src/org/projatlas/
+	vim src/org/
 
 gvim:
-	gvim src/org/projatlas/
+	gvim src/org/
