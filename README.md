@@ -33,7 +33,6 @@ Classes:
       - MenuPanel
       - FightPanel
         - Sprite
-      
     - GameLogic
       - Time
       - Player
