@@ -12,13 +12,15 @@ class Game {
 	public boolean isRunning;
 	public boolean gameOver;
 	public Window frame;
-	public GamePanel gamepanel;
+	public GamePanel gamePanel;
 
 	public Game() {	}
 
 	public void run() {
 		
 		initVars();
+
+		
 
 		long sleepTime = 20;
 
@@ -38,6 +40,10 @@ class Game {
 		
 		isRunning = true;
 		gameOver = false;
+		
+		frame = new Window();
+		gamePanel = new GamePanel();
+		menuPanel = new MenuPanel();
 	}
 
 	public void gameUpdate() {

@@ -6,8 +6,7 @@ import org.projatlas.GamePanel;
 
 class Window extends JFrame {
 	public static int WIDTH = 800;
-	public static int HEIGHT = 800;
-	GamePanel panel;
+	public static int HEIGHT = 800;	
 
 	public Window() {
 		
