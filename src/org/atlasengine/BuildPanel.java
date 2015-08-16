@@ -1,6 +1,5 @@
 package org.atlasengine;
 
-import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,7 +11,7 @@ import javax.swing.JPanel;
 
 public class BuildPanel extends JPanel {
 	
-	public int objects, x, y, width, height, hierarchy;
+	public int x, y, width, height, hierarchy;
 	private BuildPanel[] comps;
 	
 	public BuildPanel() {
@@ -83,20 +82,6 @@ public class BuildPanel extends JPanel {
 		super.add(panel);
 	}
 	
-	public void setBackgroundImage(String file_path) {
-		
-		if(file_path == null) {
-		} else {
-			try {
-				BufferedImage img = ImageIO.read(new File(file_path));
-				Graphics2D g = (Graphics2D) getGraphics();
-				g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
-			} catch (IOException e) {
-				System.out.println("File " + file_path + " could not found.");
-			}
-		}
-	}
-	
 	public void setHierarchy(BuildPanel panel, int index) {
 		
 		panel.hierarchy = index;
@@ -139,11 +124,6 @@ public class BuildPanel extends JPanel {
 		super.setSize(width, height);
 		this.width = width;
 		this.height = height;
-	}
-	
-	public void update() {
-		
-		repaint();
 	}
 
 }
