@@ -14,18 +14,19 @@ public class Game {
 		//mainPanel.setBackground("C:\\Users\\Nicola\\Documents\\Documenti_raffa\\Esperimenti java\\Numeri casuali\\Linear_congruential.png");
 		mainPanel.setBackground(Color.BLUE);
 		
-		BuildPanel second = new BuildPanel(30, 30, 100, 300);
-		second.setBackground(Color.RED);
-		second.hierarchy = 1;
+		BuildPanel red = new BuildPanel(30, 30, 100, 300);
+		red.setBackground(Color.RED);
 		
-		BuildPanel third = new BuildPanel(60, 60, 200, 50);
-		third.setBackground(Color.YELLOW);
-		third.hierarchy = 2;
+		BuildPanel yellow = new BuildPanel(60, 200, 200, 50);
+		yellow.setBackground(Color.YELLOW);
 		
-		mainPanel.addComponent(second);
-		mainPanel.addComponent(third);
+		BuildPanel green = new BuildPanel(40, 40, 300, 100);
+		green.setBackground(Color.GREEN);
 		
-		mainPanel.update();
+		mainPanel.setHierarchy(yellow, 2);
+		mainPanel.setHierarchy(red, 0);
+		mainPanel.setHierarchy(green, 1);
+		
 		
 		w.add(mainPanel);
 		

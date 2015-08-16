@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.Arrays;
 import java.awt.image.ImageObserver;
 
 import javax.imageio.ImageIO;
@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public class BuildPanel extends JPanel {
 	
-	public int hierarchy, objects, x, y, width, height;
+	public int objects, x, y, width, height, hierarchy;
 	private BuildPanel[] comps;
 	
 	public BuildPanel() {
@@ -23,7 +23,7 @@ public class BuildPanel extends JPanel {
 		setLayout(null);
 		setBorder(null);
 		super.setBackground(null);
-		hierarchy = 1;
+		hierarchy = 0;
 		comps = new BuildPanel[0];
 	}
 	
@@ -34,7 +34,7 @@ public class BuildPanel extends JPanel {
 		setLayout(null);
 		setBorder(null);
 		super.setBackground(null);
-		hierarchy = 1;
+		hierarchy = 0;
 		comps = new BuildPanel[0];
 	}
 	
@@ -72,61 +72,55 @@ public class BuildPanel extends JPanel {
 		
 	}
 	
-	public void addComponent(BuildPanel panel, int x, int y) {
+	public void add(BuildPanel panel, int x, int y) {
 		
 		addToHier(panel);
 		panel.setLocation(x, y);
-		update();
+		super.add(panel);
 	}
 	
-	public void addComponent(BuildPanel panel) {
+	public void add(BuildPanel panel) {
 		
 		addToHier(panel);
-		update();
+		super.add(panel);
 	}
 	
-	public void setBackground(String file_path) {
+	public void setBackgroundImage(String file_path) {
 		
-		try {
-			BufferedImage img = ImageIO.read(new File(file_path));
-			Graphics2D g = (Graphics2D) getGraphics();
-			g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
-		} catch (IOException e) {
-			System.out.println("File " + file_path + " could not found.");
+		if(file_path == null) {
+		} else {
+			try {
+				BufferedImage img = ImageIO.read(new File(file_path));
+				Graphics2D g = (Graphics2D) getGraphics();
+				g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+			} catch (IOException e) {
+				System.out.println("File " + file_path + " could not found.");
+			}
 		}
 	}
 	
-	public int getObjectNumber() {
+	public void setHierarchy(BuildPanel panel, int index) {
 		
-		return objects;
-	}
-	
-	@Override
-	public void remove(Component comp) {
-		
-		super.remove(comp);
-		objects --;
-	}
-	
-	@Override
-	public Component add(Component comp) {
-		
-		super.add(comp);
-		objects ++;
-		return comp;
-	}
-	
-	public void update() {
-		
-		for (int i = 0; i < comps.length; i++) {
-			try {
-				remove(comps[i]);
-			} catch (Exception e) {}
+		panel.hierarchy = index;
+		if (this.isAncestorOf(panel) == true) {
+			for (int i = 0; i < comps.length; i++) {
+				if(comps[i] == panel) {
+					comps[i].hierarchy = index;
+				}
+			}
+		} else {
+			this.add(panel);
+			setHierarchy(panel, index);
 		}
 		sortHier();
-		for (int i = 0; i < comps.length; i++)
-			add(comps[i]);
-		repaint();
+		int adapt = comps[comps.length - 1].hierarchy - index;
+		try {
+			setComponentZOrder(panel, adapt);
+		} catch (IllegalArgumentException e) {
+			adapt = comps[comps.length - 2].hierarchy + 1 - index;
+			System.out.println("La gerarchia è stat impostata a " + (adapt + index));
+			setComponentZOrder(panel, adapt);
+		}
 	}
 	
 	@Override
@@ -143,6 +137,12 @@ public class BuildPanel extends JPanel {
 		super.setSize(width, height);
 		this.width = width;
 		this.height = height;
+	}
+	
+	public void update() {
+		
+		sortHier();
+		repaint();
 	}
 
 }
