@@ -1,12 +1,5 @@
 package org.atlasengine;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.awt.image.ImageObserver;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class BuildPanel extends JPanel {
@@ -22,6 +15,28 @@ public class BuildPanel extends JPanel {
 		setBorder(null);
 		super.setBackground(null);
 		hierarchy = 0;
+		comps = new BuildPanel[0];
+	}
+	
+	public BuildPanel(int hierarchy) {
+		
+		this.setLocation(0, 0);
+		this.setSize(200, 200);
+		setLayout(null);
+		setBorder(null);
+		super.setBackground(null);
+		this.hierarchy = hierarchy;
+		comps = new BuildPanel[0];
+	}
+	
+	public BuildPanel(int x, int y, int width, int height, int hierarchy) {
+		
+		this.setLocation(x, y);
+		this.setSize(width, height);
+		setLayout(null);
+		setBorder(null);
+		super.setBackground(null);
+		this.hierarchy = hierarchy;
 		comps = new BuildPanel[0];
 	}
 	
@@ -55,7 +70,6 @@ public class BuildPanel extends JPanel {
 			try {
 				if (panel.hierarchy < comps[i].hierarchy) {
 					panel = comps[i];
-					//System.out.println(panel.hierarchy);
 				}
 			} catch (Exception e) {}
 		}
