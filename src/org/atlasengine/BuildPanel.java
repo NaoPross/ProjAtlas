@@ -12,7 +12,7 @@ public class BuildPanel extends JPanel {
 	 * y = posizione y del pannello
 	 * width = larghezza del pannello
 	 * height = altezza del pannello
-	 * hierarchy = livello/gerarchia di sovrapposizione dei pannelli (più è alto, più è visibile)
+	 * hierarchy = livello/gerarchia di sovrapposizione dei pannelli (piu e alto, piu e visibile)
 	 * comps = array di pannelli aggiunti a questo
 	 */
 	
