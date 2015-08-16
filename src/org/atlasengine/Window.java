@@ -30,11 +30,7 @@ public class Window extends JFrame {
 		
 		this.setLocationRelativeTo(null);
 		this.setTitle(title);
-
-		this.setLayout(cardLayout);
-		this.setVisible(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
+		this.setLayout(cardLayout);	
 		this.setPreferredSize(d);
 		this.setMinimumSize(d);
 		this.setMaximumSize(d);
@@ -73,6 +69,8 @@ public class Window extends JFrame {
 			// show the window
 			cardPanel.setLayout(cardLayout);
 			this.add(cardPanel);
+			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+			this.pack();
 			this.setVisible(true);
 		}
 	}
