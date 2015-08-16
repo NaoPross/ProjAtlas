@@ -125,7 +125,7 @@ public class BuildPanel extends JPanel {
 			super.setComponentZOrder(panel, adapt);
 		} catch (IllegalArgumentException e) {
 			adapt--;
-			System.out.println("La gerarchia è stata impostata a " + (adapt + panel.hierarchy));
+			System.out.println("La gerarchia Ã© stata impostata a " + (adapt + panel.hierarchy));
 			this.setComponentZOrder(panel, adapt);
 		}
 	}

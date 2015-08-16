@@ -1,41 +1,7 @@
 package org.enginetest;
 
-import java.awt.Color;
 import java.awt.Dimension;
 
-<<<<<<< HEAD
-import org.atlasengine.*;
-
-public class Game {
-	public static void main(String[] args) {
-		Window w = new Window("Engine Test Game", new Dimension(800, 800));
-		
-		BuildPanel mainPanel = new BuildPanel();
-		mainPanel.setSize(w.getWidth(), w.getHeight());
-		mainPanel.setBackground(Color.BLUE);
-		
-		BuildPanel red = new BuildPanel(30, 30, 100, 300);
-		red.setBackground(Color.RED);
-		
-		BuildPanel yellow = new BuildPanel(60, 200, 200, 50);
-		yellow.setBackground(Color.YELLOW);
-		
-		BuildPanel green = new BuildPanel(40, 40, 300, 100);
-		green.setBackground(Color.GREEN);
-		
-		mainPanel.add(yellow);
-		mainPanel.add(red);
-		mainPanel.add(green);
-		
-		mainPanel.setHierarchy(yellow, 2);
-		mainPanel.setHierarchy(red, 1);
-		mainPanel.setHierarchy(green, 0);
-		
-		
-		w.add(mainPanel);
-		
-		w.setVisible(true);
-=======
 import org.atlasengine.GamePanel;
 import org.atlasengine.MenuPanel;
 import org.atlasengine.States;
@@ -48,8 +14,8 @@ public class Game {
 		g.start();
 	}
 	
-	private int WIDTH = 800;
-	private int HEIGHT = 600;
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
 	
 	private Window frame;
 	private GamePanel gamePanel;
@@ -83,9 +49,10 @@ public class Game {
 			
 			if (this.gameState == States.MENU) {
 				// Menu Screen
-				frame.showScreen(States.GAMEPANEL);		
+				frame.showScreen(States.MENUPANEL);
 			} else if (this.gameState == States.GAME) {
 				
+				frame.showScreen(States.GAMEPANEL);
 				long sleepTime;
 				sleepTime = 10;
 				
@@ -100,7 +67,6 @@ public class Game {
 				}
 			}
 		}
->>>>>>> origin/master
 	}
 }
 

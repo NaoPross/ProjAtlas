@@ -28,11 +28,17 @@ public class Window extends JFrame {
 		cardLayout = new CardLayout(0, 0);
 		cardPanel = new JPanel();
 		
+		this.setLocationRelativeTo(null);
 		this.setTitle(title);
-		this.setSize(d);
+
 		this.setLayout(cardLayout);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		this.setPreferredSize(d);
+		this.setMinimumSize(d);
+		this.setMaximumSize(d);
+		this.setResizable(false);
 	}
 	
 	// Add an instance of MenuPanel in this class
@@ -47,6 +53,10 @@ public class Window extends JFrame {
 	public void addGamePanel(GamePanel p) {
 		this.gamePanel = p;
 		cardLayout.addLayoutComponent(gamePanel, States.GAMEPANEL.toString());
+	}
+	
+	public void addCustomComponent(BuildPanel p, String name) {
+		cardLayout.addLayoutComponent(p, name);
 	}
 	
 	// Switch between screens 
