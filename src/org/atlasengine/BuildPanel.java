@@ -5,7 +5,16 @@ import javax.swing.JPanel;
 public class BuildPanel extends JPanel {
 	
 	public int x, y, width, height, hierarchy;
-	private BuildPanel[] comps; // Array of added istances of BuildPanel
+	private BuildPanel[] comps; 
+	
+	/*
+	 * x = posizione x del pannello
+	 * y = posizione y del pannello
+	 * width = larghezza del pannello
+	 * height = altezza del pannello
+	 * hierarchy = livello/gerarchia di sovrapposizione dei pannelli (più è alto, più è visibile)
+	 * comps = array di pannelli aggiunti a questo
+	 */
 	
 	//Builder method of the Panel
 	public BuildPanel() {
