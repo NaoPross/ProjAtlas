@@ -5,8 +5,9 @@ import javax.swing.JPanel;
 public class BuildPanel extends JPanel {
 	
 	public int x, y, width, height, hierarchy;
-	private BuildPanel[] comps;
+	private BuildPanel[] comps; // Array of added istances of BuildPanel
 	
+	//Builder method of the Panel
 	public BuildPanel() {
 		
 		this.setLocation(0, 0);
@@ -51,6 +52,7 @@ public class BuildPanel extends JPanel {
 		comps = new BuildPanel[0];
 	}
 	
+	// Add a BuildPanel to this istance comps array
 	private void addToHier(BuildPanel panel) {
 		
 		BuildPanel[] comps_prov = new BuildPanel[comps.length + 1];
@@ -63,6 +65,7 @@ public class BuildPanel extends JPanel {
 			comps[i] = comps_prov[i];
 	}
 	
+	// Return the comps or comps_prov BuildPanel with the max value of hierarchy
 	private BuildPanel getMaxHier(BuildPanel[] comps) {
 		BuildPanel panel = new BuildPanel();
 		panel.hierarchy = 0;
@@ -76,6 +79,7 @@ public class BuildPanel extends JPanel {
 		return panel;
 	}
 	
+	// Add a BuildPanel to this one
 	public void add(BuildPanel panel, int x, int y) {
 		
 		addToHier(panel);
@@ -96,6 +100,7 @@ public class BuildPanel extends JPanel {
 		super.add(panel);
 	}
 	
+	// Set level of overlapping panels
 	public void setHierarchy(BuildPanel panel, int index) {
 		
 		panel.hierarchy = index;
@@ -113,6 +118,7 @@ public class BuildPanel extends JPanel {
 		this.setComponentZOrder(panel, adapt);
 	}
 	
+	// Call the Component's setComponentZOrder method
 	private void setComponentZOrder(BuildPanel panel, int adapt) {
 		
 		try {
@@ -124,6 +130,7 @@ public class BuildPanel extends JPanel {
 		}
 	}
 	
+	// Change the panel location
 	@Override
 	public void setLocation(int x, int y) {
 		
@@ -132,6 +139,7 @@ public class BuildPanel extends JPanel {
 		this.y = y;
 	}
 	
+	// Change the panel size
 	@Override
 	public void setSize(int width, int height) {
 		

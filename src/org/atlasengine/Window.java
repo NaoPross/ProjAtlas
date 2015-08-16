@@ -30,11 +30,9 @@ public class Window extends JFrame {
 		
 		this.setTitle(title);
 		this.setSize(d);
-<<<<<<< HEAD
 		this.setLayout(cardLayout);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-=======
 	}
 	
 	// Add an instance of MenuPanel in this class
@@ -67,6 +65,5 @@ public class Window extends JFrame {
 			this.add(cardPanel);
 			this.setVisible(true);
 		}
->>>>>>> origin/master
 	}
 }

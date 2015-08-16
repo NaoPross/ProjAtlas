@@ -12,7 +12,6 @@ public class Game {
 		
 		BuildPanel mainPanel = new BuildPanel();
 		mainPanel.setSize(w.getWidth(), w.getHeight());
-		//mainPanel.setBackgroundImage("C:\\Users\\Nicola\\Documents\\Documenti_raffa\\Esperimenti java\\Numeri casuali\\Linear_congruential.png");
 		mainPanel.setBackground(Color.BLUE);
 		
 		BuildPanel red = new BuildPanel(30, 30, 100, 300);
@@ -28,9 +27,9 @@ public class Game {
 		mainPanel.add(red);
 		mainPanel.add(green);
 		
-		mainPanel.setHierarchy(yellow, 0);
+		mainPanel.setHierarchy(yellow, 2);
 		mainPanel.setHierarchy(red, 1);
-		mainPanel.setHierarchy(green, 2);
+		mainPanel.setHierarchy(green, 0);
 		
 		
 		w.add(mainPanel);
