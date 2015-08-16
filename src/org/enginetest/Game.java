@@ -23,9 +23,13 @@ public class Game {
 		BuildPanel green = new BuildPanel(40, 40, 300, 100);
 		green.setBackground(Color.GREEN);
 		
+		mainPanel.add(yellow);
+		mainPanel.add(red);
+		mainPanel.add(green);
+		
 		mainPanel.setHierarchy(yellow, 2);
-		mainPanel.setHierarchy(red, 0);
-		mainPanel.setHierarchy(green, 1);
+		mainPanel.setHierarchy(red, 1);
+		mainPanel.setHierarchy(green, 0);
 		
 		
 		w.add(mainPanel);

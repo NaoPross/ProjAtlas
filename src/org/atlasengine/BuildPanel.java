@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.awt.image.ImageObserver;
 
 import javax.imageio.ImageIO;
@@ -50,26 +49,18 @@ public class BuildPanel extends JPanel {
 			comps[i] = comps_prov[i];
 	}
 	
-	private void sortHier() {
-		
-		BuildPanel[] comps_prov = new BuildPanel[comps.length];
-		for (int i = 0; i < comps.length; i++)
-			comps_prov[i] = comps[i];
-		
-		comps = new BuildPanel[comps_prov.length];
-		int i = 0;
-		int j = 0;
-		
-		while (j < comps.length) {
-			if (comps_prov[j].hierarchy == i) {
-				comps[j] = comps_prov[j];
-				j++;
-				i = 0;
-			} else {
-				i++;
-			}
+	private BuildPanel getMaxHier(BuildPanel[] comps) {
+		BuildPanel panel = new BuildPanel();
+		panel.hierarchy = 0;
+		for (int i = 0; i < comps.length; i++) {
+			try {
+				if (panel.hierarchy < comps[i].hierarchy) {
+					panel = comps[i];
+					//System.out.println(panel.hierarchy);
+				}
+			} catch (Exception e) {}
 		}
-		
+		return panel;
 	}
 	
 	public void add(BuildPanel panel, int x, int y) {
@@ -81,6 +72,13 @@ public class BuildPanel extends JPanel {
 	
 	public void add(BuildPanel panel) {
 		
+		addToHier(panel);
+		super.add(panel);
+	}
+	
+	public void add(BuildPanel panel, int hierarchy) {
+		
+		panel.hierarchy = hierarchy;
 		addToHier(panel);
 		super.add(panel);
 	}
@@ -109,17 +107,21 @@ public class BuildPanel extends JPanel {
 				}
 			}
 		} else {
-			this.add(panel);
-			setHierarchy(panel, index);
+			this.add(panel, index);
 		}
-		sortHier();
-		int adapt = comps[comps.length - 1].hierarchy - index;
+		
+		int adapt = getMaxHier(comps).hierarchy - index;
+		this.setComponentZOrder(panel, adapt);
+	}
+	
+	private void setComponentZOrder(BuildPanel panel, int adapt) {
+		
 		try {
-			setComponentZOrder(panel, adapt);
+			super.setComponentZOrder(panel, adapt);
 		} catch (IllegalArgumentException e) {
-			adapt = comps[comps.length - 2].hierarchy + 1 - index;
-			System.out.println("La gerarchia è stat impostata a " + (adapt + index));
-			setComponentZOrder(panel, adapt);
+			adapt--;
+			System.out.println("La gerarchia è stata impostata a " + (adapt + panel.hierarchy));
+			this.setComponentZOrder(panel, adapt);
 		}
 	}
 	
@@ -141,7 +143,6 @@ public class BuildPanel extends JPanel {
 	
 	public void update() {
 		
-		sortHier();
 		repaint();
 	}
 
