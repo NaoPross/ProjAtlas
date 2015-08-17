@@ -58,7 +58,7 @@ public class Window extends JFrame {
 	public Window(String title, Sprite img) {
 		
 		super(title);
-		setIconImage(img);
+		setIconImage(img.sprite);
 		setLayout(null);
 		setBounds(100, 50, 800, 700);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
@@ -99,7 +99,7 @@ public class Window extends JFrame {
 	public Window(String title, int x, int y, int width, int height, Sprite img) {
 		
 		super(title);
-		setIconImage(img);
+		setIconImage(img.sprite);
 		setLayout(null);
 		setBounds(x, y, width, height);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));

@@ -6,7 +6,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class MainPanel extends JPanel implements MouseListener, KeyListener {
@@ -164,7 +167,7 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener {
 		 */
 		
 		for (int i = 0; i < img_added.length; i++) {
-			g.drawImage(img_added[i], img_added[i].x, img_added[i].y, img_added[i].width, img_added[i].height, this);
+			g.drawImage(img_added[i].sprite, img_added[i].x, img_added[i].y, img_added[i].width, img_added[i].height, this);
 		}
 		
 		/*

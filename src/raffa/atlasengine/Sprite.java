@@ -7,10 +7,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Sprite extends BufferedImage implements AccessPanel {
+public class Sprite implements AccessPanel {
 
 	public int zLevel, x, y, width, height;
 	Graphics2D g;
+	BufferedImage sprite;
 	
 	/*
 	 * Create a double buffered RGB sprite image
@@ -29,11 +30,10 @@ public class Sprite extends BufferedImage implements AccessPanel {
 	
 	public Sprite(String path) {
 		
-		super(100, 100, BufferedImage.TYPE_INT_RGB);
 		setBounds(0, 0, 100, 100);
 		zLevel = 1;
 		setImage(path);
-		g = this.createGraphics();
+		g = sprite.createGraphics();
 	}
 	
 	/*
@@ -43,11 +43,10 @@ public class Sprite extends BufferedImage implements AccessPanel {
 	
 	public Sprite(String path, int x, int y) {
 		
-		super(100, 100, BufferedImage.TYPE_INT_RGB);
 		setBounds(x, y, 100, 100);
 		zLevel = 1;
 		setImage(path);
-		g = this.createGraphics();
+		g = sprite.createGraphics();
 	}
 	
 	/*
@@ -57,11 +56,10 @@ public class Sprite extends BufferedImage implements AccessPanel {
 	
 	public Sprite(String path, int x, int y, int width, int height) {
 		
-		super(width, height, BufferedImage.TYPE_INT_RGB);
 		setBounds(x, y, width, height);
 		zLevel = 1;
 		setImage(path);
-		g = this.createGraphics();
+		g = sprite.createGraphics();
 	}
 	
 	/*
@@ -71,8 +69,9 @@ public class Sprite extends BufferedImage implements AccessPanel {
 	public void setImage(String path) {
 		
 		File file = new File(path);
+		sprite = null;
 		try {
-			ImageIO.read(file); 		// Input of the image
+			sprite = ImageIO.read(file); 		// Input of the image
 		} catch (IOException e) {
 			System.out.println("IOError: Image file not found\n"); // IO error message
 			e.printStackTrace();
@@ -114,7 +113,6 @@ public class Sprite extends BufferedImage implements AccessPanel {
 		g = this.getGraphics();
 	}
 	
-	@Override
 	public Graphics2D getGraphics() {
 		
 		return g;
