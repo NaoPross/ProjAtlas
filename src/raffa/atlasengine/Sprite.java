@@ -7,14 +7,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Sprite implements AccessPanel {
-
-	public int zLevel, x, y, width, height;
+public class Sprite extends AccessPanel {
+	
 	Graphics2D g;
-	BufferedImage sprite;
+	BufferedImage sprite; // This is the real sprite object
 	
 	/*
-	 * Create a double buffered RGB sprite image
+	 * Create a mechanic for a BufferedImage
+	 * that is instanced
 	 * basing on the file address
 	 * 
 	 * Create also a Graphics2D parameter
@@ -26,6 +26,9 @@ public class Sprite implements AccessPanel {
 	 * 	width = 100
 	 * 	height = 100
 	 * 	zLevel = 1
+	 * 
+	 * The real sprite object is obtained
+	 * calling tha variable (BufferedImage sprite)
 	 */
 	
 	public Sprite(String path) {
@@ -79,40 +82,12 @@ public class Sprite implements AccessPanel {
 	}
 
 	@Override
-	public void setBounds(int x, int y, int width, int height) {
-		
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-	}
-
-	@Override
-	public void setZLevel(int zLevel) {
-		
-		this.zLevel = zLevel;
-	}
-
-	@Override
-	public void setLocation(int x, int y) {
-		
-		this.x = x;
-		this.y = y;
-	}
-
-	@Override
-	public void setSize(int width, int height) {
-		
-		this.width = width;
-		this.height = height;
-	}
-
-	@Override
 	public void paintContent(Graphics2D g) {
 		
 		g = this.getGraphics();
 	}
 	
+	@Override
 	public Graphics2D getGraphics() {
 		
 		return g;

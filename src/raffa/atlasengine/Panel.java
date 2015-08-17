@@ -2,10 +2,8 @@ package raffa.atlasengine;
 
 import java.awt.Graphics2D;
 
-public class Panel implements AccessPanel {
-
-	protected int x, y, width, height; // Bound values
-	public int zLevel; // level of overlapping panels
+public class Panel extends AccessPanel {
+	
 	protected Graphics2D g;
 	
 	/*
@@ -44,35 +42,6 @@ public class Panel implements AccessPanel {
 		this.height = height;
 		this.zLevel = zLevel;
 	}
-
-	@Override
-	public void setBounds(int x, int y, int width, int height) {
-		
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-	}
-
-	@Override
-	public void setZLevel(int zLevel) {
-		
-		this.zLevel = zLevel;
-	}
-
-	@Override
-	public void setLocation(int x, int y) {
-		
-		this.x = x;
-		this.y = y;
-	}
-
-	@Override
-	public void setSize(int width, int height) {
-		
-		this.width = width;
-		this.height = height;
-	}
 	
 	/*
 	 * Override this method in the
@@ -89,6 +58,7 @@ public class Panel implements AccessPanel {
 	 * Return the graphics component of the panel
 	 */
 	
+	@Override
 	public Graphics2D getGraphics() {
 		
 		return g;
