@@ -6,17 +6,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class MainPanel extends JPanel implements MouseListener, KeyListener {
+public class MainPanel extends JPanel implements MouseListener, KeyListener, InterPanel {
 	
 	Graphics2D g; // Instance the graphics component that draws the others
-	Sprite[] img_added; // Array of the sprites added to this panel
-	Panel[] panel_added; // Array of the other panels added to this panel
+	InterPanel[] comp_added; // Array of all the components added
 	
 	/*
 	 * Create the double buffered main window panel
@@ -37,123 +32,6 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener {
 		addKeyListener(this);
 	}
 	
-	/*
-	 * Add a sprite the this panel
-	 */
-	
-	public void add(Sprite sprite) {
-		
-		int length = img_added.length;
-		
-		Sprite[] img_prov = new Sprite[length];
-		
-		for (int i = 0; i < length; i++)
-			img_prov[i] = img_added[i];
-		
-		length++;
-		
-		img_added = new Sprite[length];
-		
-		for (int i = 0; i < length; i++)
-			img_added[i] = img_prov[i];
-		
-		img_added[length - 1] = sprite;
-		
-		sortSprite();
-	}
-	
-	/*
-	 *  Add an other panel to this one
-	 *  without create a new thread
-	 */
-	
-	public void add(Panel panel) {
-		
-		int length = panel_added.length;
-		
-		Panel[] panel_prov = new Panel[length];
-		
-		for (int i = 0; i < length; i++)
-			panel_prov[i] = panel_added[i];
-		
-		length++;
-		
-		panel_added = new Panel[length];
-		
-		for (int i = 0; i < length; i++)
-			panel_added[i] = panel_prov[i];
-		
-		panel_added[length - 1] = panel;
-		
-		sortPanel();
-	}
-	
-	public void setBackground(Sprite img) {
-		
-		img.setZLevel(0);
-		img.setBounds(0, 0, this.getWidth(), this.getHeight());
-		this.add(img);
-	}
-	
-	public void setBackground(Panel panel) {
-		
-		panel.setZLevel(0);
-		panel.setBounds(0, 0, this.getWidth(), this.getHeight());
-		this.add(panel);
-	}
-	
-	/*
-	 * Basing on the zLevel variable of
-	 * each Sprite, sort the array img_added
-	 */
-	
-	private void sortSprite() {
-		
-		boolean flag = false;
-		
-		for (int i = 0; i < img_added.length; i++) {
-			
-			for(int j = 0; j < img_added.length - 1; j++) {
-				
-				if(img_added[j].zLevel > img_added[j+1].zLevel) {
-					
-                    Sprite k = img_added[j];
-                    img_added[j] = img_added[j+1];
-                    img_added[j+1] = k;
-                    flag = true;
-                }
-			}
-			
-			if (!flag) break;
-		}
-	}
-	
-	/*
-	 * Basing on the zLevel variable of
-	 * each panel, sort the array panel_added
-	 */
-	
-	private void sortPanel() {
-		
-		boolean flag = false;
-		
-		for (int i = 0; i < panel_added.length; i++) {
-			
-			for(int j = 0; j < panel_added.length - 1; j++) {
-				
-				if(panel_added[j].zLevel > panel_added[j+1].zLevel) {
-					
-                    Panel k = panel_added[j];
-                    panel_added[j] = panel_added[j+1];
-                    panel_added[j+1] = k;
-                    flag = true;
-                }
-			}
-			
-			if (!flag) break;
-		}
-	}
-	
 	@Override
 	public void paintComponent(Graphics graphics) {
 		
@@ -162,27 +40,16 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener {
 		g = (Graphics2D) graphics;
 		
 		/*
-		 * Draw the images following
-		 * the img_added order
+		 * Paint all the components added
 		 */
 		
-		for (int i = 0; i < img_added.length; i++) {
-			g.drawImage(img_added[i].sprite, img_added[i].x, img_added[i].y, img_added[i].width, img_added[i].height, this);
-		}
-		
-		/*
-		 * Draw the panels following
-		 * the panel_added order
-		 */
-		
-		for (int i = 0; i < panel_added.length; i++) {
-			panel_added[i].paintContent(g);
+		for (int i = 0; i < comp_added.length; i++) {
+			comp_added[i].paintComp(g, this);
 		}
 	}
 	
 	/*
-	 * Update the animations
-	 * Run the program
+	 * Run and update the animations
 	 */
 	
 	public void update() {
@@ -240,6 +107,100 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/*
+	 * Override from InterPanel
+	 * Sort the comp_added array basing
+	 * on the zLevel variable of each component
+	 */
+
+	@Override
+	public void sort() {
+		
+		boolean flag = false;
+		
+		for (int i = 0; i < comp_added.length; i++) {
+			
+			for(int j = 0; j < comp_added.length - 1; j++) {
+				
+				if(comp_added[j].getZLevel() > comp_added[j+1].getZLevel()) {
+					
+                    InterPanel k = comp_added[j];
+                    comp_added[j] = comp_added[j+1];
+                    comp_added[j+1] = k;
+                    flag = true;
+                }
+			}
+			
+			if (!flag) break;
+		}
+	}
+	
+	/*
+	 * Override from InterPanel
+	 * Add a component to the comp_added array and sort it
+	 */
+
+	@Override
+	public void add(InterPanel I) {
+		
+		int length = comp_added.length;
+		
+		InterPanel[] comp_prov = new Sprite[length];
+		
+		for (int i = 0; i < length; i++)
+			comp_prov[i] = comp_added[i];
+		
+		length++;
+		
+		comp_added = new InterPanel[length];
+		
+		for (int i = 0; i < length; i++)
+			comp_added[i] = comp_prov[i];
+		
+		comp_added[length - 1] = I;
+		
+		sort();
+	}
+	
+	/*
+	 * Override from InterPanel
+	 * Set the component zLevel to 0 and
+	 * adapt the width and the height to
+	 * the main panel
+	 * Set it as Background of the main panel
+	 */
+
+	@Override
+	public void setBackGround(InterPanel I) {
+		
+		I.setZLevel(0);
+		I.setBounds(0, 0, this.getWidth(), this.getHeight());
+		this.add(I);
+	}
+	
+	/*
+	 * Methods inherited from InterPanel
+	 * They don't have a function in this class
+	 */
+
+	@Override
+	public int getZLevel() {
+		
+		return 0;
+	}
+
+	@Override
+	public void setZLevel(int zLevel) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void paintComp(Graphics2D g, MainPanel observer) {
 		// TODO Auto-generated method stub
 		
 	}

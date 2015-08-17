@@ -80,16 +80,26 @@ public class Sprite extends AccessPanel {
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void paintContent(Graphics2D g) {
-		
-		g = this.getGraphics();
-	}
 	
-	@Override
+	/*
+	 * Get the Graphics2D element of this Sprite to
+	 * draw in it
+	 */
+	
 	public Graphics2D getGraphics() {
 		
 		return g;
+	}
+	
+	/*
+	 * Override from InterPanel
+	 * Paint this sprite on the main panel
+	 * Do not call this method
+	 */
+
+	@Override
+	public void paintComp(Graphics2D g, MainPanel observer) {
+		
+		g.drawImage(sprite, this.x, this.y, this.width, this.height , observer);
 	}
 }

@@ -1,23 +1,65 @@
 package raffa.atlasengine;
 
-import java.awt.Graphics2D;
-
-public abstract class AccessPanel {
+public abstract class AccessPanel implements InterPanel {
 	
 	/*
-	 * Commun variable between graphics objects
+	 * Commun variable between graphics objects (subclasses)
 	 */
 	
 	public int x, y, width, height, zLevel;
+	
+	/*
+	 * Methods inherited from InterPanel
+	 * They don't have a function in this class
+	 */
 
-	/*
-	 * Commun methods between graphics objects
-	 */
+	@Override
+	public void sort() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void add(InterPanel I) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setBackGround(InterPanel I) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	/*
-	 *Set the object bounds
+	 * Override from InterPanel
+	 * return the overlapping level of a component
 	 */
+
+	@Override
+	public int getZLevel() {
+		
+		return zLevel;
+	}
 	
+	/*
+	 * Override from InterPanel
+	 * set the overlapping level of a component
+	 * Default value = 1
+	 */
+
+	@Override
+	public void setZLevel(int zLevel) {
+		
+		this.zLevel = zLevel;
+	}
+	
+	/*
+	 * Override from InterPanel
+	 * set the component bounds
+	 */
+
+	@Override
 	public void setBounds(int x, int y, int width, int height) {
 		
 		this.x = x;
@@ -27,9 +69,11 @@ public abstract class AccessPanel {
 	}
 	
 	/*
-	 * Set the object x and y location
+	 * Override from InterPanel
+	 * set the component location in the main panel
 	 */
-	
+
+	@Override
 	public void setLocation(int x, int y) {
 		
 		this.x = x;
@@ -37,25 +81,15 @@ public abstract class AccessPanel {
 	}
 	
 	/*
-	 * Set the object size
+	 * Override from InterPanel
+	 * set the component size
 	 */
-	
+
+	@Override
 	public void setSize(int width, int height) {
 		
 		this.width = width;
 		this.height = height;
 	}
 	
-	/*
-	 * Set the object overlapping level
-	 */
-	
-	public void setZLevel(int zLevel) {
-		
-		this.zLevel = zLevel;
-	}
-	
-	public abstract void paintContent(Graphics2D g); // Draw inside the content
-	
-	public abstract Graphics2D getGraphics();
 }

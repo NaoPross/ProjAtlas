@@ -4,8 +4,6 @@ import java.awt.Graphics2D;
 
 public class Panel extends AccessPanel {
 	
-	protected Graphics2D g;
-	
 	/*
 	 * Create a panel
 	 * Default parameters:
@@ -42,25 +40,16 @@ public class Panel extends AccessPanel {
 		this.height = height;
 		this.zLevel = zLevel;
 	}
-	
+
 	/*
-	 * Override this method in the
-	 * subclasses to paint in the panel
+	 * Override from InterPanel
+	 * Override this method to draw something in
 	 */
 	
 	@Override
-	public void paintContent(Graphics2D g) {
+	public void paintComp(Graphics2D g, MainPanel observer) {
 		
-		this.g = g;
 	}
 	
-	/*
-	 * Return the graphics component of the panel
-	 */
 	
-	@Override
-	public Graphics2D getGraphics() {
-		
-		return g;
-	}
 }
