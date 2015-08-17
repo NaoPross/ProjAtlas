@@ -76,6 +76,7 @@ public class BuildPanel extends JPanel {
 	
 	// Return the comps or comps_prov BuildPanel with the max value of hierarchy
 	private BuildPanel getMaxHier(BuildPanel[] comps) {
+		
 		BuildPanel panel = new BuildPanel();
 		panel.hierarchy = 0;
 		for (int i = 0; i < comps.length; i++) {
