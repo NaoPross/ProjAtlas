@@ -122,12 +122,24 @@ public class Window extends JFrame {
 		return panel;
 	}
 	
+	/*
+	 * Enter the program in a loop
+	 */
+	
 	public void run() {
 		
 		while(isActive()) {
-			
+			winMain();
 			panel.update();
 		}
+	}
+	
+	/*
+	 * Override this method to write the game code
+	 */
+	
+	public void winMain() {
+		
 	}
 
 }
