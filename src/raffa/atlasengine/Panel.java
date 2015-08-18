@@ -42,8 +42,9 @@ public class Panel extends AccessPanel {
 	}
 
 	/*
-	 * Override from InterPanel
+	 * Override from AccessPanel
 	 * Override this method to draw something in
+	 * the mainPanel
 	 */
 	
 	@Override

@@ -8,10 +8,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
-public class MainPanel extends JPanel implements MouseListener, KeyListener, InterPanel {
+public class MainPanel extends JPanel implements MouseListener, KeyListener {
 	
 	Graphics2D g; // Instance the graphics component that draws the others
-	InterPanel[] comp_added; // Array of all the components added
+	AccessPanel[] comp_added; // Array of all the components added
 	
 	/*
 	 * Create the double buffered main window panel
@@ -23,7 +23,7 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener, Int
 		
 		super(null, true);
 		super.setBackground(null);
-		comp_added = new InterPanel[0];
+		comp_added = new AccessPanel[0];
 		
 		/*
 		 *  Add serializable interfaces
@@ -46,6 +46,7 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener, Int
 		for (int i = 0; i < comp_added.length; i++) {
 			try {
 				comp_added[i].paintComp(g, this);
+				System.out.println("Drawn a component");
 			} catch (NullPointerException e) {}
 		}
 	}
@@ -58,6 +59,7 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener, Int
 		
 		try {
 			Thread.sleep(100);
+			System.out.println("Thread has sleeped 100");
 		} catch (Exception e) {
 			System.out.println("Error: Main panel Thread sleep failed\n");
 			e.printStackTrace();
@@ -119,7 +121,6 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener, Int
 	 * on the zLevel variable of each component
 	 */
 
-	@Override
 	public void sort() {
 		
 		boolean flag = false;
@@ -130,7 +131,7 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener, Int
 				
 				if(comp_added[j].getZLevel() > comp_added[j+1].getZLevel()) {
 					
-                    InterPanel k = comp_added[j];
+					AccessPanel k = comp_added[j];
                     comp_added[j] = comp_added[j+1];
                     comp_added[j+1] = k;
                     flag = true;
@@ -146,65 +147,40 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener, Int
 	 * Add a component to the comp_added array and sort it
 	 */
 
-	@Override
-	public void add(InterPanel I) {
+	public void add(AccessPanel component) {
 		
 		int length = comp_added.length;
 		
-		InterPanel[] comp_prov = new InterPanel[length + 1];
+		AccessPanel[] comp_prov = new AccessPanel[length + 1];
 		
 		for (int i = 0; i < length; i++)
 			comp_prov[i] = comp_added[i];
 		
 		length++;
 		
-		comp_added = new InterPanel[length];
+		comp_added = new AccessPanel[length];
 		
 		for (int i = 0; i < length; i++)
 			comp_added[i] = comp_prov[i];
 		
-		comp_added[length - 1] = I;
+		comp_added[length - 1] = component;
 		
 		sort();
 	}
 	
 	/*
-	 * Override from InterPanel
+	 * 
 	 * Set the component zLevel to 0 and
 	 * adapt the width and the height to
 	 * the main panel
 	 * Set it as Background of the main panel
 	 */
 
-	@Override
-	public void setBackGround(InterPanel I) {
+	public void setBackGround(AccessPanel component) {
 		
-		I.setZLevel(0);
-		I.setBounds(0, 0, this.getWidth(), this.getHeight());
-		this.add(I);
-	}
-	
-	/*
-	 * Methods inherited from InterPanel
-	 * They don't have a function in this class
-	 */
-
-	@Override
-	public int getZLevel() {
-		
-		return 0;
-	}
-
-	@Override
-	public void setZLevel(int zLevel) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void paintComp(Graphics2D g, MainPanel observer) {
-		// TODO Auto-generated method stub
-		
+		component.setZLevel(0);
+		component.setBounds(0, 0, this.getWidth(), this.getHeight());
+		this.add(component);
 	}
 
 }

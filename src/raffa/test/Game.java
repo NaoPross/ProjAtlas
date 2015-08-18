@@ -4,6 +4,11 @@ import raffa.atlasengine.*;
 
 public class Game extends Window {
 	
+	/*
+	 * A try of the instance of the components
+	 * in the main panel
+	 */
+	
 	Sprite sfondo;
 	Elettrone elettrone;
 	Protone protone;
@@ -26,7 +31,7 @@ public class Game extends Window {
 		panel.add(elettrone);
 		panel.add(protone);
 		
-		run();
+		super.run();
 	}
 	
 	@Override

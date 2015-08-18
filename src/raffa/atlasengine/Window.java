@@ -81,7 +81,6 @@ public class Window extends JFrame {
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		
 		createMainPanel();
-		
 	}
 	
 	/*
@@ -112,6 +111,7 @@ public class Window extends JFrame {
 	public void run() {
 		
 		while(isActive()) {
+			System.out.println("The program is running");
 			winMain();
 			panel.update();
 		}
