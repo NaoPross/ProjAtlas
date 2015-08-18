@@ -11,7 +11,7 @@ public class Elettrone extends Panel {
 
 	public Elettrone() {
 		
-		super(100, 300, 30, 30);
+		super(200, 300, 30, 30);
 		giallo = new Color(255, 255, 0);
 		zLevel = 2;
 	}
@@ -20,6 +20,6 @@ public class Elettrone extends Panel {
 	public void paintComp(Graphics2D g, MainPanel observer) {
 		
 		g.setColor(giallo);
-		g.fillOval(x, y, width, height);
+		g.fillOval(x, y, width / 2, height / 2);
 	}
 }

@@ -11,7 +11,7 @@ public class Protone extends Panel {
 
 	public Protone() {
 		
-		super(500, 400, 100, 100);
+		super(400, 300, 100, 100);
 		blu = new Color(0, 0, 255);
 		zLevel = 1;
 	}
@@ -20,6 +20,6 @@ public class Protone extends Panel {
 	public void paintComp(Graphics2D g, MainPanel observer) {
 		
 		g.setColor(blu);
-		g.fillOval(x, y, width, height);
+		g.fillOval(x, y, width / 2, height / 2);
 	}
 }

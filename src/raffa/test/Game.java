@@ -16,12 +16,11 @@ public class Game extends Window {
 	public static void main(String[] args) {
 		
 		Game frame = new Game();
-		frame.setVisible(true);
 	}
 	
 	public Game() {
 		
-		//sfondo = new Sprite("C:\\Users\\Nicola\\Documents\\Documenti_Raffa\\Immagini_montecarlo\\Metodo Montecarlo_1.png");
+		sfondo = new Sprite("C:\\Users\\Nicola\\Documents\\Documenti_Raffa\\Immagini_montecarlo\\Metodo Montecarlo_1.png");
 		
 		elettrone = new Elettrone();
 		
@@ -31,14 +30,18 @@ public class Game extends Window {
 		panel.add(elettrone);
 		panel.add(protone);
 		
+		super.isRunning = true;
+		super.setVisible(isRunning);
+		
 		super.run();
 	}
 	
 	@Override
 	public void gameLoop() {
 		
-		elettrone.setLocation(elettrone.x + 1, elettrone.y - 1);
-		System.out.println(elettrone.x + "" + elettrone.y);
+		elettrone.setLocation(elettrone.x + 3, elettrone.y);
+		protone.setLocation(protone.x - 3, protone.y);
+		System.out.println(elettrone.x + "  " + elettrone.y);
 	}
 
 }

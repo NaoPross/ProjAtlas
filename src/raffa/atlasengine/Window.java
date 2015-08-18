@@ -124,7 +124,7 @@ public class Window extends JFrame {
 	 */
 	
 	public void gameLoop() {
-		throw new Exception("You must ovveride the gameloop method.");
+		throw new StackOverflowError("Error: You must override the gameLoop method");
 	}
 
 }

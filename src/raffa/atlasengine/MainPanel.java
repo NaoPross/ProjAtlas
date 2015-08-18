@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
-public class MainPanel extends JPanel implements MouseListener, KeyListener {
+public class MainPanel extends JPanel {
 	
 	Graphics2D g; // Instance the graphics component that draws the others
 	AccessPanel[] comp_added; // Array of all the components added
@@ -29,8 +29,6 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener {
 		 *  Add serializable interfaces
 		 */
 		
-		addMouseListener(this);
-		addKeyListener(this);
 	}
 	
 	@Override
@@ -65,54 +63,6 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener {
 			e.printStackTrace();
 		}
 		repaint(); // update the graphics components
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	/*

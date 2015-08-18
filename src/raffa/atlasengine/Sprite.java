@@ -101,5 +101,6 @@ public class Sprite extends AccessPanel {
 	public void paintComp(Graphics2D g, MainPanel observer) {
 		
 		g.drawImage(sprite, this.x, this.y, this.width, this.height , observer);
+		System.out.println("Image drawn");
 	}
 }
