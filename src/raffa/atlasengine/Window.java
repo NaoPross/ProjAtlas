@@ -22,13 +22,7 @@ public class Window extends JFrame {
 		setBounds(100, 50, 800, 700);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		
-		/*
-		 * Istance the main panel
-		 */
-		
-		panel = new MainPanel();
-		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-		setContentPane(panel);
+		createMainPanel();
 	}
 	
 	/*
@@ -42,13 +36,7 @@ public class Window extends JFrame {
 		setBounds(100, 50, 800, 700);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		
-		/*
-		 * Istance the main panel
-		 */
-		
-		panel = new MainPanel();
-		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-		setContentPane(panel);
+		createMainPanel();
 	}																	
 	
 	/*
@@ -63,13 +51,7 @@ public class Window extends JFrame {
 		setBounds(100, 50, 800, 700);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		
-		/*
-		 * Istance the main panel
-		 */
-		
-		panel = new MainPanel();
-		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-		setContentPane(panel);
+		createMainPanel();
 	}
 	
 	/*
@@ -83,13 +65,7 @@ public class Window extends JFrame {
 		setBounds(x, y, width, height);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		
-		/*
-		 * Istance the main panel
-		 */
-		
-		panel = new MainPanel();
-		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-		setContentPane(panel);
+		createMainPanel();
 	}
 	
 	/*
@@ -104,13 +80,20 @@ public class Window extends JFrame {
 		setBounds(x, y, width, height);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		
-		/*
-		 * Istance the main panel
-		 */
+		createMainPanel();
+		
+	}
+	
+	/*
+	 * Istance the main panel
+	 */
+	
+	public MainPanel createMainPanel() {
 		
 		panel = new MainPanel();
 		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
 		setContentPane(panel);
+		return panel;
 	}
 	
 	/*
@@ -139,7 +122,7 @@ public class Window extends JFrame {
 	 */
 	
 	public void winMain() {
-		
+		System.out.println("The override doesn't work");
 	}
 
 }

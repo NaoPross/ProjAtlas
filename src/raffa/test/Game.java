@@ -33,6 +33,7 @@ public class Game extends Window {
 	public void winMain() {
 		
 		elettrone.setLocation(elettrone.x + 1, elettrone.y - 1);
+		System.out.println(elettrone.x + "" + elettrone.y);
 	}
 
 }
