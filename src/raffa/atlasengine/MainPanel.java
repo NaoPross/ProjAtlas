@@ -130,12 +130,11 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener {
 			for(int j = 0; j < comp_added.length - 1; j++) {
 				
 				if(comp_added[j].getZLevel() > comp_added[j+1].getZLevel()) {
-					
 					AccessPanel k = comp_added[j];
-                    comp_added[j] = comp_added[j+1];
-                    comp_added[j+1] = k;
-                    flag = true;
-                }
+                			comp_added[j] = comp_added[j+1];
+               				comp_added[j+1] = k;
+                    			flag = true;
+                		}
 			}
 			
 			if (!flag) break;

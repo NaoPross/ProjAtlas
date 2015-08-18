@@ -16,6 +16,6 @@ gvim:
 	gvim src/org/
 
 raffa:
-	javac -d bin -sourcepath src src/raffa/atlasengine/*.java
+	javac -d bin -sourcepath src src/raffa/atlasenginie/*.java
 	javac -d bin -sourcepath src src/raffa/test/*.java
 	java -cp bin raffa.test.Game

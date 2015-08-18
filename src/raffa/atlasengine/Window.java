@@ -15,6 +15,7 @@ public class Window extends JFrame {
 	 */
 	
 	protected MainPanel panel; // Instance a main window panel
+	public volatile boolean isRunning, gameOver;
 
 	public Window() {
 		
@@ -110,9 +111,10 @@ public class Window extends JFrame {
 	
 	public void run() {
 		
-		while(isActive()) {
+		while(isRunning) {
 			System.out.println("The program is running");
-			winMain();
+			if (!gameOver)
+				gameLoop();		
 			panel.update();
 		}
 	}
@@ -121,8 +123,8 @@ public class Window extends JFrame {
 	 * Override this method to write the game code
 	 */
 	
-	public void winMain() {
-		System.out.println("The override doesn't work");
+	public void gameLoop() {
+		throw new Exception("You must ovveride the gameloop method.");
 	}
 
 }

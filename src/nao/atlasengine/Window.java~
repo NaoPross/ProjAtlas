@@ -1,0 +1,7 @@
+package nao.atlasengine;
+
+class Window extends JFrame {
+		public Window() {
+				
+		}
+}
