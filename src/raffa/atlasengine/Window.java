@@ -14,7 +14,7 @@ public class Window extends JFrame {
 	 * MainPanel autoinsert in the window
 	 */
 	
-	MainPanel panel; // Instance a main window panel
+	protected MainPanel panel; // Instance a main window panel
 
 	public Window() {
 		

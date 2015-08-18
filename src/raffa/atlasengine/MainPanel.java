@@ -23,6 +23,7 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener, Int
 		
 		super(null, true);
 		super.setBackground(null);
+		comp_added = new InterPanel[0];
 		
 		/*
 		 *  Add serializable interfaces
@@ -42,9 +43,10 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener, Int
 		/*
 		 * Paint all the components added
 		 */
-		
 		for (int i = 0; i < comp_added.length; i++) {
-			comp_added[i].paintComp(g, this);
+			try {
+				comp_added[i].paintComp(g, this);
+			} catch (NullPointerException e) {}
 		}
 	}
 	
