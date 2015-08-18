@@ -10,13 +10,13 @@ public class Game extends Window {
 	
 	public static void main(String[] args) {
 		
-		Window frame = new Window();
+		Game frame = new Game();
 		frame.setVisible(true);
 	}
 	
 	public Game() {
 		
-		sfondo = new Sprite("C:\\Users\\Nicola\\Documents\\Documenti_Raffa\\Immagini_montecarlo\\Metodo_Montecarlo_1");
+		sfondo = new Sprite("C:\\Users\\Nicola\\Documents\\Documenti_Raffa\\Immagini_montecarlo\\Metodo Montecarlo_1.png");
 		
 		elettrone = new Elettrone();
 		

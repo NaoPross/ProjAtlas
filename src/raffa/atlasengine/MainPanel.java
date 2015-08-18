@@ -151,7 +151,7 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener, Int
 		
 		int length = comp_added.length;
 		
-		InterPanel[] comp_prov = new Sprite[length];
+		InterPanel[] comp_prov = new InterPanel[length + 1];
 		
 		for (int i = 0; i < length; i++)
 			comp_prov[i] = comp_added[i];
