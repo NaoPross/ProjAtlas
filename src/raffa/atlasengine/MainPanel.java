@@ -44,7 +44,7 @@ public class MainPanel extends JPanel {
 		for (int i = 0; i < comp_added.length; i++) {
 			try {
 				comp_added[i].paintComp(g, this);
-				System.out.println("Drawn a component");
+				//System.out.println("Drawn a component");
 			} catch (NullPointerException e) {}
 		}
 	}
@@ -57,7 +57,7 @@ public class MainPanel extends JPanel {
 		
 		try {
 			Thread.sleep(100);
-			System.out.println("Thread has sleeped 100");
+			//System.out.println("Thread has sleeped 100");
 		} catch (Exception e) {
 			System.out.println("Error: Main panel Thread sleep failed\n");
 			e.printStackTrace();

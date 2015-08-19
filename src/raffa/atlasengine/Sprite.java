@@ -100,7 +100,7 @@ public class Sprite extends AccessPanel {
 	@Override
 	public void paintComp(Graphics2D g, MainPanel observer) {
 		
-		g.drawImage(sprite, this.x, this.y, this.width, this.height , observer);
-		System.out.println("Image drawn");
+		g.drawImage(sprite, this.x, this.y, this.width, this.height , null);
+		//System.out.println("Image drawn");
 	}
 }

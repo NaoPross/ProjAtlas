@@ -1,12 +1,14 @@
 package raffa.atlasengine;
 
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
 
 
-public class Window extends JFrame {
+public class Window extends JFrame implements WindowListener {
 	
 	/*
 	 * Create a window
@@ -22,6 +24,7 @@ public class Window extends JFrame {
 		setLayout(null);
 		setBounds(100, 50, 800, 700);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		addWindowListener(this);
 		
 		createMainPanel();
 	}
@@ -36,6 +39,7 @@ public class Window extends JFrame {
 		setLayout(null);
 		setBounds(100, 50, 800, 700);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		addWindowListener(this);
 		
 		createMainPanel();
 	}																	
@@ -51,6 +55,7 @@ public class Window extends JFrame {
 		setLayout(null);
 		setBounds(100, 50, 800, 700);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		addWindowListener(this);
 		
 		createMainPanel();
 	}
@@ -65,6 +70,7 @@ public class Window extends JFrame {
 		setLayout(null);
 		setBounds(x, y, width, height);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		addWindowListener(this);
 		
 		createMainPanel();
 	}
@@ -80,6 +86,7 @@ public class Window extends JFrame {
 		setLayout(null);
 		setBounds(x, y, width, height);
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		addWindowListener(this);
 		
 		createMainPanel();
 	}
@@ -112,7 +119,7 @@ public class Window extends JFrame {
 	public void run() {
 		
 		while(isRunning) {
-			System.out.println("The program is running");
+			//System.out.println("The program is running");
 			if (!gameOver)
 				gameLoop();		
 			panel.update();
@@ -125,6 +132,49 @@ public class Window extends JFrame {
 	
 	public void gameLoop() {
 		throw new StackOverflowError("Error: You must override the gameLoop method");
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		
+		isRunning = false;
+		gameOver = false;
+		System.exit(0);
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
