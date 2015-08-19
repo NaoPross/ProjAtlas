@@ -26,13 +26,16 @@ public class Game extends Window {
 		
 		protone = new Protone();
 		
+		
 		atlas = new Sprite("C:\\Users\\Nicola\\Desktop\\Atlas2.png");
 		atlas.setBounds(40, 30, 300, 600);
 		atlas.zLevel = 1;
 		
+		
 		ghosteon = new Sprite("C:\\Users\\Nicola\\Desktop\\Ghosteon.png");
 		ghosteon.setBounds(260, 200, 300, 250);
 		ghosteon.zLevel = 2;
+		
 		
 		panel.setBackground(sfondo);
 		panel.add(elettrone);
