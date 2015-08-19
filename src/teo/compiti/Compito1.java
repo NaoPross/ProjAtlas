@@ -39,7 +39,27 @@ public class Compito1 {
 
 	public static void main(String[] args) {
 		
-
-	}
+		Mechanics oggetto = new Mechanics();
+		
+		int ATT = 130;
+		int IVs = 31;
+		int EVs = 252;
+		int liv = 100;
+		float nat = 1.1f;
+		
+		int attGarchomp = oggetto.calcAtt(ATT, IVs, EVs, liv, nat);
+		
+		System.out.println(attGarchomp);
+		
+		int ATTjolteon = 50;
+		int IVsjolteon = 10;
+		int EVsjolteon = 0;
+		int livjolteon = 50;
+		float natjolteon = 0.9f;
+		
+		int attjolteon = oggetto.calcAtt(ATTjolteon, IVsjolteon, EVsjolteon, livjolteon, natjolteon);
+		
+		System.out.println(attjolteon);
+	} 
 
 }
