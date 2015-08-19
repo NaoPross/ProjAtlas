@@ -26,7 +26,30 @@ public class Compito2 {
 
 	public static void main(String[] args) {
 		
-
+		int lunghezza = 1000;
+		int[] lista = new int[lunghezza];
+		
+		for (int i = 0; i < lunghezza; i++) {
+			lista[i] = 3 * i + 5;
+		}
+		
+		Compito2 ciao = new Compito2();
+		
+		int contatore = 0;
+		
+		for (int i = 0; i < lunghezza; i++) {
+			if (ciao.verifica(lista[i]) == 1) {
+				contatore++;
+			}
+		}
+		
+		System.out.println(contatore);
+	}
+		
+	public int verifica(int x) {
+		
+		int risultato = x % 2;
+		return risultato;
 	}
 
 }

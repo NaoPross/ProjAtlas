@@ -51,6 +51,10 @@ public class CompilazioneArray {
 		 * Percio lista[1] = 1 + 1 = 2
 		 * 
 		 * Ecc... fino a compilare l'intero array di 10 slot
+		 * 
+		 * La funzione matematica con cui e stato compilato
+		 * l'array e
+		 * y = x + 1 (in un ciclo for la i prende il posto della x)
 		 */
 	}
 
