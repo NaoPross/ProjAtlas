@@ -28,6 +28,7 @@ public class Window extends JFrame implements WindowListener {
 		height = getHeight();
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		setMaximumSize(new Dimension(width, height));
+		setResizable(false);
 		addWindowListener(this);
 		
 		createMainPanel();
@@ -46,6 +47,7 @@ public class Window extends JFrame implements WindowListener {
 		height = getHeight();
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		setMaximumSize(new Dimension(width, height));
+		setResizable(false);
 		addWindowListener(this);
 		
 		createMainPanel();
@@ -65,6 +67,7 @@ public class Window extends JFrame implements WindowListener {
 		height = getHeight();
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		setMaximumSize(new Dimension(width, height));
+		setResizable(false);
 		addWindowListener(this);
 		
 		createMainPanel();
@@ -82,7 +85,8 @@ public class Window extends JFrame implements WindowListener {
 		Window.width = getWidth();
 		Window.height = getHeight();
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
-		this.setMaximumSize(new Dimension(width, height));
+		setMaximumSize(new Dimension(width, height));
+		setResizable(false);
 		addWindowListener(this);
 		
 		createMainPanel();
@@ -102,6 +106,7 @@ public class Window extends JFrame implements WindowListener {
 		Window.height = getHeight();
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		setMaximumSize(new Dimension(width, height));
+		setResizable(false);
 		addWindowListener(this);
 		
 		createMainPanel();
@@ -115,7 +120,7 @@ public class Window extends JFrame implements WindowListener {
 		
 		panel = new MainPanel();
 		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-		Window.frameRate = 100;
+		Window.frameRate = 50;
 		setContentPane(panel);
 		return panel;
 	}

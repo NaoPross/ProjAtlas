@@ -36,6 +36,9 @@ public class Sprite extends AccessPanel {
 		
 		setBounds(0, 0, 100, 100);
 		zLevel = 1;
+		phi = 0;
+		xRot = x;
+		yRot = y;
 		setImage(path);
 		g = sprite.createGraphics();
 		comp_added = new AccessPanel[0];
@@ -50,6 +53,9 @@ public class Sprite extends AccessPanel {
 		
 		setBounds(x, y, 100, 100);
 		zLevel = 1;
+		phi = 0;
+		xRot = x;
+		yRot = y;
 		setImage(path);
 		g = sprite.createGraphics();
 		comp_added = new AccessPanel[0];
@@ -64,6 +70,9 @@ public class Sprite extends AccessPanel {
 		
 		setBounds(x, y, width, height);
 		zLevel = 1;
+		phi = 0;
+		xRot = x;
+		yRot = y;
 		setImage(path);
 		g = sprite.createGraphics();
 		comp_added = new AccessPanel[0];
@@ -114,7 +123,9 @@ public class Sprite extends AccessPanel {
 	@Override
 	public void paintComp(Graphics2D g, MainPanel observer) {
 		
-		g.drawImage(sprite, this.x, this.y, this.width, this.height , null);
+		g.rotate(phi, xRot, yRot);
+		g.drawImage(sprite, x, y, width, height , null);
 		//System.out.println("Image drawn");
+		g.rotate(-phi, xRot, yRot);
 	}
 }

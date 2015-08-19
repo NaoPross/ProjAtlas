@@ -54,6 +54,7 @@ public class Game extends Window {
 		
 		elettrone.setLocation(elettrone.x + 3, elettrone.y);
 		protone.setLocation(protone.x - 3, protone.y);
+		atlas.rotate(2, atlas.x + 150, atlas.y + 300);
 		//System.out.println(elettrone.x + "  " + elettrone.y);
 	}
 

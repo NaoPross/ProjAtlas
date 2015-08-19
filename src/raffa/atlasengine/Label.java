@@ -1,5 +1,6 @@
 package raffa.atlasengine;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
@@ -12,24 +13,43 @@ public class Label extends AccessPanel {
 	public String text; // The String that has to be drawn
 	public Font type; // The Font type of the string
 	int size; // The Font size of the string
+	public Color rgb;
 	
-	public Label(String text) {
+	public Label(String text, int x, int y) {
 		
 		this.text = text;
 		type = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
+		this.x = x;
+		this.y = y;
+		phi = 0;
+		xRot = x;
+		yRot = y;
+		rgb = Color.BLACK;
 	}
 	
-	public Label(String text, int size) {
+	public Label(String text, int x, int y, int size) {
 		
 		this.text = text;
 		this.size = size;
 		type = new Font(Font.SANS_SERIF, Font.PLAIN, size);
+		this.x = x;
+		this.y = y;
+		phi = 0;
+		xRot = x;
+		yRot = y;
+		rgb = Color.BLACK;
 	}
 	
-	public Label(String text, Font type) {
+	public Label(String text, int x, int y, Font type) {
 		
 		this.text = text;
 		this.type = type;
+		this.x = x;
+		this.y = y;
+		phi = 0;
+		xRot = x;
+		yRot = y;
+		rgb = Color.BLACK;
 	}
 	
 	/*
@@ -62,12 +82,22 @@ public class Label extends AccessPanel {
 		int style = type.getStyle();
 		type = new Font(font, style, size);
 	}
+	
+	public void setColor(Color rgb) {
+		
+		this.rgb = rgb;
+	}
 
 	@Override
 	public void paintComp(Graphics2D g, MainPanel observer) {
 		
+		g.rotate(phi, xRot, yRot);
+		
+		g.setColor(rgb);
 		g.setFont(type);
 		g.drawString(text, x, y);
+		
+		g.rotate(-phi, xRot, yRot);
 	}
 
 }

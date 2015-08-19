@@ -26,6 +26,9 @@ public class Panel extends AccessPanel {
 		width = 200;
 		height = 100;
 		zLevel = 1;
+		phi = 0;
+		xRot = x;
+		yRot = y;
 		border = false;
 		pixel = new Pixel[0];
 		comp_added = new AccessPanel[0];
@@ -38,6 +41,9 @@ public class Panel extends AccessPanel {
 		this.width = width;
 		this.height = height;
 		zLevel = 1;
+		phi = 0;
+		xRot = x;
+		yRot = y;
 		border = false;
 		pixel = new Pixel[0];
 		comp_added = new AccessPanel[0];
@@ -50,6 +56,9 @@ public class Panel extends AccessPanel {
 		this.width = width;
 		this.height = height;
 		this.zLevel = zLevel;
+		phi = 0;
+		xRot = x;
+		yRot = y;
 		border = false;
 		pixel = new Pixel[0];
 		comp_added = new AccessPanel[0];
@@ -113,6 +122,8 @@ public class Panel extends AccessPanel {
 	@Override
 	public void paintComp(Graphics2D g, MainPanel observer) {
 		
+		g.rotate(phi, xRot, yRot);
+		
 		/*
 		 * Draw the pixels basing on the pixel array
 		 */
@@ -130,6 +141,8 @@ public class Panel extends AccessPanel {
 			g.setColor(rgb_border);
 			g.drawRect(x, y, width, height);
 		}
+		
+		g.rotate(-phi, xRot, yRot);
 	}
 	
 	
