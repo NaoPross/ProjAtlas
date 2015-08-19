@@ -26,7 +26,7 @@ public class Game extends Window {
 		
 		protone = new Protone();
 		
-		panel.setBackGround(sfondo);
+		panel.setBackground(sfondo);
 		panel.add(elettrone);
 		panel.add(protone);
 		

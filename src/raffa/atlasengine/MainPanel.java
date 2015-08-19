@@ -2,10 +2,6 @@ package raffa.atlasengine;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
 public class MainPanel extends JPanel {
@@ -125,10 +121,11 @@ public class MainPanel extends JPanel {
 	 * Set it as Background of the main panel
 	 */
 
-	public void setBackGround(AccessPanel component) {
+	public void setBackground(AccessPanel component) {
 		
 		component.setZLevel(0);
-		component.setBounds(0, 0, this.getWidth(), this.getHeight());
+		component.setBounds(0, 0, Window.width, Window.height);
+		//System.out.println(this.getWidth() + "  " + this.getHeight());
 		this.add(component);
 	}
 

@@ -17,6 +17,7 @@ public class Window extends JFrame implements WindowListener {
 	 */
 	
 	protected MainPanel panel; // Instance a main window panel
+	public static int width, height;
 	public volatile boolean isRunning, gameOver;
 
 	public Window() {
@@ -99,6 +100,8 @@ public class Window extends JFrame implements WindowListener {
 		
 		panel = new MainPanel();
 		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
+		width = getWidth();
+		height = getHeight();
 		setContentPane(panel);
 		return panel;
 	}
