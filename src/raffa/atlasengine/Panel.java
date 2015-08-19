@@ -27,6 +27,8 @@ public class Panel extends AccessPanel {
 		height = 100;
 		zLevel = 1;
 		border = false;
+		pixel = new Pixel[0];
+		comp_added = new AccessPanel[0];
 	}
 	
 	public Panel(int x, int y, int width, int height) {
@@ -37,6 +39,8 @@ public class Panel extends AccessPanel {
 		this.height = height;
 		zLevel = 1;
 		border = false;
+		pixel = new Pixel[0];
+		comp_added = new AccessPanel[0];
 	}
 	
 	public Panel(int x, int y, int width, int height, int zLevel) {
@@ -47,6 +51,8 @@ public class Panel extends AccessPanel {
 		this.height = height;
 		this.zLevel = zLevel;
 		border = false;
+		pixel = new Pixel[0];
+		comp_added = new AccessPanel[0];
 	}
 	
 	/*
@@ -58,6 +64,8 @@ public class Panel extends AccessPanel {
 		border = true;
 		this.rgb_border = rgb;
 	}
+	
+	
 	
 	/*
 	 * Add a pixel to the array pixel

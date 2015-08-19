@@ -9,7 +9,7 @@ public class Game extends Window {
 	 * in the main panel
 	 */
 	
-	Sprite sfondo;
+	Sprite sfondo, atlas, ghosteon;
 	Elettrone elettrone;
 	Protone protone;
 	
@@ -20,15 +20,25 @@ public class Game extends Window {
 	
 	public Game() {
 		
-		sfondo = new Sprite("C:\\Users\\Nicola\\Documents\\Documenti_Raffa\\Immagini_montecarlo\\Metodo Montecarlo_1.png");
+		sfondo = new Sprite("C:\\Users\\Nicola\\Desktop\\Vogelberg.png");
 		
 		elettrone = new Elettrone();
 		
 		protone = new Protone();
 		
+		atlas = new Sprite("C:\\Users\\Nicola\\Desktop\\Atlas2.png");
+		atlas.setBounds(40, 30, 300, 600);
+		atlas.zLevel = 1;
+		
+		ghosteon = new Sprite("C:\\Users\\Nicola\\Desktop\\Ghosteon.png");
+		ghosteon.setBounds(260, 200, 300, 250);
+		ghosteon.zLevel = 2;
+		
 		panel.setBackground(sfondo);
 		panel.add(elettrone);
 		panel.add(protone);
+		panel.add(atlas);
+		panel.add(ghosteon);
 		
 		super.isRunning = true;
 		super.setVisible(isRunning);

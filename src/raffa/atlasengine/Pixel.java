@@ -4,8 +4,13 @@ import java.awt.Color;
 
 public class Pixel {
 	
-	public Color rgb;
-	public int x, y;
+	/*
+	 * Create a pixel object with
+	 * location and color
+	 */
+	
+	public Color rgb; // Color of the pixel
+	public int x, y; // The pixel location
 
 	public Pixel(int x, int y) {
 		
@@ -19,5 +24,24 @@ public class Pixel {
 		this.x = x;
 		this.y = y;
 		this.rgb = rgb;
+	}
+	
+	/*
+	 * Set the pixel color
+	 */
+	
+	public void setColor(Color rgb) {
+		
+		this.rgb = rgb;
+	}
+	
+	/*
+	 * Set the pixel location
+	 */
+	
+	public void setLocation(int x, int y) {
+		
+		this.x = x;
+		this.y = y;
 	}
 }

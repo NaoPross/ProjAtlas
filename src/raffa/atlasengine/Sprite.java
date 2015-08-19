@@ -1,5 +1,6 @@
 package raffa.atlasengine;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -37,6 +38,7 @@ public class Sprite extends AccessPanel {
 		zLevel = 1;
 		setImage(path);
 		g = sprite.createGraphics();
+		comp_added = new AccessPanel[0];
 	}
 	
 	/*
@@ -50,6 +52,7 @@ public class Sprite extends AccessPanel {
 		zLevel = 1;
 		setImage(path);
 		g = sprite.createGraphics();
+		comp_added = new AccessPanel[0];
 	}
 	
 	/*
@@ -63,6 +66,7 @@ public class Sprite extends AccessPanel {
 		zLevel = 1;
 		setImage(path);
 		g = sprite.createGraphics();
+		comp_added = new AccessPanel[0];
 	}
 	
 	/*
@@ -89,6 +93,16 @@ public class Sprite extends AccessPanel {
 	public Graphics2D getGraphics() {
 		
 		return g;
+	}
+	
+	/*
+	 * Modify a pixel of the image
+	 */
+	
+	public void drawPixel(int x, int y, Color rgb) {
+		
+		int color = rgb.getRGB();
+		sprite.setRGB(x, y, color);
 	}
 	
 	/*

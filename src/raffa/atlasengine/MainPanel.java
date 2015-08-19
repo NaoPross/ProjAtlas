@@ -52,7 +52,7 @@ public class MainPanel extends JPanel {
 	public void update() {
 		
 		try {
-			Thread.sleep(100);
+			Thread.sleep(Window.frameRate);
 			//System.out.println("Thread has sleeped 100");
 		} catch (Exception e) {
 			System.out.println("Error: Main panel Thread sleep failed\n");

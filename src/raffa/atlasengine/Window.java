@@ -17,14 +17,17 @@ public class Window extends JFrame implements WindowListener {
 	 */
 	
 	protected MainPanel panel; // Instance a main window panel
-	public static int width, height;
+	public static int width, height, frameRate;
 	public volatile boolean isRunning, gameOver;
 
 	public Window() {
 		
 		setLayout(null);
 		setBounds(100, 50, 800, 700);
+		width = getWidth();
+		height = getHeight();
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		setMaximumSize(new Dimension(width, height));
 		addWindowListener(this);
 		
 		createMainPanel();
@@ -39,7 +42,10 @@ public class Window extends JFrame implements WindowListener {
 		super(title);
 		setLayout(null);
 		setBounds(100, 50, 800, 700);
+		width = getWidth();
+		height = getHeight();
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		setMaximumSize(new Dimension(width, height));
 		addWindowListener(this);
 		
 		createMainPanel();
@@ -55,7 +61,10 @@ public class Window extends JFrame implements WindowListener {
 		setIconImage(img.sprite);
 		setLayout(null);
 		setBounds(100, 50, 800, 700);
+		width = getWidth();
+		height = getHeight();
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		setMaximumSize(new Dimension(width, height));
 		addWindowListener(this);
 		
 		createMainPanel();
@@ -70,7 +79,10 @@ public class Window extends JFrame implements WindowListener {
 		super(title);
 		setLayout(null);
 		setBounds(x, y, width, height);
+		Window.width = getWidth();
+		Window.height = getHeight();
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		this.setMaximumSize(new Dimension(width, height));
 		addWindowListener(this);
 		
 		createMainPanel();
@@ -86,7 +98,10 @@ public class Window extends JFrame implements WindowListener {
 		setIconImage(img.sprite);
 		setLayout(null);
 		setBounds(x, y, width, height);
+		Window.width = getWidth();
+		Window.height = getHeight();
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
+		setMaximumSize(new Dimension(width, height));
 		addWindowListener(this);
 		
 		createMainPanel();
@@ -100,8 +115,7 @@ public class Window extends JFrame implements WindowListener {
 		
 		panel = new MainPanel();
 		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-		width = getWidth();
-		height = getHeight();
+		Window.frameRate = 100;
 		setContentPane(panel);
 		return panel;
 	}
@@ -123,8 +137,8 @@ public class Window extends JFrame implements WindowListener {
 		
 		while(isRunning) {
 			//System.out.println("The program is running");
-			if (!gameOver)
-				gameLoop();		
+			if (!gameOver) 
+				gameLoop();
 			panel.update();
 		}
 	}
