@@ -39,7 +39,7 @@ public class MainPanel extends JPanel {
 		 */
 		for (int i = 0; i < comp_added.length; i++) {
 			try {
-				comp_added[i].paintComp(g, this);
+				comp_added[i].paintComp(g);
 				//System.out.println("Drawn a component");
 			} catch (NullPointerException e) {}
 		}

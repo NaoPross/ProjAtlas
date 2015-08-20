@@ -17,7 +17,7 @@ public class Protone extends Panel {
 	}
 	
 	@Override
-	public void paintComp(Graphics2D g, MainPanel observer) {
+	public void paintComp(Graphics2D g) {
 		
 		g.setColor(blu);
 		g.fillOval(x, y, width / 2, height / 2);

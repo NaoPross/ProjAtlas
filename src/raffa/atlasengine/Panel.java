@@ -120,7 +120,7 @@ public class Panel extends AccessPanel {
 	 */
 	
 	@Override
-	public void paintComp(Graphics2D g, MainPanel observer) {
+	public void paintComp(Graphics2D g) {
 		
 		g.rotate(phi, xRot, yRot);
 		

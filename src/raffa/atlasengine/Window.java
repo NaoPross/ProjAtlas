@@ -7,7 +7,6 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 
 
-
 public class Window extends JFrame implements WindowListener {
 	
 	/*

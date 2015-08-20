@@ -176,6 +176,6 @@ public abstract class AccessPanel {
 		rotate(phi);
 	}
 	
-	public abstract void paintComp(Graphics2D g, MainPanel observer);
+	public abstract void paintComp(Graphics2D g);
 	
 }
