@@ -62,7 +62,6 @@ public class MainPanel extends JPanel {
 	}
 	
 	/*
-	 * Override from InterPanel
 	 * Sort the comp_added array basing
 	 * on the zLevel variable of each component
 	 */
@@ -88,7 +87,6 @@ public class MainPanel extends JPanel {
 	}
 	
 	/*
-	 * Override from InterPanel
 	 * Add a component to the comp_added array and sort it
 	 */
 
@@ -111,6 +109,39 @@ public class MainPanel extends JPanel {
 		comp_added[length - 1] = component;
 		
 		sort();
+	}
+	
+	/*
+	 * Remove a component from the comp_added array
+	 * without making null slots (the array length apadt
+	 * on the component number)
+	 */
+	
+	public void remove(AccessPanel component) {
+		
+		int length = comp_added.length;
+		
+		for (int i = 0; i < length; i++) {
+			if (comp_added[i] == component)
+				comp_added[i] = null;
+		}
+		
+		AccessPanel[] comp_prov = new AccessPanel[length - 1];
+		
+		int j = 0;
+		int w = 0;
+		while (w < length - 1) {
+			if (comp_added[j] == null)
+				j++;
+			comp_prov[w] = comp_added[j];
+			j++;
+			w++;
+		}
+		
+		comp_added = new AccessPanel[length - 1];
+		
+		for (int i = 0; i < length - 1; i++)
+			comp_added[i] = comp_prov[i];
 	}
 	
 	/*

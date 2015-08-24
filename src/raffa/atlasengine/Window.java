@@ -119,7 +119,7 @@ public class Window extends JFrame implements WindowListener {
 		
 		panel = new MainPanel();
 		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-		Window.frameRate = 50;
+		Window.frameRate = 60;
 		setContentPane(panel);
 		return panel;
 	}
@@ -176,14 +176,14 @@ public class Window extends JFrame implements WindowListener {
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
+		//gameOver = false;
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
+		//gameOver = true;
 	}
 
 	@Override

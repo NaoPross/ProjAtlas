@@ -32,6 +32,7 @@ public class Panel extends AccessPanel {
 		border = false;
 		pixel = new Pixel[0];
 		comp_added = new AccessPanel[0];
+		instance = true;
 	}
 	
 	public Panel(int x, int y, int width, int height) {
@@ -47,6 +48,7 @@ public class Panel extends AccessPanel {
 		border = false;
 		pixel = new Pixel[0];
 		comp_added = new AccessPanel[0];
+		instance = true;
 	}
 	
 	public Panel(int x, int y, int width, int height, int zLevel) {
@@ -62,6 +64,7 @@ public class Panel extends AccessPanel {
 		border = false;
 		pixel = new Pixel[0];
 		comp_added = new AccessPanel[0];
+		instance = true;
 	}
 	
 	/*
@@ -110,13 +113,9 @@ public class Panel extends AccessPanel {
 
 	/*
 	 * Override from AccessPanel
-	 * Override this method to draw something in
-	 * the mainPanel
 	 * 
-	 * In the overrided method write
-	 * super.paintComp(g, observer);
-	 * if you want to upload the graphics
-	 * component relative to this panel
+	 * Draws pixels, border and component added
+	 * to this panel
 	 */
 	
 	@Override
@@ -140,6 +139,14 @@ public class Panel extends AccessPanel {
 		if (border) {
 			g.setColor(rgb_border);
 			g.drawRect(x, y, width, height);
+		}
+		
+		/*
+		 * Draw the components
+		 */
+		
+		for (int i = 0; i < comp_added.length; i++) {
+			comp_added[i].paintComp(g);
 		}
 		
 		g.rotate(-phi, xRot, yRot);

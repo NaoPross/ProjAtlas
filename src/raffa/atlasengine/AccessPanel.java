@@ -8,8 +8,10 @@ public abstract class AccessPanel {
 	 * Commun variable between graphics objects (subclasses)
 	 */
 	
-	public int x, y, width, height, zLevel, xRot, yRot;
+	public int x, y, width, height, zLevel, xRot, yRot, countMove, countRot;
 	public float phi;
+	public boolean move, rotate = false;
+	public boolean instance;
 	AccessPanel[] comp_added;
 	
 	/*
@@ -57,8 +59,14 @@ public abstract class AccessPanel {
 	
 	public void setLocation(int x, int y) {
 		
+		if (!move) {
+			countMove = 0;
+			move = true;
+		}
+		
 		this.x = x;
 		this.y = y;
+		countMove++;
 	}
 	
 	/*
@@ -79,6 +87,10 @@ public abstract class AccessPanel {
 	 */
 	
 	public void add(AccessPanel component) {
+		
+		/*
+		 * Adapt the component to the bounds
+		 */
 		
 		if (component.x > width || component.y > height || (component.x < 0 && component.width < - component.x) || (component.y < 0 && component.width < - component.y)) {
 			System.out.println("Component out of panel's bounds");
@@ -115,6 +127,37 @@ public abstract class AccessPanel {
 		
 			sort();
 		}
+	}
+	
+	/*
+	 * Remove a component from this one
+	 */
+	
+	public void remove(AccessPanel component) {
+		
+		int length = comp_added.length;
+		
+		for (int i = 0; i < length; i++) {
+			if (comp_added[i] == component)
+				comp_added[i] = null;
+		}
+		
+		AccessPanel[] comp_prov = new AccessPanel[length - 1];
+		
+		int j = 0;
+		int w = 0;
+		while (w < length - 1) {
+			if (comp_added[j] == null)
+				j++;
+			comp_prov[w] = comp_added[j];
+			j++;
+			w++;
+		}
+		
+		comp_added = new AccessPanel[length - 1];
+		
+		for (int i = 0; i < length - 1; i++)
+			comp_added[i] = comp_prov[i];
 	}
 	
 	/*
@@ -160,9 +203,14 @@ public abstract class AccessPanel {
 	
 	public void rotate(int phi) {
 		
+		if (!rotate) {
+			countRot = 0;
+			rotate = true;
+		}
 		phi %= 360;
 		this.phi += (float)(phi * Math.PI / 180);
 		//System.out.println("Rotation of" + phi + "degrees");
+		countRot++;
 	}
 	
 	/*

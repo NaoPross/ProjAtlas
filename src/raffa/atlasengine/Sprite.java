@@ -42,6 +42,7 @@ public class Sprite extends AccessPanel {
 		setImage(path);
 		g = sprite.createGraphics();
 		comp_added = new AccessPanel[0];
+		instance = true;
 	}
 	
 	/*
@@ -59,6 +60,7 @@ public class Sprite extends AccessPanel {
 		setImage(path);
 		g = sprite.createGraphics();
 		comp_added = new AccessPanel[0];
+		instance = true;
 	}
 	
 	/*
@@ -76,6 +78,7 @@ public class Sprite extends AccessPanel {
 		setImage(path);
 		g = sprite.createGraphics();
 		comp_added = new AccessPanel[0];
+		instance = true;
 	}
 	
 	/*
@@ -124,8 +127,22 @@ public class Sprite extends AccessPanel {
 	public void paintComp(Graphics2D g) {
 		
 		g.rotate(phi, xRot, yRot);
+		
+		/*
+		 * Draw the sprite image
+		 */
+		
 		g.drawImage(sprite, x, y, width, height , null);
 		//System.out.println("Image drawn");
+		
+		/*
+		 * Draw the components
+		 */
+		
+		for (int i = 0; i < comp_added.length; i++) {
+			comp_added[i].paintComp(g);
+		}
+		
 		g.rotate(-phi, xRot, yRot);
 	}
 }

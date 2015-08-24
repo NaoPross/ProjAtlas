@@ -55,6 +55,15 @@ public class Game extends Window {
 		elettrone.setLocation(elettrone.x + 3, elettrone.y);
 		protone.setLocation(protone.x - 3, protone.y);
 		atlas.rotate(2, atlas.x + 150, atlas.y + 300);
+		
+		if (ghosteon.instance) {
+			int phi = ghosteon.countRot / 10;
+			if (ghosteon.countRot > 100) {
+				panel.remove(ghosteon);
+				ghosteon.instance = false;
+			}
+			ghosteon.rotate(phi, ghosteon.x + 150, ghosteon.y + 150);
+		}
 		//System.out.println(elettrone.x + "  " + elettrone.y);
 	}
 

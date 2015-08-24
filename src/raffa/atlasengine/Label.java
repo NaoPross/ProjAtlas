@@ -25,6 +25,7 @@ public class Label extends AccessPanel {
 		xRot = x;
 		yRot = y;
 		rgb = Color.BLACK;
+		instance = true;
 	}
 	
 	public Label(String text, int x, int y, int size) {
@@ -38,6 +39,7 @@ public class Label extends AccessPanel {
 		xRot = x;
 		yRot = y;
 		rgb = Color.BLACK;
+		instance = true;
 	}
 	
 	public Label(String text, int x, int y, Font type) {
@@ -50,6 +52,7 @@ public class Label extends AccessPanel {
 		xRot = x;
 		yRot = y;
 		rgb = Color.BLACK;
+		instance = true;
 	}
 	
 	/*
