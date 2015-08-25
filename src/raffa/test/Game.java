@@ -57,12 +57,14 @@ public class Game extends Window {
 		atlas.rotate(2, atlas.x + 150, atlas.y + 300);
 		
 		if (ghosteon.instance) {
-			int phi = ghosteon.countRot / 10;
+			int phi = ghosteon.countRot / 2;
 			if (ghosteon.countRot > 100) {
 				panel.remove(ghosteon);
 				ghosteon.instance = false;
 			}
 			ghosteon.rotate(phi, ghosteon.x + 150, ghosteon.y + 150);
+			ghosteon.setSize((int)(ghosteon.width * 0.95), (int)(ghosteon.height * 0.95));
+			ghosteon.setLocation(ghosteon.x + 2, ghosteon.y - 1);
 		}
 		//System.out.println(elettrone.x + "  " + elettrone.y);
 	}

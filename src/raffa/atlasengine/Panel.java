@@ -21,50 +21,34 @@ public class Panel extends AccessPanel {
 	
 	public Panel() {
 		
-		x = 50;
-		y = 30;
-		width = 200;
-		height = 100;
-		zLevel = 1;
-		phi = 0;
-		xRot = x;
-		yRot = y;
-		border = false;
-		pixel = new Pixel[0];
-		comp_added = new AccessPanel[0];
-		instance = true;
+		setBounds(50, 30, 200, 100);
+		this.defaultValue();
 	}
 	
 	public Panel(int x, int y, int width, int height) {
 		
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-		zLevel = 1;
-		phi = 0;
-		xRot = x;
-		yRot = y;
-		border = false;
-		pixel = new Pixel[0];
-		comp_added = new AccessPanel[0];
-		instance = true;
+		setBounds(x, y, width, height);
+		this.defaultValue();
 	}
 	
 	public Panel(int x, int y, int width, int height, int zLevel) {
 		
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		setBounds(x, y, width, height);
+		this.defaultValue();
 		this.zLevel = zLevel;
-		phi = 0;
-		xRot = x;
-		yRot = y;
+	}
+	
+	/*
+	 * Override from AccessPanel
+	 * Contains this panel's default values
+	 */
+	
+	@Override
+	protected void defaultValue() {
+		
+		super.defaultValue();
 		border = false;
 		pixel = new Pixel[0];
-		comp_added = new AccessPanel[0];
-		instance = true;
 	}
 	
 	/*

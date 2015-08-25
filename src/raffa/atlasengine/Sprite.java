@@ -35,14 +35,8 @@ public class Sprite extends AccessPanel {
 	public Sprite(String path) {
 		
 		setBounds(0, 0, 100, 100);
-		zLevel = 1;
-		phi = 0;
-		xRot = x;
-		yRot = y;
 		setImage(path);
-		g = sprite.createGraphics();
-		comp_added = new AccessPanel[0];
-		instance = true;
+		this.defaultValue();
 	}
 	
 	/*
@@ -53,14 +47,8 @@ public class Sprite extends AccessPanel {
 	public Sprite(String path, int x, int y) {
 		
 		setBounds(x, y, 100, 100);
-		zLevel = 1;
-		phi = 0;
-		xRot = x;
-		yRot = y;
 		setImage(path);
-		g = sprite.createGraphics();
-		comp_added = new AccessPanel[0];
-		instance = true;
+		this.defaultValue();
 	}
 	
 	/*
@@ -71,14 +59,20 @@ public class Sprite extends AccessPanel {
 	public Sprite(String path, int x, int y, int width, int height) {
 		
 		setBounds(x, y, width, height);
-		zLevel = 1;
-		phi = 0;
-		xRot = x;
-		yRot = y;
 		setImage(path);
+		this.defaultValue();
+	}
+	
+	/*
+	 * Override from AccessPanel
+	 * Contains this sprite's default values
+	 */
+	
+	@Override
+	protected void defaultValue() {
+		
+		super.defaultValue();
 		g = sprite.createGraphics();
-		comp_added = new AccessPanel[0];
-		instance = true;
 	}
 	
 	/*

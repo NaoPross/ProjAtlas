@@ -18,41 +18,39 @@ public class Label extends AccessPanel {
 	public Label(String text, int x, int y) {
 		
 		this.text = text;
-		type = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
-		this.x = x;
-		this.y = y;
-		phi = 0;
-		xRot = x;
-		yRot = y;
-		rgb = Color.BLACK;
-		instance = true;
+		this.defaultValue();
+		this.setLocation(x, y);
 	}
 	
 	public Label(String text, int x, int y, int size) {
 		
 		this.text = text;
+		this.defaultValue();
 		this.size = size;
 		type = new Font(Font.SANS_SERIF, Font.PLAIN, size);
-		this.x = x;
-		this.y = y;
-		phi = 0;
-		xRot = x;
-		yRot = y;
-		rgb = Color.BLACK;
-		instance = true;
+		this.setLocation(x, y);
 	}
 	
 	public Label(String text, int x, int y, Font type) {
 		
 		this.text = text;
+		this.defaultValue();
 		this.type = type;
-		this.x = x;
-		this.y = y;
-		phi = 0;
-		xRot = x;
-		yRot = y;
+		this.setLocation(x, y);
+	}
+	
+	/*
+	 * Override from AccessPanel
+	 * Contains this label's default values
+	 */
+	
+	@Override
+	protected void defaultValue() {
+		
+		super.defaultValue();
 		rgb = Color.BLACK;
-		instance = true;
+		size = 10;
+		type = new Font(Font.SANS_SERIF, Font.PLAIN, size);
 	}
 	
 	/*

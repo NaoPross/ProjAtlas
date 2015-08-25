@@ -15,6 +15,24 @@ public abstract class AccessPanel {
 	AccessPanel[] comp_added;
 	
 	/*
+	 * Commun default values
+	 */
+	
+	protected void defaultValue() {
+		
+		phi = 0;
+		zLevel = 1;
+		xRot = x;
+		yRot = y;
+		countMove = 0;
+		countRot = 0;
+		move = false;
+		rotate = false;
+		instance = true;
+		comp_added = new AccessPanel[0];
+	}
+	
+	/*
 	 * 
 	 * return the overlapping level of a component
 	 */
