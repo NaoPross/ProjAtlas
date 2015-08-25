@@ -20,19 +20,19 @@ public class Game extends Window {
 	
 	public Game() {
 		
-		sfondo = new Sprite("C:\\Users\\Nicola\\Desktop\\Vogelberg.png");
+		sfondo = new Sprite("./Vogelberg.png");
 		
 		elettrone = new Elettrone();
 		
 		protone = new Protone();
 		
 		
-		atlas = new Sprite("C:\\Users\\Nicola\\Desktop\\Atlas2.png");
+		atlas = new Sprite("./Atlas2.png");
 		atlas.setBounds(40, 30, 300, 600);
 		atlas.zLevel = 1;
 		
 		
-		ghosteon = new Sprite("C:\\Users\\Nicola\\Desktop\\Ghosteon.png");
+		ghosteon = new Sprite("./Ghosteon.png");
 		ghosteon.setBounds(260, 200, 300, 250);
 		ghosteon.zLevel = 2;
 		
