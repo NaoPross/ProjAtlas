@@ -10,7 +10,7 @@ public abstract class AccessPanel {
 	
 	public int x, y, width, height, zLevel, xRot, yRot, countMove, countRot;
 	public float phi;
-	public boolean move, rotate = false;
+	public boolean move, rotate;
 	public boolean instance;
 	AccessPanel[] comp_added;
 	

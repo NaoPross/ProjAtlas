@@ -1,5 +1,6 @@
 package raffa.atlasengine;
 
+import java.awt.AWTError;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -7,7 +8,7 @@ public class Panel extends AccessPanel {
 	
 	Color rgb_border; // Color of the border
 	boolean border; // True if the panel has a border
-	Pixel[] pixel; // Array of the pixel drawn in the panel
+	int[][] pixel; // Array of the pixel drawn in the panel
 	
 	/*
 	 * Create a panel
@@ -48,7 +49,7 @@ public class Panel extends AccessPanel {
 		
 		super.defaultValue();
 		border = false;
-		pixel = new Pixel[0];
+		pixel = new int[0][3];
 	}
 	
 	/*
@@ -69,29 +70,32 @@ public class Panel extends AccessPanel {
 	
 	public void drawPixel(int x, int y, Color rgb) {
 		
-		if (x > width || x < 0) {
-			System.out.println("Location x out of panel's bounds");
-		} else if (y > height || y < 0) {
-			System.out.println("Location y out of panel's bounds");
+		if ((x > width || x < 0) || (y > height || y < 0)) {
+			// Do nothing
 		} else {
 			
-			Pixel pix = new Pixel(x, y, rgb);
+			int[] pix = {x, y, rgb.getRGB()};
 			
 			int length = pixel.length;
 			
-			Pixel[] pixel_prov = new Pixel[length];
+			int[][] pixel_prov = new int[length][3];
 			
-			for (int i = 0; i < length; i++)
-				pixel_prov[i] = pixel[i];
+			for (int i = 0; i < length; i++) {
+				for(int j = 0; j < 3; j++)
+					pixel_prov[i][j] = pixel[i][j];
+			}
 			
 			length++;
 			
-			pixel = new Pixel[length];
+			pixel = new int[length][3];
 			
-			for (int i = 0; i < length; i++)
-				pixel[i] = pixel_prov[i];
+			for (int i = 0; i < length - 1; i++) {
+				for (int j = 0; j < 3; j++)
+					pixel[i][j] = pixel_prov[i][j];
+			}
 			
-			pixel[length - 1] = pix;
+			for (int j = 0; j < 3; j++)
+				pixel[length - 1][j] = pix[j];
 		}
 	}
 
@@ -108,12 +112,20 @@ public class Panel extends AccessPanel {
 		g.rotate(phi, xRot, yRot);
 		
 		/*
+		 * Draw the components
+		 */
+		
+		for (int i = 0; i < comp_added.length; i++) {
+			comp_added[i].paintComp(g);
+		}
+		
+		/*
 		 * Draw the pixels basing on the pixel array
 		 */
 		
 		for (int i = 0; i < pixel.length; i++) {
-				g.setColor(pixel[i].rgb);
-				g.drawLine(x + pixel[i].x, y + pixel[i].y, x + pixel[i].x, y + pixel[i].y); // Draw a pixel
+				g.setColor(new Color(pixel[i][2]));
+				g.drawLine(x + pixel[i][0], y + pixel[i][0], x + pixel[i][0], y + pixel[i][0]); // Draw a pixel
 		}
 		
 		/*
@@ -123,14 +135,6 @@ public class Panel extends AccessPanel {
 		if (border) {
 			g.setColor(rgb_border);
 			g.drawRect(x, y, width, height);
-		}
-		
-		/*
-		 * Draw the components
-		 */
-		
-		for (int i = 0; i < comp_added.length; i++) {
-			comp_added[i].paintComp(g);
 		}
 		
 		g.rotate(-phi, xRot, yRot);

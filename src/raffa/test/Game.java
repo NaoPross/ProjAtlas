@@ -1,5 +1,7 @@
 package raffa.test;
 
+import java.awt.Color;
+
 import raffa.atlasengine.*;
 
 public class Game extends Window {
@@ -25,6 +27,7 @@ public class Game extends Window {
 		elettrone = new Elettrone();
 		
 		protone = new Protone();
+		protone.setBorder(Color.BLACK);
 		
 		
 		atlas = new Sprite("./Atlas2.png");
