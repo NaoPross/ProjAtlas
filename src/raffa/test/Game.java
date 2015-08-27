@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import raffa.atlasengine.*;
 
-public class Game extends Window {
+public class Game extends MainPanel {
 	
 	/*
 	 * A try of the instance of the components
@@ -22,6 +22,7 @@ public class Game extends Window {
 	
 	public Game() {
 		
+		super("Test grafico", 100, 50, 1000, 650);
 		sfondo = new Sprite("./Vogelberg.png");
 		
 		elettrone = new Elettrone();
@@ -40,14 +41,13 @@ public class Game extends Window {
 		ghosteon.zLevel = 2;
 		
 		
-		panel.setBackground(sfondo);
-		panel.add(elettrone);
-		panel.add(protone);
-		panel.add(atlas);
-		panel.add(ghosteon);
+		this.setBackground(sfondo);
+		this.add(elettrone);
+		this.add(protone);
+		this.add(atlas);
+		this.add(ghosteon);
 		
-		super.isRunning = true;
-		super.setVisible(isRunning);
+		super.setVisible(true);
 		
 		super.run();
 	}
@@ -62,7 +62,7 @@ public class Game extends Window {
 		if (ghosteon.instance) {
 			int phi = ghosteon.countRot / 2;
 			if (ghosteon.countRot > 100) {
-				panel.remove(ghosteon);
+				remove(ghosteon);
 				ghosteon.instance = false;
 			}
 			ghosteon.rotate(phi, ghosteon.x + 150, ghosteon.y + 150);

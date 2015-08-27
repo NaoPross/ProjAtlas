@@ -11,66 +11,10 @@ public class Window extends JFrame implements WindowListener {
 	
 	/*
 	 * Create a window
-	 * Default bounds(100, 50, 800, 700)
-	 * MainPanel autoinsert in the window
 	 */
 	
 	protected MainPanel panel; // Instance a main window panel
-	public static int width, height, frameRate;
-	public volatile boolean isRunning, gameOver;
-
-	public Window() {
-		
-		setLayout(null);
-		setBounds(100, 50, 800, 700);
-		width = getWidth();
-		height = getHeight();
-		setPreferredSize(new Dimension(getWidth(), getHeight()));
-		setMaximumSize(new Dimension(width, height));
-		setResizable(false);
-		addWindowListener(this);
-		
-		createMainPanel();
-	}
-	
-	/*
-	 * Create a window with title
-	 */
-	
-	public Window(String title) {										
-		
-		super(title);
-		setLayout(null);
-		setBounds(100, 50, 800, 700);
-		width = getWidth();
-		height = getHeight();
-		setPreferredSize(new Dimension(getWidth(), getHeight()));
-		setMaximumSize(new Dimension(width, height));
-		setResizable(false);
-		addWindowListener(this);
-		
-		createMainPanel();
-	}																	
-	
-	/*
-	 * Create a window with title and a sprite image icon
-	 */
-	
-	public Window(String title, Sprite img) {
-		
-		super(title);
-		setIconImage(img.sprite);
-		setLayout(null);
-		setBounds(100, 50, 800, 700);
-		width = getWidth();
-		height = getHeight();
-		setPreferredSize(new Dimension(getWidth(), getHeight()));
-		setMaximumSize(new Dimension(width, height));
-		setResizable(false);
-		addWindowListener(this);
-		
-		createMainPanel();
-	}
+	public static int x, y, width, height;																	
 	
 	/*
 	 * Create a window with title and bounds
@@ -81,79 +25,21 @@ public class Window extends JFrame implements WindowListener {
 		super(title);
 		setLayout(null);
 		setBounds(x, y, width, height);
+		
+		Window.x = x;
+		Window.y = y;
 		Window.width = getWidth();
 		Window.height = getHeight();
+		
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		setMaximumSize(new Dimension(width, height));
 		setResizable(false);
 		addWindowListener(this);
-		
-		createMainPanel();
 	}
 	
 	/*
-	 * Create a window with title, bounds and a sprite image icon
+	 * Add the window interface 
 	 */
-	
-	public Window(String title, int x, int y, int width, int height, Sprite img) {
-		
-		super(title);
-		setIconImage(img.sprite);
-		setLayout(null);
-		setBounds(x, y, width, height);
-		Window.width = getWidth();
-		Window.height = getHeight();
-		setPreferredSize(new Dimension(getWidth(), getHeight()));
-		setMaximumSize(new Dimension(width, height));
-		setResizable(false);
-		addWindowListener(this);
-		
-		createMainPanel();
-	}
-	
-	/*
-	 * Istance the main panel
-	 */
-	
-	public MainPanel createMainPanel() {
-		
-		panel = new MainPanel();
-		panel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-		Window.frameRate = 60;
-		setContentPane(panel);
-		return panel;
-	}
-	
-	/*
-	 * Return the istance of the main panel
-	 */
-	
-	public MainPanel getMainPanel() {
-		
-		return panel;
-	}
-	
-	/*
-	 * Enter the program in a loop
-	 */
-	
-	public void run() {
-		
-		while(isRunning) {
-			//System.out.println("The program is running");
-			if (!gameOver) 
-				gameLoop();
-			panel.update();
-		}
-	}
-	
-	/*
-	 * Override this method to write the game code
-	 */
-	
-	public void gameLoop() {
-		throw new StackOverflowError("Error: You must override the gameLoop method");
-	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
@@ -164,9 +50,8 @@ public class Window extends JFrame implements WindowListener {
 	@Override
 	public void windowClosing(WindowEvent e) {
 		
-		isRunning = false;
-		gameOver = false;
-		System.exit(0);
+		MainPanel.isRunning = false;  // isRunning is set to false when window is closed
+		MainPanel.gameOver = true; // gameOver is set to true when window is closed
 	}
 
 	@Override
@@ -177,13 +62,13 @@ public class Window extends JFrame implements WindowListener {
 	@Override
 	public void windowIconified(WindowEvent e) {
 		
-		//gameOver = false;
+		MainPanel.gameOver = true; // gameOver is set to true when the window is iconified
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 		
-		//gameOver = true;
+		MainPanel.gameOver = false; // gameOver is set to false when the window is deiconified
 	}
 
 	@Override

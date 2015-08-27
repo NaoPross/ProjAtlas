@@ -137,6 +137,7 @@ public class Sprite extends AccessPanel {
 			comp_added[i].paintComp(g);
 		}
 		
+		
 		g.rotate(-phi, xRot, yRot);
 	}
 }

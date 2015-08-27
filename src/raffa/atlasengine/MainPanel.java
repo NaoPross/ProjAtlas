@@ -1,67 +1,84 @@
 package raffa.atlasengine;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+
 import javax.swing.JPanel;
 
-public class MainPanel extends JPanel {
+public class MainPanel extends JPanel implements Runnable {
 	
-	Graphics2D g; // Instance the graphics component that draws the others
-	AccessPanel[] comp_added; // Array of all the components added
+	/**
+	 * Create a new Thread of the main panel int he window
+	 */
 	
-	/*
-	 * Create the double buffered main window panel
+	private Graphics2D g, bufferGraphics; // Instance the graphics component that draws the others
+	private AccessPanel[] comp_added; // Array of all the components added
+	
+	/**
+	 * The game status:
+	 * when isRunning is false the program is stopped and closed
+	 * when gameOver is false the animations are stopped but the program is always running
+	 */
+	
+	public static volatile boolean isRunning, gameOver;
+	
+	protected Window window; // The window that contains the main panel
+	public static volatile int sleepTime; // The relative extimated sleepTime for the animations
+	private Thread animator;
+	
+	private Image buffer; // The second buffer of the main panel
+	
+	/**
+	 * Create the double buffered panel the is the content of the window
 	 * On this one all the graphics components are written
 	 * This is the only serializable panel
 	 */
 	
-	public MainPanel() {
+	public MainPanel(String title, int x, int y, int width, int height) {
 		
-		super(null, true);
+		super(null, true); 		// layout = null, doubleBuffer = true
 		super.setBackground(null);
 		comp_added = new AccessPanel[0];
+		isRunning = false;
+		gameOver = false;
 		
-		/*
-		 *  Add serializable interfaces
-		 */
+		window = new Window(title, x, y, width, height);
+		this.setPreferredSize(new Dimension(getWidth(), getHeight()));
+		sleepTime = 40;
+		window.setContentPane(this);
 		
 	}
 	
 	@Override
-	public void paintComponent(Graphics graphics) {
+	public void setVisible(boolean isVisible) {
 		
-		super.paintComponent(graphics);
+		window.setVisible(isVisible); // Recall the method setVisible of Window
+	}
+	
+	@Override
+	public void addNotify() {
 		
-		g = (Graphics2D) graphics;
+		super.addNotify();
+		startGame();
+	}
+	
+	private void startGame() {
 		
-		/*
-		 * Paint all the components added
-		 */
-		for (int i = 0; i < comp_added.length; i++) {
-			try {
-				comp_added[i].paintComp(g);
-				//System.out.println("Drawn a component");
-			} catch (NullPointerException e) {}
+		if (animator == null || !isRunning) {
+			animator = new Thread(this);
+			animator.start();
 		}
 	}
 	
-	/*
-	 * Run and update the animations
-	 */
-	
-	public void update() {
+	public void stopGame() {
 		
-		try {
-			Thread.sleep(Window.frameRate);
-			//System.out.println("Thread has sleeped 100");
-		} catch (Exception e) {
-			System.out.println("Error: Main panel Thread sleep failed\n");
-			e.printStackTrace();
-		}
-		repaint(); // update the graphics components
+		isRunning = false; // close the program
 	}
 	
-	/*
+	/**
 	 * Sort the comp_added array basing
 	 * on the zLevel variable of each component
 	 */
@@ -86,7 +103,7 @@ public class MainPanel extends JPanel {
 		}
 	}
 	
-	/*
+	/**
 	 * Add a component to the comp_added array and sort it
 	 */
 
@@ -111,7 +128,7 @@ public class MainPanel extends JPanel {
 		sort();
 	}
 	
-	/*
+	/**
 	 * Remove a component from the comp_added array
 	 * without making null slots (the array length apadt
 	 * on the component number)
@@ -144,8 +161,7 @@ public class MainPanel extends JPanel {
 			comp_added[i] = comp_prov[i];
 	}
 	
-	/*
-	 * 
+	/**
 	 * Set the component zLevel to 0 and
 	 * adapt the width and the height to
 	 * the main panel
@@ -158,6 +174,94 @@ public class MainPanel extends JPanel {
 		component.setBounds(0, 0, Window.width, Window.height);
 		//System.out.println(this.getWidth() + "  " + this.getHeight());
 		this.add(component);
+	}
+	
+	/**
+	 * Override this method to write tha gameLoop code
+	 */
+	
+	public void gameLoop() {
+		throw new StackOverflowError("Error: You must override the gameLoop method");
+	}
+	
+	/**
+	 * Update the animations if gameOver is false
+	 */
+	
+	private void update() {
+		
+		if (!gameOver) 
+			gameLoop();
+	}
+	
+	/**
+	 * Create the secondo buffer (Image) of the main panel
+	 */
+	
+	private void gameRender() {
+		
+		if (buffer == null) {
+			buffer = createImage(Window.width, Window.height);
+			if (buffer == null) {
+				System.out.println("Buffer is null");
+				return;
+			}
+		} else {
+			
+			bufferGraphics = (Graphics2D) buffer.getGraphics(); // Graphics component of the second buffer
+		}
+		
+		for (int i = 0; i < comp_added.length; i++)
+			comp_added[i].paintComp(bufferGraphics); // Components
+	}
+	
+	/**
+	 * Paint the second buffer on the first one (the real main panel)
+	 */
+	
+	private void paintScreen() {
+		
+		g = (Graphics2D) this.getGraphics();
+		
+		if (buffer != null && g != null)
+			g.drawImage(buffer, 0, 0, Window.width, Window.height, null); // Draw the buffer Image (second buffer)
+			
+		Toolkit.getDefaultToolkit().sync(); // Update the display
+		g.dispose();
+	}
+	
+	/**
+	 * Run the program entering in the animations loop
+	 */
+
+	@Override
+	public void run() {
+		
+		long beforeTime, timeDiff; // variables to calculate the real timeSleep
+		int period;					// The real timeSleep
+		
+		beforeTime = System.currentTimeMillis();
+		
+		isRunning = true;
+		while(isRunning) {
+			
+			update(); 		// Update the animations' status
+			gameRender();	// Update the graphics components in the second buffer
+			paintScreen(); 	// update the main panel
+			
+			timeDiff = System.currentTimeMillis() - beforeTime;
+			period = (int)(sleepTime - timeDiff);
+			
+			try {
+				Thread.sleep(period); // The real sleepTime is based on the computer elaboration time
+			} catch (InterruptedException e) {
+				beforeTime = System.currentTimeMillis();
+			} catch (IllegalArgumentException e) {
+				beforeTime = System.currentTimeMillis();
+			}
+		}
+		
+		System.exit(0);
 	}
 
 }
