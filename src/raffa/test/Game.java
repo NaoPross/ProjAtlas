@@ -14,6 +14,7 @@ public class Game extends MainPanel {
 	Sprite sfondo, atlas, ghosteon;
 	Elettrone elettrone;
 	Protone protone;
+	boolean instance = true;
 	
 	public static void main(String[] args) {
 		
@@ -57,16 +58,16 @@ public class Game extends MainPanel {
 		
 		elettrone.setLocation(elettrone.x + 3, elettrone.y);
 		protone.setLocation(protone.x - 3, protone.y);
-		atlas.rotate(2, atlas.x + 150, atlas.y + 300);
+		atlas.rotate(1, atlas.x + 150, atlas.y + 300);
 		
-		if (ghosteon.instance) {
-			int phi = ghosteon.countRot / 2;
-			if (ghosteon.countRot > 100) {
+		if (instance) {
+			int phi = ghosteon.countRot / 10;
+			if (ghosteon.countRot > 250) {
 				remove(ghosteon);
-				ghosteon.instance = false;
+				instance = false;
 			}
 			ghosteon.rotate(phi, ghosteon.x + 150, ghosteon.y + 150);
-			ghosteon.setSize((int)(ghosteon.width * 0.95), (int)(ghosteon.height * 0.95));
+			ghosteon.setSize((int)(ghosteon.width * 0.99), (int)(ghosteon.height * 0.99));
 			ghosteon.setLocation(ghosteon.x + 2, ghosteon.y - 1);
 		}
 		//System.out.println(elettrone.x + "  " + elettrone.y);

@@ -44,10 +44,8 @@ public class Panel extends AccessPanel {
 	 * Contains this panel's default values
 	 */
 	
-	@Override
-	protected void defaultValue() {
+	private void defaultValue() {
 		
-		super.defaultValue();
 		border = false;
 		pixel = new int[0][3];
 	}
@@ -107,7 +105,7 @@ public class Panel extends AccessPanel {
 	 */
 	
 	@Override
-	public void paintComp(Graphics2D g) {
+	public void paint(Graphics2D g) {
 		
 		g.rotate(phi, xRot, yRot);
 		
@@ -116,7 +114,7 @@ public class Panel extends AccessPanel {
 		 */
 		
 		for (int i = 0; i < comp_added.length; i++) {
-			comp_added[i].paintComp(g);
+			comp_added[i].paint(g);
 		}
 		
 		/*

@@ -68,10 +68,8 @@ public class Sprite extends AccessPanel {
 	 * Contains this sprite's default values
 	 */
 	
-	@Override
-	protected void defaultValue() {
+	private void defaultValue() {
 		
-		super.defaultValue();
 		g = sprite.createGraphics();
 	}
 	
@@ -118,7 +116,7 @@ public class Sprite extends AccessPanel {
 	 */
 
 	@Override
-	public void paintComp(Graphics2D g) {
+	public void paint(Graphics2D g) {
 		
 		g.rotate(phi, xRot, yRot);
 		
@@ -127,14 +125,13 @@ public class Sprite extends AccessPanel {
 		 */
 		
 		g.drawImage(sprite, x, y, width, height , null);
-		//System.out.println("Image drawn");
 		
 		/*
 		 * Draw the components
 		 */
 		
 		for (int i = 0; i < comp_added.length; i++) {
-			comp_added[i].paintComp(g);
+			comp_added[i].paint(g);
 		}
 		
 		

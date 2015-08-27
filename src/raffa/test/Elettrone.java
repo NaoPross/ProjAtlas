@@ -17,8 +17,9 @@ public class Elettrone extends Panel {
 	}
 	
 	@Override
-	public void paintComp(Graphics2D g) {
+	public void paint(Graphics2D g) {
 		
+		super.paint(g);
 		g.setColor(giallo);
 		g.fillOval(x, y, width / 2, height / 2);
 	}

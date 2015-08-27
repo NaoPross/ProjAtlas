@@ -11,15 +11,14 @@ public abstract class AccessPanel {
 	public int x, y, width, height, zLevel, xRot, yRot, countMove, countRot;
 	public float phi;
 	public boolean move, rotate;
-	public boolean instance;
 	AccessPanel[] comp_added;
 	
-	/*
-	 * Commun default values
-	 */
-	
-	protected void defaultValue() {
+	public AccessPanel() {
 		
+		x = 0;
+		y = 0;
+		width = 100;
+		height = 100;
 		phi = 0;
 		zLevel = 1;
 		xRot = x;
@@ -28,7 +27,6 @@ public abstract class AccessPanel {
 		countRot = 0;
 		move = false;
 		rotate = false;
-		instance = true;
 		comp_added = new AccessPanel[0];
 	}
 	
@@ -242,6 +240,6 @@ public abstract class AccessPanel {
 		rotate(phi);
 	}
 	
-	public abstract void paintComp(Graphics2D g);
+	public abstract void paint(Graphics2D g);
 	
 }

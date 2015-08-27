@@ -43,11 +43,12 @@ public class MainPanel extends JPanel implements Runnable {
 		super.setBackground(null);
 		comp_added = new AccessPanel[0];
 		isRunning = false;
+		animator = null;
 		gameOver = false;
 		
 		window = new Window(title, x, y, width, height);
 		this.setPreferredSize(new Dimension(getWidth(), getHeight()));
-		sleepTime = 40;
+		sleepTime = 20;
 		window.setContentPane(this);
 		
 	}
@@ -64,6 +65,10 @@ public class MainPanel extends JPanel implements Runnable {
 		super.addNotify();
 		startGame();
 	}
+	
+	/**
+	 * Start the main panel's thread
+	 */
 	
 	private void startGame() {
 		
@@ -202,17 +207,17 @@ public class MainPanel extends JPanel implements Runnable {
 		
 		if (buffer == null) {
 			buffer = createImage(Window.width, Window.height);
+			
 			if (buffer == null) {
 				System.out.println("Buffer is null");
 				return;
 			}
 		} else {
-			
 			bufferGraphics = (Graphics2D) buffer.getGraphics(); // Graphics component of the second buffer
 		}
-		
+			
 		for (int i = 0; i < comp_added.length; i++)
-			comp_added[i].paintComp(bufferGraphics); // Components
+				comp_added[i].paint(bufferGraphics); // Paint the components
 	}
 	
 	/**
@@ -221,13 +226,20 @@ public class MainPanel extends JPanel implements Runnable {
 	
 	private void paintScreen() {
 		
-		g = (Graphics2D) this.getGraphics();
-		
-		if (buffer != null && g != null)
-			g.drawImage(buffer, 0, 0, Window.width, Window.height, null); // Draw the buffer Image (second buffer)
+		try {
 			
-		Toolkit.getDefaultToolkit().sync(); // Update the display
-		g.dispose();
+			g = (Graphics2D) this.getGraphics();
+		
+			if ((buffer != null) && (g != null))
+				g.drawImage(buffer, 0, 0, Window.width, Window.height, null); // Draw the buffer Image (second buffer)
+		
+			Toolkit.getDefaultToolkit().sync(); // Update the display
+			g.dispose();
+			
+		} catch (Exception e) {
+			
+			System.out.println("Graphics context error: " + e);
+		}
 	}
 	
 	/**
@@ -237,7 +249,7 @@ public class MainPanel extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		
-		long beforeTime, timeDiff; // variables to calculate the real timeSleep
+		long beforeTime, timeDiff, afterTime; // variables to calculate the real timeSleep
 		int period;					// The real timeSleep
 		
 		beforeTime = System.currentTimeMillis();

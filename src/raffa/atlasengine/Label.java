@@ -40,14 +40,11 @@ public class Label extends AccessPanel {
 	}
 	
 	/*
-	 * Override from AccessPanel
 	 * Contains this label's default values
 	 */
 	
-	@Override
-	protected void defaultValue() {
+	private void defaultValue() {
 		
-		super.defaultValue();
 		rgb = Color.BLACK;
 		size = 10;
 		type = new Font(Font.SANS_SERIF, Font.PLAIN, size);
@@ -90,7 +87,7 @@ public class Label extends AccessPanel {
 	}
 
 	@Override
-	public void paintComp(Graphics2D g) {
+	public void paint(Graphics2D g) {
 		
 		g.rotate(phi, xRot, yRot);
 		
