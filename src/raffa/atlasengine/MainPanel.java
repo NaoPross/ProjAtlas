@@ -207,7 +207,6 @@ public class MainPanel extends JPanel implements Runnable {
 		
 		if (buffer == null) {
 			buffer = createImage(Window.width, Window.height);
-			
 			if (buffer == null) {
 				System.out.println("Buffer is null");
 				return;
@@ -215,7 +214,7 @@ public class MainPanel extends JPanel implements Runnable {
 		} else {
 			bufferGraphics = (Graphics2D) buffer.getGraphics(); // Graphics component of the second buffer
 		}
-			
+		
 		for (int i = 0; i < comp_added.length; i++)
 				comp_added[i].paint(bufferGraphics); // Paint the components
 	}

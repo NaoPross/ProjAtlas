@@ -9,20 +9,14 @@ public class Panel extends AccessPanel {
 	Color rgb_border; // Color of the border
 	boolean border; // True if the panel has a border
 	int[][] pixel; // Array of the pixel drawn in the panel
+	protected boolean override; // True if the paint method is override from a subclass
 	
 	/*
 	 * Create a panel
-	 * Default parameters:
-	 * 	x = 50
-	 * 	y = 30
-	 * 	width = 200
-	 * 	height = 100
-	 * 	zLevel = 1
 	 */
 	
 	public Panel() {
 		
-		setBounds(50, 30, 200, 100);
 		this.defaultValue();
 	}
 	
@@ -47,6 +41,7 @@ public class Panel extends AccessPanel {
 	private void defaultValue() {
 		
 		border = false;
+		override = false;
 		pixel = new int[0][3];
 	}
 	
@@ -135,7 +130,8 @@ public class Panel extends AccessPanel {
 			g.drawRect(x, y, width, height);
 		}
 		
-		g.rotate(-phi, xRot, yRot);
+		if (override == false)
+			g.rotate(-phi, xRot, yRot);
 	}
 	
 	

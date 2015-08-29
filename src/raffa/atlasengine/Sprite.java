@@ -10,8 +10,8 @@ import javax.imageio.ImageIO;
 
 public class Sprite extends AccessPanel {
 	
-	Graphics2D g; // The BufferedImage Graphics2D variable
-	BufferedImage sprite; // This is the real sprite object
+	public Graphics2D g; // The BufferedImage Graphics2D variable
+	public BufferedImage sprite; // This is the real sprite object
 	
 	/*
 	 * Create a mechanic for a BufferedImage

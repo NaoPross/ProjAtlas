@@ -20,6 +20,9 @@ public class Data {
 	FileReader readFile;
 	BufferedReader reader; // The string reader
 	BufferedWriter writer; // The string writer
+	public static final int A = 69069;
+	public static final int C = 1234567;
+	public static final long M = (long)Math.pow(2, 32);
 
 	public Data(String filePath) {
 		
@@ -101,7 +104,7 @@ public class Data {
 	 * seconds
 	 */
 	
-	public int[] getTime() {
+	public static int[] getTime() {
 		
 		long t = System.currentTimeMillis() / 1000;
 		int[] time = new int[3];
@@ -111,5 +114,15 @@ public class Data {
 		time[0] = (int)((t / 3600) % 24); // current hour
 		
 		return time;
+	}
+	
+	/**
+	 * A KISS random number generator
+	 */
+	
+	public static long random(long seed) {
+		
+		seed = (A * seed + C) % M; // The linear congruential
+		return seed;
 	}
 }
