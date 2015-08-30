@@ -15,6 +15,7 @@ public class Game extends MainPanel {
 	Elettrone elettrone;
 	Protone protone;
 	boolean instance = true;
+	Audio audio;
 	
 	public static void main(String[] args) {
 		
@@ -25,6 +26,10 @@ public class Game extends MainPanel {
 		
 		super("Test grafico", 100, 50, 1000, 650);
 		sfondo = new Sprite("./Vogelberg.png");
+		
+		audio = new Audio();
+		audio.load("./L'addio di Nancy.wav");
+		audio.play(0, true);
 		
 		elettrone = new Elettrone();
 		

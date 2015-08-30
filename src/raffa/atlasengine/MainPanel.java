@@ -31,6 +31,8 @@ public class MainPanel extends JPanel implements Runnable {
 	
 	private Image buffer; // The second buffer of the main panel
 	
+	public static long counter; // Count the gameLoop repetitions
+	
 	/**
 	 * Create the double buffered panel the is the content of the window
 	 * On this one all the graphics components are written
@@ -108,6 +110,10 @@ public class MainPanel extends JPanel implements Runnable {
 		}
 	}
 	
+	/**
+	 * Add a new empty slot to the comp_added array
+	 */
+	
 	private void addNullSlot() {
 		
 		int length = comp_added.length;
@@ -124,6 +130,10 @@ public class MainPanel extends JPanel implements Runnable {
 		for (int i = 0; i < length; i++)
 			comp_added[i] = comp_prov[i];
 	}
+	
+	/**
+	 * Remove all the null slots from the comp_added array
+	 */
 	
 	private void removeNullSlots() {
 		
@@ -158,21 +168,37 @@ public class MainPanel extends JPanel implements Runnable {
 	
 	/**
 	 * Add a component to the comp_added array and sort it
+	 * If a slot of the array is null, the component will replace it
 	 */
 
 	public void add(AccessPanel component) {
 		
-		addNullSlot();
+		int countNull = 0;
 		
-		comp_added[comp_added.length - 1] = component;
+		for (int i = 0; i < comp_added.length; i++) {
+			if (comp_added[i] == null)
+				countNull++;
+		}
+		
+		if (countNull == 0) {
+			addNullSlot();
+			comp_added[comp_added.length - 1] = component;
+		} else {
+			boolean notFound = true;
+			for (int i = 0; notFound; i++) {
+				if (comp_added[i] == null) {
+					comp_added[i] = component;
+					notFound = false;
+				}
+			}
+		}
 		
 		sort();
 	}
 	
 	/**
 	 * Remove a component from the comp_added array
-	 * without making null slots (the array length apadt
-	 * on the component number)
+	 * letting a null slot in it
 	 */
 	
 	public void remove(AccessPanel component) {
@@ -293,6 +319,8 @@ public class MainPanel extends JPanel implements Runnable {
 			} catch (IllegalArgumentException e) {
 				beforeTime = System.currentTimeMillis();
 			}
+			
+			counter++;
 		}
 		
 		System.exit(0);
