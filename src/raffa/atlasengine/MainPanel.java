@@ -108,11 +108,7 @@ public class MainPanel extends JPanel implements Runnable {
 		}
 	}
 	
-	/**
-	 * Add a component to the comp_added array and sort it
-	 */
-
-	public void add(AccessPanel component) {
+	private void addNullSlot() {
 		
 		int length = comp_added.length;
 		
@@ -127,8 +123,48 @@ public class MainPanel extends JPanel implements Runnable {
 		
 		for (int i = 0; i < length; i++)
 			comp_added[i] = comp_prov[i];
+	}
+	
+	private void removeNullSlots() {
 		
-		comp_added[length - 1] = component;
+		int countNull = 0;
+		
+		int length = comp_added.length;
+		
+		for (int i = 0; i < length; i++) {
+			if (comp_added[i] == null)
+				countNull++;
+		}
+		
+		length -= countNull;
+		
+		AccessPanel[] comp_prov = new AccessPanel[length];
+		
+		int j = 0;
+		int w = 0;
+		while (w < length) {
+			if (comp_added[j] == null)
+				j++;
+			comp_prov[w] = comp_added[j];
+			j++;
+			w++;
+		}
+		
+		comp_added = new AccessPanel[length];
+		
+		for (int i = 0; i < length; i++)
+			comp_added[i] = comp_prov[i];
+	}
+	
+	/**
+	 * Add a component to the comp_added array and sort it
+	 */
+
+	public void add(AccessPanel component) {
+		
+		addNullSlot();
+		
+		comp_added[comp_added.length - 1] = component;
 		
 		sort();
 	}
@@ -141,29 +177,10 @@ public class MainPanel extends JPanel implements Runnable {
 	
 	public void remove(AccessPanel component) {
 		
-		int length = comp_added.length;
-		
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < comp_added.length; i++) {
 			if (comp_added[i] == component)
 				comp_added[i] = null;
 		}
-		
-		AccessPanel[] comp_prov = new AccessPanel[length - 1];
-		
-		int j = 0;
-		int w = 0;
-		while (w < length - 1) {
-			if (comp_added[j] == null)
-				j++;
-			comp_prov[w] = comp_added[j];
-			j++;
-			w++;
-		}
-		
-		comp_added = new AccessPanel[length - 1];
-		
-		for (int i = 0; i < length - 1; i++)
-			comp_added[i] = comp_prov[i];
 	}
 	
 	/**
@@ -215,8 +232,14 @@ public class MainPanel extends JPanel implements Runnable {
 			bufferGraphics = (Graphics2D) buffer.getGraphics(); // Graphics component of the second buffer
 		}
 		
-		for (int i = 0; i < comp_added.length; i++)
+		for (int i = 0; i < comp_added.length; i++) {
+			if (comp_added[i] !=  null)
 				comp_added[i].paint(bufferGraphics); // Paint the components
+			else {
+				removeNullSlots();
+				return;
+			}
+		}
 	}
 	
 	/**
