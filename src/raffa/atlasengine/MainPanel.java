@@ -31,7 +31,7 @@ public class MainPanel extends JPanel implements Runnable {
 	
 	private Image buffer; // The second buffer of the main panel
 	
-	public static long counter; // Count the gameLoop repetitions
+	public static volatile long counter; // Count the gameLoop repetitions
 	
 	/**
 	 * Create the double buffered panel the is the content of the window
@@ -265,7 +265,7 @@ public class MainPanel extends JPanel implements Runnable {
 				removeNullSlots();
 				return;
 			}
-		}
+		}	
 	}
 	
 	/**

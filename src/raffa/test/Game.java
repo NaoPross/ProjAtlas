@@ -29,11 +29,8 @@ public class Game extends MainPanel {
 		
 		
 		audio = new Audio("./L'addio di Nancy.wav", true);
-		/*
-		audio.load("./L'addio di Nancy.wav");
-		audio.play(0, true);
-		*/
-		
+		audio.setVolume(Audio.VOLUME_MEDIUM);
+		//System.out.println(audio.getVolume());
 		
 		elettrone = new Elettrone();
 		

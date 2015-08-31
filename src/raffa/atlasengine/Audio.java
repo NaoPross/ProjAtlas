@@ -10,6 +10,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
@@ -20,8 +21,20 @@ public class Audio implements LineListener {
 	
 	DecimalFormat df;
 	Clip clip;
-	double duration;
-	boolean loop;
+	double duration; // duration of the clip
+	boolean loop; 		// True if the clip is repeated continously
+	FloatControl volume; // Volume manager
+	
+	/**
+	 * Volume constants
+	 */
+	
+	public static final int VOLUME_DEFAULT = 85;
+	public static final int VOLUME_MAX = 107;
+	public static final int VOLUME_MUTE = 0;
+	public static final int VOLUME_HIGH = 100;
+	public static final int VOLUME_MEDIUM = 75;
+	public static final int VOLUME_LOW = 60;
 	
 	/**
 	 * Execute a sound file adapting on its format
@@ -32,6 +45,7 @@ public class Audio implements LineListener {
 		df = new DecimalFormat("0.#");
 		loop = false;
 		loadClip(path);
+		setVolume(VOLUME_DEFAULT);
 		play();
 	}
 	
@@ -40,6 +54,7 @@ public class Audio implements LineListener {
 		df = new DecimalFormat("0.#");
 		this.loop = loop;
 		loadClip(path);
+		setVolume(VOLUME_DEFAULT);
 		play();
 	}
 	
@@ -84,6 +99,8 @@ public class Audio implements LineListener {
 			
 			duration = clip.getMicrosecondLength() / 1000000; // Duration in seconds
 			
+			volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			
 		} catch (UnsupportedAudioFileException e){
 			System.out.println("Unsupported audio file :" + path);
 		} catch (LineUnavailableException e) {
@@ -118,7 +135,7 @@ public class Audio implements LineListener {
 			if (!loop)
 				clip.start();
 			else
-				clip.loop(loopCount());
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
 		}
 	}
 	
@@ -141,6 +158,27 @@ public class Audio implements LineListener {
 	public void setLoop(boolean loop) {
 		
 		this.loop = loop;
+	}
+	
+	/**
+	 * Set the decibel volume using a percent value
+	 */
+	
+	public void setVolume(int perc) {
+		
+		float value = 80.0f * ((float)(perc / 100.0f) - 1.0f);
+		volume.setValue(value);
+	}
+	
+	/**
+	 * Get the volume in a percent value
+	 */
+	
+	public int getVolume() {
+		
+		float value = volume.getValue();
+		int perc = (int)((value / 80 + 1) * 100);
+		return perc;
 	}
 
 	@Override

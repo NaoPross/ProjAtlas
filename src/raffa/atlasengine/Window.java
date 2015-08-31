@@ -13,7 +13,6 @@ public class Window extends JFrame implements WindowListener {
 	 * Create a window
 	 */
 	
-	protected MainPanel panel; // Instance a main window panel
 	public static volatile int x, y, width, height;																	
 	
 	/*
