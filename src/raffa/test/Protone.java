@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import raffa.atlasengine.*;
 
-public class Protone extends Panel {
+public class Protone extends AccessPanel {
 	
 	Color blu;
 
@@ -14,13 +14,16 @@ public class Protone extends Panel {
 		super(400, 300, 100, 100);
 		blu = new Color(0, 0, 255);
 		zLevel = 1;
+		paint();
+		Label text = new Label("Protone");
+		text.setLocation(50, 50);
+		text.setSize(2);
+		add(text);
 	}
 	
-	@Override
-	public void paint(Graphics2D g) {
+	public void paint() {
 		
-		super.paint(g);
 		g.setColor(blu);
-		g.fillOval(x, y, width / 2, height / 2);
+		g.fillOval(0, 0, width, height);
 	}
 }

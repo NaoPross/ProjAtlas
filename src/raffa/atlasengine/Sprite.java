@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 public class Sprite extends AccessPanel {
 	
 	public Graphics2D g; // The BufferedImage Graphics2D variable
-	public BufferedImage sprite; // This is the real sprite object
 	
 	/*
 	 * Create a mechanic for a BufferedImage
@@ -34,9 +33,7 @@ public class Sprite extends AccessPanel {
 	
 	public Sprite(String path) {
 		
-		setBounds(0, 0, 100, 100);
 		setImage(path);
-		this.defaultValue();
 	}
 	
 	/*
@@ -46,9 +43,8 @@ public class Sprite extends AccessPanel {
 	
 	public Sprite(String path, int x, int y) {
 		
-		setBounds(x, y, 100, 100);
+		setLocation(x, y);
 		setImage(path);
-		this.defaultValue();
 	}
 	
 	/*
@@ -58,19 +54,8 @@ public class Sprite extends AccessPanel {
 	
 	public Sprite(String path, int x, int y, int width, int height) {
 		
-		setBounds(x, y, width, height);
+		super(x, y, width, height);
 		setImage(path);
-		this.defaultValue();
-	}
-	
-	/*
-	 * Override from AccessPanel
-	 * Contains this sprite's default values
-	 */
-	
-	private void defaultValue() {
-		
-		g = sprite.createGraphics();
 	}
 	
 	/*
@@ -87,54 +72,5 @@ public class Sprite extends AccessPanel {
 			System.out.println("IOError: Image file not found\n"); // IO error message
 			e.printStackTrace();
 		}
-	}
-	
-	/*
-	 * Get the Graphics2D element of this Sprite to
-	 * draw in it
-	 */
-	
-	public Graphics2D getGraphics() {
-		
-		return g;
-	}
-	
-	/*
-	 * Modify a pixel of the image
-	 */
-	
-	public void drawPixel(int x, int y, Color rgb) {
-		
-		int color = rgb.getRGB();
-		sprite.setRGB(x, y, color);
-	}
-	
-	/*
-	 * Override from AccessPanel
-	 * Paint this sprite on the main panel
-	 * Do not call this method
-	 */
-
-	@Override
-	public void paint(Graphics2D g) {
-		
-		g.rotate(phi, xRot, yRot);
-		
-		/*
-		 * Draw the sprite image
-		 */
-		
-		g.drawImage(sprite, x, y, width, height , null);
-		
-		/*
-		 * Draw the components
-		 */
-		
-		for (int i = 0; i < comp_added.length; i++) {
-			comp_added[i].paint(g);
-		}
-		
-		
-		g.rotate(-phi, xRot, yRot);
 	}
 }

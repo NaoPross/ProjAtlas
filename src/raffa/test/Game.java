@@ -14,6 +14,7 @@ public class Game extends MainPanel {
 	Sprite sfondo, atlas, ghosteon;
 	Elettrone elettrone;
 	Protone protone;
+	Label text;
 	boolean instance = true;
 	Audio audio;
 	
@@ -47,6 +48,10 @@ public class Game extends MainPanel {
 		ghosteon.setBounds(260, 200, 300, 250);
 		ghosteon.zLevel = 2;
 		
+		text = new Label("Funziona", 30, 30);
+		text.setSize(100);
+		add(text);
+		
 		
 		this.setBackground(sfondo);
 		this.add(elettrone);
@@ -64,7 +69,7 @@ public class Game extends MainPanel {
 		
 		elettrone.setLocation(elettrone.x + 3, elettrone.y);
 		protone.setLocation(protone.x - 3, protone.y);
-		atlas.rotate(3, atlas.x + 150, atlas.y + 300);
+		atlas.rotate(1, atlas.x + 150, atlas.y + 300);
 		
 		if (instance) {
 			int phi = ghosteon.countRot / 10;
@@ -73,7 +78,7 @@ public class Game extends MainPanel {
 				instance = false;
 			}
 			ghosteon.rotate(phi, ghosteon.x + 150, ghosteon.y + 150);
-			ghosteon.setSize((int)(ghosteon.width * 0.99), (int)(ghosteon.height * 0.99));
+			ghosteon.setSize((int)(ghosteon.width * 0.995), (int)(ghosteon.height * 0.995));
 			ghosteon.setLocation(ghosteon.x + 2, ghosteon.y - 1);
 		}
 		//System.out.println(elettrone.x + "  " + elettrone.y);

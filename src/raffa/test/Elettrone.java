@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import raffa.atlasengine.*;
 
-public class Elettrone extends Panel {
+public class Elettrone extends AccessPanel {
 	
 	Color giallo;
 
@@ -14,13 +14,12 @@ public class Elettrone extends Panel {
 		super(200, 300, 30, 30);
 		giallo = new Color(255, 255, 0);
 		zLevel = 2;
+		paint();
 	}
 	
-	@Override
-	public void paint(Graphics2D g) {
+	public void paint() {
 		
-		super.paint(g);
 		g.setColor(giallo);
-		g.fillOval(x, y, width / 2, height / 2);
+		g.fillOval(0, 0, width, height);
 	}
 }

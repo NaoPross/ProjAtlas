@@ -1,17 +1,21 @@
 package raffa.atlasengine;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
-public abstract class AccessPanel {
+public class AccessPanel {
 	
 	/*
 	 * Commun variable between graphics objects (subclasses)
 	 */
 	
 	public int x, y, width, height, zLevel, xRot, yRot, countMove, countRot;
-	public float phi;
+	protected float phi;
 	public boolean move, rotate, visible;
-	AccessPanel[] comp_added;
+	protected BufferedImage sprite;
+	protected AccessPanel[] comp_added;
+	protected Graphics2D g;
 	
 	public AccessPanel() {
 		
@@ -25,6 +29,28 @@ public abstract class AccessPanel {
 		yRot = y;
 		countMove = 0;
 		countRot = 0;
+		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		g = sprite.createGraphics();
+		move = false;
+		rotate = false;
+		visible = true;
+		comp_added = new AccessPanel[0];
+	}
+	
+	public AccessPanel(int x, int y, int width, int height) {
+		
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		phi = 0;
+		zLevel = 1;
+		xRot = x;
+		yRot = y;
+		countMove = 0;
+		countRot = 0;
+		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		g = sprite.createGraphics();
 		move = false;
 		rotate = false;
 		visible = true;
@@ -105,45 +131,23 @@ public abstract class AccessPanel {
 	
 	public void add(AccessPanel component) {
 		
-		/*
-		 * Adapt the component to the bounds
-		 */
+		int length = comp_added.length;
 		
-		if (component.x > width || component.y > height || (component.x < 0 && component.width < - component.x) || (component.y < 0 && component.width < - component.y)) {
-			System.out.println("Component out of panel's bounds");
-		} else {
-			
-			if (component.x < 0 && component.width > - component.x) {
-				component.x = 0;
-			} else if (component.y < 0 && component.height > - component.y){
-				component.y = 0;
-			} else if (component.width > width - component.x) {
-				component.width = width - component.x;
-			} else if (component.height > height - component.y) {
-				component.height = height - component.y;
-			}
-			
-			component.x += this.x;
-			component.y += this.y;
+		AccessPanel[] comp_prov = new AccessPanel[length + 1];
 		
-			int length = comp_added.length;
+		for (int i = 0; i < length; i++)
+			comp_prov[i] = comp_added[i];
 		
-			AccessPanel[] comp_prov = new AccessPanel[length + 1];
+		length++;
 		
-			for (int i = 0; i < length; i++)
-				comp_prov[i] = comp_added[i];
+		comp_added = new AccessPanel[length];
 		
-			length++;
+		for (int i = 0; i < length; i++)
+			comp_added[i] = comp_prov[i];
 		
-			comp_added = new AccessPanel[length];
+		comp_added[length - 1] = component;
 		
-			for (int i = 0; i < length; i++)
-				comp_added[i] = comp_prov[i];
-		
-			comp_added[length - 1] = component;
-		
-			sort();
-		}
+		sort();
 	}
 	
 	/*
@@ -241,6 +245,52 @@ public abstract class AccessPanel {
 		rotate(phi);
 	}
 	
-	public abstract void paint(Graphics2D g);
+	/*
+	 * Get the Graphics2D element of this Sprite to
+	 * draw in it
+	 */
+	
+	public Graphics2D getGraphics() {
+		
+		return g;
+	}
+	
+	/*
+	 * Modify a pixel of the image
+	 */
+	
+	public void drawPixel(int x, int y, Color rgb) {
+		
+		int color = rgb.getRGB();
+		sprite.setRGB(x, y, color);
+	}
+	
+	public void setBorder(Color rgb) {
+		
+		g.setColor(rgb);
+		g.drawRect(1, 1, width - 2, height - 2);
+	}
+	
+	public void paint(Graphics2D g) {
+		
+		g.rotate(phi, xRot, yRot);
+		
+		/*
+		 * Draw the sprite image
+		 */
+		
+		g.drawImage(sprite, x, y, width, height , null);
+		
+		/*
+		 * Draw the components
+		 */
+		
+		for (int i = 0; i < comp_added.length; i++) {
+			comp_added[i].paint(this.g);
+		}
+		
+		
+		g.rotate(-phi, xRot, yRot);
+	}
 	
 }

@@ -13,11 +13,18 @@ public class SplittedSprite extends Sprite {
 	
 	public int x_rel, y_rel, width_rel, height_rel; // bounds (relative) of the visible part of the sprite
 	public BufferedImage sprite_rel; // Relative sprite that contains the splitted image
-	public Graphics2D g_rel; // Graphics2D context of the relative sprite
 
 	public SplittedSprite(String path) {
 		
 		super(path);
+		sprite_rel = sprite;
+		this.setSplittedPart(0, 0, width, height);
+	}
+	
+	@Override
+	public void setImage(String path) {
+		
+		super.setImage(path);
 		sprite_rel = sprite;
 		this.setSplittedPart(0, 0, width, height);
 	}
@@ -33,11 +40,11 @@ public class SplittedSprite extends Sprite {
 		this.width_rel = width_rel;
 		this.height_rel = height_rel;
 		
-		if (g_rel != null)
-			g_rel.dispose();
+		if (g != null)
+			g.dispose();
 		
-		g_rel = sprite_rel.createGraphics();
-		g_rel.drawImage(sprite, x_rel, y_rel, x_rel + width_rel, y_rel, x_rel, y_rel + height_rel, x_rel + width_rel, y_rel + height_rel, (ImageObserver) sprite_rel);
+		g = sprite.createGraphics();
+		g.drawImage(sprite_rel, x_rel, y_rel, x_rel + width_rel, y_rel, x_rel, y_rel + height_rel, x_rel + width_rel, y_rel + height_rel, (ImageObserver) sprite);
 	}
 	
 	/**
@@ -57,28 +64,5 @@ public class SplittedSprite extends Sprite {
 		}
 		this.setSplittedPart(x, y, width, height);
 		return (int) Math.pow(parts, 2);
-	}
-	
-	@Override
-	public void paint(Graphics2D g) {
-		
-		g.rotate(phi, xRot, yRot);
-		
-		/*
-		 * Draw the relative sprite image
-		 */
-		
-		g.drawImage(sprite_rel, x, y, width, height , null);
-		
-		/*
-		 * Draw the components
-		 */
-		
-		for (int i = 0; i < comp_added.length; i++) {
-			comp_added[i].paint(g);
-		}
-		
-		
-		g.rotate(-phi, xRot, yRot);
 	}
 }
