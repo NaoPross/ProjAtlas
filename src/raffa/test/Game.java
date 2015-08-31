@@ -27,9 +27,13 @@ public class Game extends MainPanel {
 		super("Test grafico", 100, 50, 1000, 650);
 		sfondo = new Sprite("./Vogelberg.png");
 		
-		audio = new Audio();
+		
+		audio = new Audio("./L'addio di Nancy.wav", true);
+		/*
 		audio.load("./L'addio di Nancy.wav");
 		audio.play(0, true);
+		*/
+		
 		
 		elettrone = new Elettrone();
 		
@@ -63,7 +67,7 @@ public class Game extends MainPanel {
 		
 		elettrone.setLocation(elettrone.x + 3, elettrone.y);
 		protone.setLocation(protone.x - 3, protone.y);
-		atlas.rotate(1, atlas.x + 150, atlas.y + 300);
+		atlas.rotate(3, atlas.x + 150, atlas.y + 300);
 		
 		if (instance) {
 			int phi = ghosteon.countRot / 10;

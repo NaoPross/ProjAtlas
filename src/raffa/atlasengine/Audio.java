@@ -1,130 +1,158 @@
 package raffa.atlasengine;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.util.HashMap;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.text.DecimalFormat;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 
-public class Audio {
+public class Audio implements LineListener {
 	
-	private HashMap soundMap;
-	private String[] playList;
-	private String currentPlaying;
+	DecimalFormat df;
+	Clip clip;
+	double duration;
+	boolean loop;
 	
-	public Audio() {
+	/**
+	 * Execute a sound file adapting on its format
+	 */
+	
+	public Audio (String path) {
 		
-		playList = new String[0];
+		df = new DecimalFormat("0.#");
+		loop = false;
+		loadClip(path);
+		play();
 	}
 	
-	public Audio(String[] playList) {
+	public Audio(String path, boolean loop) {
 		
-		load(playList);
+		df = new DecimalFormat("0.#");
+		this.loop = loop;
+		loadClip(path);
+		play();
 	}
 	
-	private void addNullSlot() {
-		
-		int length = playList.length;
-		
-		String[] prov = new String[length + 1];
-		
-		for (int i = 0; i < length; i++)
-			prov[i] = playList[i];
-		
-		length++;
-		
-		playList = new String[length];
-		
-		for (int i = 0; i < length; i++)
-			playList[i] = prov[i];
-	}
+	/**
+	 * Load the file in the program but not start it
+	 */
 	
-	public void removeNullSlots() {
+	private void loadClip(String path) {
 		
-		int countNull = 0;
-		
-		int length = playList.length;
-		
-		for (int i = 0; i < length; i++) {
-			if (playList[i] == null)
-				countNull++;
-		}
-		
-		length -= countNull;
-		
-		String[] prov = new String[length];
-		
-		int j = 0;
-		int w = 0;
-		while (w < length) {
-			if (playList[j] == null)
-				j++;
-			prov[w] = playList[j];
-			j++;
-			w++;
-		}
-		
-		playList = new String[length];
-		
-		for (int i = 0; i < length; i++)
-			playList[i] = prov[i];
-	}
-	
-	public void load(String path) {
-		
-		soundMap = new HashMap();
-		
-		addNullSlot();
-		
-		playList[playList.length - 1] = path;
-		
-		for (int i = 0; i < playList.length; i++) {
-			AudioClip clip = Applet.newAudioClip(getClass().getResource(playList[i]));
-		
-		if (clip == null)
-			System.out.println("Sound error: " + playList[i]);
-		else
-			soundMap.put(playList[i], clip);
+		try {
+			AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path));
+			AudioFormat format = stream.getFormat();
+			
+			/**
+			 * Convertion of the file in case the format is unsupported
+			 */
+			
+			if ((format.getEncoding() == AudioFormat.Encoding.ULAW) || (format.getEncoding() == AudioFormat.Encoding.ALAW)) {
+				
+				AudioFormat newFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(),
+														format.getSampleSizeInBits(), format.getChannels(), format.getFrameSize() * 2,
+														format.getFrameRate(), true);
+				
+				stream = AudioSystem.getAudioInputStream(newFormat, stream);
+				format = newFormat;
+			}
+			
+			/**
+			 * Create the sound clip
+			 */
+			
+			DataLine.Info info = new DataLine.Info(Clip.class, format);
+			
+			if (!AudioSystem.isLineSupported(info)) {
+				System.out.println("Unsupported Clip File: " + path);
+			}
+			
+			clip = (Clip) AudioSystem.getLine(info);
+			clip.addLineListener(this);
+			clip.open(stream);
+			stream.close();
+			
+			duration = clip.getMicrosecondLength() / 1000000; // Duration in seconds
+			
+		} catch (UnsupportedAudioFileException e){
+			System.out.println("Unsupported audio file :" + path);
+		} catch (LineUnavailableException e) {
+			System.out.println("No audio line available for :" + path);
+		} catch (IOException e) {
+			System.out.println("Could not read: " + path);
+		} catch (Exception e) {
+			System.out.println("Problem with: " + path);
+			e.printStackTrace();
 		}
 	}
 	
-	public void load(String[] playList) {
+	/**
+	 * Return the duration in integer seconds
+	 */
+	
+	public int loopCount() {
 		
-		soundMap = new HashMap();
-		this.playList = playList;
+		int loopCount = (int) (duration);
+		return loopCount;
+	}
+	
+	/**
+	 * Start the clip basing the loop variable
+	 * If it's false the sound is played once
+	 * Else it enter in a loop
+	 */
+	
+	public void play() {
 		
-		for (int i = 0; i < playList.length; i++) {
-			AudioClip clip = Applet.newAudioClip(getClass().getResource(playList[i]));
-		
-		if (clip == null)
-			System.out.println("Sound error: " + playList[i]);
-		else
-			soundMap.put(playList[i], clip);
+		if (clip != null) {
+			if (!loop)
+				clip.start();
+			else
+				clip.loop(loopCount());
 		}
 	}
 	
-	public void play(String path, boolean toLoop) {
-		
-		AudioClip clip = (AudioClip) soundMap.get(path);
-		if (clip == null) {
-			System.out.println("File " + path + " not loaded");
-		}
-		
-		if (toLoop)
-			clip.loop();
-		else
-			clip.play();
-		
-		currentPlaying = path;
-	}
-	
-	public void play(int index, boolean toLoop) {
-		
-		play(playList[index], toLoop);
-	}
+	/**
+	 * Stop the clip
+	 */
 	
 	public void stop() {
 		
-		AudioClip clip = (AudioClip) soundMap.get(currentPlaying);
-		clip.stop();
+		if (clip != null && clip.isRunning())
+			clip.stop();
+		else
+			System.out.println("Audioclip is not running");
 	}
+	
+	/**
+	 * Set the loop variable
+	 */
+	
+	public void setLoop(boolean loop) {
+		
+		this.loop = loop;
+	}
+
+	@Override
+	public void update(LineEvent lineEvent) {
+		
+		if (lineEvent.getType() == LineEvent.Type.STOP) {
+			System.out.println("Exiting..");
+			
+			clip.stop();
+			lineEvent.getLine().close();
+		}
+	}
+	
+	
 }

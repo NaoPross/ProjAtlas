@@ -259,7 +259,7 @@ public class MainPanel extends JPanel implements Runnable {
 		}
 		
 		for (int i = 0; i < comp_added.length; i++) {
-			if (comp_added[i] !=  null)
+			if (comp_added[i] !=  null && comp_added[i].visible)
 				comp_added[i].paint(bufferGraphics); // Paint the components
 			else {
 				removeNullSlots();
