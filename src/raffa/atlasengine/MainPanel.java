@@ -265,7 +265,7 @@ public class MainPanel extends JPanel implements Runnable {
 				removeNullSlots();
 				return;
 			}
-		}	
+		}
 	}
 	
 	/**

@@ -31,7 +31,6 @@ public class Game extends MainPanel {
 		
 		audio = new Audio("./L'addio di Nancy.wav", true);
 		audio.setVolume(Audio.VOLUME_MEDIUM);
-		//System.out.println(audio.getVolume());
 		
 		elettrone = new Elettrone();
 		
@@ -48,8 +47,9 @@ public class Game extends MainPanel {
 		ghosteon.setBounds(260, 200, 300, 250);
 		ghosteon.zLevel = 2;
 		
-		text = new Label("Funziona", 30, 30);
-		text.setSize(100);
+		text = new Label("Atlas Engine Try", 20, 40);
+		text.setSize(20);
+		text.setBorder(Color.black);
 		add(text);
 		
 		
@@ -68,11 +68,11 @@ public class Game extends MainPanel {
 	public void gameLoop() {
 		
 		elettrone.setLocation(elettrone.x + 3, elettrone.y);
-		protone.setLocation(protone.x - 3, protone.y);
-		atlas.rotate(1, atlas.x + 150, atlas.y + 300);
+		protone.setLocation(protone.x - 1, protone.y);
+		atlas.rotate(1, atlas.x + atlas.width / 2, atlas.y + atlas.height / 2);
 		
 		if (instance) {
-			int phi = ghosteon.countRot / 10;
+			int phi = ghosteon.countRot / 2;
 			if (ghosteon.countRot > 250) {
 				remove(ghosteon);
 				instance = false;
@@ -81,6 +81,8 @@ public class Game extends MainPanel {
 			ghosteon.setSize((int)(ghosteon.width * 0.995), (int)(ghosteon.height * 0.995));
 			ghosteon.setLocation(ghosteon.x + 2, ghosteon.y - 1);
 		}
+		
+		protone.text.setText("Protone" + String.valueOf(protone.countMove));
 		//System.out.println(elettrone.x + "  " + elettrone.y);
 	}
 

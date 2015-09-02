@@ -271,23 +271,42 @@ public class AccessPanel {
 		g.drawRect(1, 1, width - 2, height - 2);
 	}
 	
+	private void render() {
+		
+		if (this.sprite == null) {
+			this.sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			
+			if (this.sprite == null) {
+				System.out.println("Sprite not rendered");
+				return;
+			}
+		}
+		else {
+			if (g != null)
+				g.dispose();
+			g = sprite.createGraphics();
+		}
+	}
+	
 	public void paint(Graphics2D g) {
 		
 		g.rotate(phi, xRot, yRot);
+		
+		/*
+		 * Draw the components
+		 */
+		
+		render();
+		
+		for (int i = 0; i < comp_added.length; i++) {
+			comp_added[i].paint(this.g);
+		}
 		
 		/*
 		 * Draw the sprite image
 		 */
 		
 		g.drawImage(sprite, x, y, width, height , null);
-		
-		/*
-		 * Draw the components
-		 */
-		
-		for (int i = 0; i < comp_added.length; i++) {
-			comp_added[i].paint(this.g);
-		}
 		
 		
 		g.rotate(-phi, xRot, yRot);

@@ -8,6 +8,7 @@ import raffa.atlasengine.*;
 public class Protone extends AccessPanel {
 	
 	Color blu;
+	public Label text;
 
 	public Protone() {
 		
@@ -15,10 +16,12 @@ public class Protone extends AccessPanel {
 		blu = new Color(0, 0, 255);
 		zLevel = 1;
 		paint();
-		Label text = new Label("Protone");
-		text.setLocation(50, 50);
-		text.setSize(2);
+		
+		text = new Label("Protone");
+		text.setLocation(10, 50);
+		text.setSize(17);
 		add(text);
+		
 	}
 	
 	public void paint() {

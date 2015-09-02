@@ -14,16 +14,15 @@ public class Label extends AccessPanel {
 	
 	public String text; // The String that has to be drawn
 	public Font type; // The Font type of the string
-	int size; // The Font size of the string
 	public Color rgb;
 	
 	public Label(String text) {
 		
 		this.text = text;
 		rgb = Color.BLACK;
-		size = 10;
-		type = new Font(Font.SANS_SERIF, Font.PLAIN, size);
-		paintString();
+		height = 10;
+		type = new Font(Font.SANS_SERIF, Font.PLAIN, height);
+		sprite = null;
 	}
 	
 	public Label(String text, int x, int y) {
@@ -31,19 +30,19 @@ public class Label extends AccessPanel {
 		this.text = text;
 		this.setLocation(x, y);
 		rgb = Color.BLACK;
-		size = 10;
-		type = new Font(Font.SANS_SERIF, Font.PLAIN, size);
-		paintString();
+		height = 10;
+		type = new Font(Font.SANS_SERIF, Font.PLAIN, height);
+		sprite = null;
 	}
 	
 	public Label(String text, int x, int y, int size) {
 		
 		this.text = text;
-		this.size = size;
+		this.height = size;
 		type = new Font(Font.SANS_SERIF, Font.PLAIN, size);
 		this.setLocation(x, y);
 		rgb = Color.BLACK;
-		paintString();
+		sprite = null;
 	}
 	
 	public Label(String text, int x, int y, Font type) {
@@ -52,21 +51,28 @@ public class Label extends AccessPanel {
 		this.type = type;
 		this.setLocation(x, y);
 		rgb = Color.BLACK;
-		size = 10;
-		paintString();
+		height = 10;
+		sprite = null;
 	}
 	
 	/*
 	 * Contains this label's default values
 	 */
 	
-	private void paintString() {
+	@Override
+	public void paint(Graphics2D g) {
 		
-		if (g != null)
-			g.dispose();
-		g = sprite.createGraphics();
+		g.rotate(phi, xRot, yRot);
+		
+		/*
+		 * Draw the string
+		 */
+		
+		g.setColor(rgb);
 		g.setFont(type);
-		g.drawString(text, 1, 1);
+		g.drawString(text, x, y);
+		
+		g.rotate(-phi, xRot, yRot);
 	}
 	
 	/*
@@ -76,7 +82,6 @@ public class Label extends AccessPanel {
 	public void setText(String text) {
 		
 		this.text = text;
-		paintString();
 	}
 	
 	/*
@@ -85,27 +90,22 @@ public class Label extends AccessPanel {
 	
 	public void setFont(String font, int style, int size) {
 		
-		this.size = size;
+		this.height = size;
 		type = new Font(font, style, size);
-		paintString();
 	}
 	
 	/*
 	 * Set the Font size
 	 */
 	
-	public void setSize(int size) {
+	public void setSize(int height) {
 		
-		this.size = size;
-		String font = type.getFontName();
-		int style = type.getStyle();
-		type = new Font(font, style, size);
-		paintString();
+		this.height = height;
+		type = type.deriveFont((float)height);
 	}
 	
 	public void setColor(Color rgb) {
 		
 		this.rgb = rgb;
-		paintString();
 	}
 }
