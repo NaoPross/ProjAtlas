@@ -1,13 +1,15 @@
 package raffa.atlasengine;
 
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
 
-public class Window extends JFrame implements WindowListener {
+public class Window extends JFrame implements WindowListener, KeyListener {
 	
 	/*
 	 * Create a window
@@ -33,6 +35,8 @@ public class Window extends JFrame implements WindowListener {
 		setPreferredSize(new Dimension(getWidth(), getHeight()));
 		setMaximumSize(new Dimension(width, height));
 		setResizable(false);
+		setFocusable(true);
+		addKeyListener(this);
 		addWindowListener(this);
 	}
 	
@@ -78,6 +82,25 @@ public class Window extends JFrame implements WindowListener {
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+		if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_F4)
+			System.exit(1);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

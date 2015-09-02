@@ -56,7 +56,7 @@ public class Label extends AccessPanel {
 	}
 	
 	/*
-	 * Contains this label's default values
+	 * Draw a string directly on the screen (and not rendered to an image)
 	 */
 	
 	@Override
@@ -103,6 +103,10 @@ public class Label extends AccessPanel {
 		this.height = height;
 		type = type.deriveFont((float)height);
 	}
+	
+	/*
+	 * Set the text color
+	 */
 	
 	public void setColor(Color rgb) {
 		

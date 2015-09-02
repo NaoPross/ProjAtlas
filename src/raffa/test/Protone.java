@@ -15,7 +15,6 @@ public class Protone extends AccessPanel {
 		super(400, 300, 100, 100);
 		blu = new Color(0, 0, 255);
 		zLevel = 1;
-		paint();
 		
 		text = new Label("Protone");
 		text.setLocation(10, 50);
@@ -24,9 +23,11 @@ public class Protone extends AccessPanel {
 		
 	}
 	
-	public void paint() {
+	@Override
+	public void paintIn(Graphics2D g) {
 		
 		g.setColor(blu);
 		g.fillOval(0, 0, width, height);
+		
 	}
 }

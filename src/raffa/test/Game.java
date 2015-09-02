@@ -83,6 +83,7 @@ public class Game extends MainPanel {
 		}
 		
 		protone.text.setText("Protone" + String.valueOf(protone.countMove));
+		text.setText("Atlas Engine Try " + String.valueOf(protone.countMove));
 		//System.out.println(elettrone.x + "  " + elettrone.y);
 	}
 

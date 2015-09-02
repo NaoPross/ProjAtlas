@@ -12,10 +12,11 @@ public class AccessPanel {
 	
 	public int x, y, width, height, zLevel, xRot, yRot, countMove, countRot;
 	protected float phi;
-	public boolean move, rotate, visible;
+	public boolean move, rotate, visible, border;
+	private Color border_color;
 	protected BufferedImage sprite;
 	protected AccessPanel[] comp_added;
-	protected Graphics2D g;
+	private Graphics2D g;
 	
 	public AccessPanel() {
 		
@@ -29,11 +30,13 @@ public class AccessPanel {
 		yRot = y;
 		countMove = 0;
 		countRot = 0;
-		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		g = sprite.createGraphics();
 		move = false;
 		rotate = false;
 		visible = true;
+		border = false;
+		border_color = null;
+		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		g = sprite.createGraphics();
 		comp_added = new AccessPanel[0];
 	}
 	
@@ -49,11 +52,13 @@ public class AccessPanel {
 		yRot = y;
 		countMove = 0;
 		countRot = 0;
-		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		g = sprite.createGraphics();
 		move = false;
 		rotate = false;
 		visible = true;
+		border = false;
+		border_color = null;
+		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		g = sprite.createGraphics();
 		comp_added = new AccessPanel[0];
 	}
 	
@@ -214,7 +219,6 @@ public class AccessPanel {
 		
 		component.setZLevel(0);
 		component.setBounds(this.x, this.y, this.width, this.height);
-		//System.out.println(this.getWidth() + "  " + this.getHeight());
 		this.add(component);
 	}
 	
@@ -230,7 +234,6 @@ public class AccessPanel {
 		}
 		phi %= 360;
 		this.phi += (float)(phi * Math.PI / 180);
-		//System.out.println("Rotation of" + phi + "degrees");
 		countRot++;
 	}
 	
@@ -246,16 +249,6 @@ public class AccessPanel {
 	}
 	
 	/*
-	 * Get the Graphics2D element of this Sprite to
-	 * draw in it
-	 */
-	
-	public Graphics2D getGraphics() {
-		
-		return g;
-	}
-	
-	/*
 	 * Modify a pixel of the image
 	 */
 	
@@ -265,11 +258,19 @@ public class AccessPanel {
 		sprite.setRGB(x, y, color);
 	}
 	
+	/*
+	 * Draw a border with it's relative color
+	 */
+	
 	public void setBorder(Color rgb) {
 		
-		g.setColor(rgb);
-		g.drawRect(1, 1, width - 2, height - 2);
+		border = true;
+		border_color = rgb;
 	}
+	
+	/*
+	 * Render the panel's sprite buffer
+	 */
 	
 	private void render() {
 		
@@ -288,19 +289,46 @@ public class AccessPanel {
 		}
 	}
 	
+	/*
+	 * Override this method to draw something
+	 * in this panel
+	 * The components drawn here don't have any priority
+	 */
+	
+	protected void paintIn(Graphics2D g) {
+		
+	}
+	
+	/*
+	 * Draw the component's
+	 */
+	
+	private void paintPanel() {
+		
+		paintIn(this.g);
+		
+		for (int i = 0; i < comp_added.length; i++) {
+			comp_added[i].paint(this.g);
+		}
+		
+		if (border) {
+			
+			this.g.setColor(border_color);
+			this.g.drawRect(1, 1, width - 2, height - 2);
+		}
+	}
+	
 	public void paint(Graphics2D g) {
 		
 		g.rotate(phi, xRot, yRot);
 		
 		/*
-		 * Draw the components
+		 * Render the sprite buffer and draw the components
 		 */
 		
 		render();
 		
-		for (int i = 0; i < comp_added.length; i++) {
-			comp_added[i].paint(this.g);
-		}
+		paintPanel();
 		
 		/*
 		 * Draw the sprite image
