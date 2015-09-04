@@ -20,9 +20,19 @@ public class Data {
 	FileReader readFile;
 	BufferedReader reader; // The string reader
 	BufferedWriter writer; // The string writer
-	public static final int A = 69069;
-	public static final int C = 1234567;
-	public static final long M = (long)Math.pow(2, 32);
+	
+	/**
+	 * Constants for the pseudo number generation
+	 */
+	
+	public static final int CONG_A = 69069;
+	public static final int CONG_C = 1234567;
+	public static final int CONG_M = (int)(Math.pow(2, 32) - 1);
+	public static final int[] SHR3_TAP = {17, 13, 5};
+	public static final int Z_NEW_A = 36969;
+	public static final int W_NEW_A = 18000;
+	public static final int NEW_B = 65535;
+	public static final int NEW_C = 16;
 
 	public Data(String filePath) {
 		
@@ -117,12 +127,45 @@ public class Data {
 	}
 	
 	/**
-	 * A KISS random number generator
+	 * A similar to KISS random number generator
 	 */
 	
-	public static long random(long seed) {
+	private static int CONG(int seed) {
 		
-		seed = (A * seed + C) % M; // The linear congruential
+		seed = (CONG_A * seed + CONG_C) % CONG_M; // The linear congruential
+		return seed;
+	}
+	
+	private static int SHR3(int seed) {
+		
+		seed ^= (seed << SHR3_TAP[0]);
+		seed ^= (seed >>> SHR3_TAP[1]);
+		seed ^= (seed << SHR3_TAP[2]);
+		
+		return seed;
+	}
+	
+	private static int zNew(int seed) {
+		
+		seed = Z_NEW_A ^ (seed & NEW_B) + (seed >>> NEW_C);
+		return seed;
+	}
+	
+	private static int wNew(int seed) {
+		
+		seed = W_NEW_A ^ (seed & NEW_B) + (seed >>> NEW_C);
+		return seed;
+	}
+	
+	private static int MWC(int seed) {
+		
+		seed = (zNew(seed) << 16) + wNew(seed);
+		return seed;
+	}
+	
+	public static int KISS(int seed) {
+		
+		seed = (MWC(seed) ^ CONG(seed)) + SHR3(seed);
 		return seed;
 	}
 }
