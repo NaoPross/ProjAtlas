@@ -127,45 +127,64 @@ public class Data {
 	}
 	
 	/**
-	 * A similar to KISS random number generator
+	 * A KISS (Keep It Simple, Stupid!) pseudo random number generator
 	 */
+	
+	private static int bin_abs(int x) {
+		
+		if (x < 0)
+			x -= (1 << 31); // Turf off the first bit of number (the sign bit) and make it positive
+		return x;
+	}
 	
 	private static int CONG(int seed) {
 		
-		seed = (CONG_A * seed + CONG_C) % CONG_M; // The linear congruential
+		seed = (CONG_A * seed + CONG_C) % CONG_M; // The Linear Congruential method
 		return seed;
 	}
 	
-	private static int SHR3(int seed) {
+	private static int SHR3(int seed) { // A modified version of the Linear Feedback Shift Register method
 		
 		seed ^= (seed << SHR3_TAP[0]);
 		seed ^= (seed >>> SHR3_TAP[1]);
 		seed ^= (seed << SHR3_TAP[2]);
 		
+		seed = bin_abs(seed);
+		
 		return seed;
 	}
 	
-	private static int zNew(int seed) {
+	private static int zNew(int seed) {		// The New method
 		
 		seed = Z_NEW_A ^ (seed & NEW_B) + (seed >>> NEW_C);
+		
+		seed = bin_abs(seed);
+		
 		return seed;
 	}
 	
 	private static int wNew(int seed) {
 		
 		seed = W_NEW_A ^ (seed & NEW_B) + (seed >>> NEW_C);
+		
+		seed = bin_abs(seed);
+		
 		return seed;
 	}
 	
-	private static int MWC(int seed) {
+	private static int MWC(int seed) { // A combination of zNew and wNew
 		
 		seed = (zNew(seed) << 16) + wNew(seed);
+		
+		seed = bin_abs(seed);
+		
 		return seed;
 	}
 	
-	public static int KISS(int seed) {
+	public static int KISS(int seed) { // The KISS generator: a combination of MWC, Linear Congruential and SHR3
 		
 		seed = (MWC(seed) ^ CONG(seed)) + SHR3(seed);
+		
 		return seed;
 	}
 }
