@@ -3,6 +3,9 @@ package raffa.test;
 import java.awt.Color;
 
 import raffa.atlasengine.*;
+import raffa.atlasengine.frame.MainPanel;
+import raffa.atlasengine.sprite.Sprite;
+import raffa.atlasengine.support.Audio;
 
 public class Game extends MainPanel {
 	
@@ -14,7 +17,6 @@ public class Game extends MainPanel {
 	Sprite sfondo, atlas, ghosteon;
 	Elettrone elettrone;
 	Protone protone;
-	Label text;
 	boolean instance = true;
 	Audio audio;
 	
@@ -26,8 +28,7 @@ public class Game extends MainPanel {
 	public Game() {
 		
 		super("Test grafico", 100, 50, 1000, 650);
-		sfondo = new Sprite("./Vogelberg.png");
-		
+		sfondo = new Sprite(Sprite.fromImage("./Vogelberg.png"));
 		
 		audio = new Audio("./L'addio di Nancy.wav", true);
 		audio.setVolume(Audio.VOLUME_MEDIUM);
@@ -35,22 +36,13 @@ public class Game extends MainPanel {
 		elettrone = new Elettrone();
 		
 		protone = new Protone();
-		protone.setBorder(Color.BLACK);
 		
-		
-		atlas = new Sprite("./Atlas2.png");
-		atlas.setBounds(40, 30, 300, 600);
+		atlas = new Sprite(Sprite.fromImage("./Atlas2.png"), 40, 30, 300, 600);
 		atlas.zLevel = 1;
 		
 		
-		ghosteon = new Sprite("./Ghosteon.png");
-		ghosteon.setBounds(260, 200, 300, 250);
+		ghosteon = new Sprite(Sprite.fromImage("./Ghosteon.png"), 260, 200, 300, 250);
 		ghosteon.zLevel = 2;
-		
-		text = new Label("Atlas Engine Try", 20, 40);
-		text.setSize(20);
-		text.setBorder(Color.black);
-		add(text);
 		
 		
 		this.setBackground(sfondo);
@@ -81,10 +73,6 @@ public class Game extends MainPanel {
 			ghosteon.setSize((int)(ghosteon.width * 0.995), (int)(ghosteon.height * 0.995));
 			ghosteon.setLocation(ghosteon.x + 2, ghosteon.y - 1);
 		}
-		
-		protone.text.setText("Protone" + String.valueOf(protone.countMove));
-		text.setText("Atlas Engine Try " + String.valueOf(protone.countMove));
-		//System.out.println(elettrone.x + "  " + elettrone.y);
 	}
 
 }

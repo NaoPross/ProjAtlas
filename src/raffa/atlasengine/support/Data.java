@@ -1,4 +1,4 @@
-package raffa.atlasengine;
+package raffa.atlasengine.support;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -186,5 +186,15 @@ public class Data {
 		seed = (MWC(seed) ^ CONG(seed)) + SHR3(seed);
 		
 		return seed;
+	}
+	
+	/**
+	 * RGB color components converted to integer
+	 */
+	
+	public static int color(int r, int g, int b) {
+		
+		int color = (int)Math.pow(2, 16) * r + (int)Math.pow(2, 8) * g + b - (int)Math.pow(2, 24);
+		return color;
 	}
 }

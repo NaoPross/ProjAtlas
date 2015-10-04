@@ -1,4 +1,4 @@
-package raffa.atlasengine;
+package raffa.atlasengine.frame;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
+import raffa.atlasengine.sprite.Sprite;
+
 public class MainPanel extends JPanel implements Runnable {
 	
 	/**
@@ -15,7 +17,7 @@ public class MainPanel extends JPanel implements Runnable {
 	 */
 	
 	private Graphics2D g, bufferGraphics; // Instance the graphics component that draws the others
-	private AccessPanel[] comp_added; // Array of all the components added
+	private Sprite[] comp_added; // Array of all the components added
 	
 	/**
 	 * The game status:
@@ -43,7 +45,7 @@ public class MainPanel extends JPanel implements Runnable {
 		
 		super(null, true); 		// layout = null, doubleBuffer = true
 		super.setBackground(null);
-		comp_added = new AccessPanel[0];
+		comp_added = new Sprite[0];
 		isRunning = false;
 		animator = null;
 		gameOver = false;
@@ -99,7 +101,7 @@ public class MainPanel extends JPanel implements Runnable {
 			for(int j = 0; j < comp_added.length - 1; j++) {
 				
 				if(comp_added[j].getZLevel() > comp_added[j+1].getZLevel()) {
-					AccessPanel k = comp_added[j];
+					Sprite k = comp_added[j];
                 			comp_added[j] = comp_added[j+1];
                				comp_added[j+1] = k;
                     			flag = true;
@@ -118,14 +120,14 @@ public class MainPanel extends JPanel implements Runnable {
 		
 		int length = comp_added.length;
 		
-		AccessPanel[] comp_prov = new AccessPanel[length + 1];
+		Sprite[] comp_prov = new Sprite[length + 1];
 		
 		for (int i = 0; i < length; i++)
 			comp_prov[i] = comp_added[i];
 		
 		length++;
 		
-		comp_added = new AccessPanel[length];
+		comp_added = new Sprite[length];
 		
 		for (int i = 0; i < length; i++)
 			comp_added[i] = comp_prov[i];
@@ -148,7 +150,7 @@ public class MainPanel extends JPanel implements Runnable {
 		
 		length -= countNull;
 		
-		AccessPanel[] comp_prov = new AccessPanel[length];
+		Sprite[] comp_prov = new Sprite[length];
 		
 		int j = 0;
 		int w = 0;
@@ -160,7 +162,7 @@ public class MainPanel extends JPanel implements Runnable {
 			w++;
 		}
 		
-		comp_added = new AccessPanel[length];
+		comp_added = new Sprite[length];
 		
 		for (int i = 0; i < length; i++)
 			comp_added[i] = comp_prov[i];
@@ -171,7 +173,7 @@ public class MainPanel extends JPanel implements Runnable {
 	 * If a slot of the array is null, the component will replace it
 	 */
 
-	public void add(AccessPanel component) {
+	public void add(Sprite component) {
 		
 		int countNull = 0;
 		
@@ -201,7 +203,7 @@ public class MainPanel extends JPanel implements Runnable {
 	 * letting a null slot in it
 	 */
 	
-	public void remove(AccessPanel component) {
+	public void remove(Sprite component) {
 		
 		for (int i = 0; i < comp_added.length; i++) {
 			if (comp_added[i] == component)
@@ -216,7 +218,7 @@ public class MainPanel extends JPanel implements Runnable {
 	 * Set it as Background of the main panel
 	 */
 
-	public void setBackground(AccessPanel component) {
+	public void setBackground(Sprite component) {
 		
 		component.setZLevel(0);
 		component.setBounds(0, 0, Window.width, Window.height);

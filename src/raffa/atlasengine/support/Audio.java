@@ -1,4 +1,4 @@
-package raffa.atlasengine;
+package raffa.atlasengine.support;
 
 import java.io.File;
 import java.io.IOException;

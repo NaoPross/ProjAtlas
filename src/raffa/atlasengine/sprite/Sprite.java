@@ -1,81 +1,111 @@
-package raffa.atlasengine;
+package raffa.atlasengine.sprite;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 
-public class AccessPanel {
+import javax.imageio.ImageIO;
+
+public class Sprite {
 	
-	/*
-	 * Commun variable between graphics objects (subclasses)
-	 */
-	
+	protected Graphics2D g; // The BufferedImage Graphics2D variable
 	public int x, y, width, height, zLevel, xRot, yRot, countMove, countRot;
 	protected float phi;
-	public boolean move, rotate, visible, border;
-	private Color border_color;
+	public boolean visible;
+	protected Sprite[] comp_added;
 	protected BufferedImage sprite;
-	protected AccessPanel[] comp_added;
-	private Graphics2D g;
 	
-	public AccessPanel() {
+	public static final int DEFAULT_Z_LEVEL = 0x1;
+	public static final int DEFAULT_LOCATION = 0x0;
+	public static final int DEFAULT_SIZE = 0x64;
+	
+	/**
+	 * Constructor without parameters
+	 */
+	
+	public Sprite() {
 		
-		x = 0;
-		y = 0;
-		width = 100;
-		height = 100;
-		phi = 0;
-		zLevel = 1;
-		xRot = x;
-		yRot = y;
-		countMove = 0;
-		countRot = 0;
-		move = false;
-		rotate = false;
-		visible = true;
-		border = false;
-		border_color = null;
 		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		g = sprite.createGraphics();
-		comp_added = new AccessPanel[0];
+		this.x = DEFAULT_LOCATION;
+		this.y = DEFAULT_LOCATION;
+		this.width = DEFAULT_SIZE;
+		this.height = DEFAULT_SIZE;
+		defaultValues();
 	}
 	
-	public AccessPanel(int x, int y, int width, int height) {
+	/**
+	 * Constructor with bounds parameters
+	 */
+	
+	public Sprite(int x, int y, int width, int height) {
 		
+		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		defaultValues();
+	}
+	
+	/**
+	 * Constructor with a image paramenter
+	 */
+	
+	public Sprite(BufferedImage img) {
+		
+		sprite = img;
+		this.x = DEFAULT_LOCATION;
+		this.y = DEFAULT_LOCATION;
+		this.width = DEFAULT_SIZE;
+		this.height = DEFAULT_SIZE;
+		defaultValues();
+	}
+	
+	/**
+	 * Constructor with image and bounds parameters
+	 */
+	
+	public Sprite(BufferedImage img, int x, int y, int width, int height) {
+		
+		sprite = img;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		defaultValues();
+	}
+	
+	/**
+	 * Sprite object default values
+	 */
+	
+	private void defaultValues() {
+		
 		phi = 0;
-		zLevel = 1;
+		zLevel = DEFAULT_Z_LEVEL;
 		xRot = x;
 		yRot = y;
 		countMove = 0;
 		countRot = 0;
-		move = false;
-		rotate = false;
 		visible = true;
-		border = false;
-		border_color = null;
-		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		g = sprite.createGraphics();
-		comp_added = new AccessPanel[0];
+		comp_added = new Sprite[0];
 	}
 	
-	/*
-	 * 
-	 * return the overlapping level of a component
+	/**
+	 * Get tho overlapping level of a component
 	 */
-
 	
 	public int getZLevel() {
 		
 		return zLevel;
 	}
 	
-	/*
-	 * 
-	 * set the overlapping level of a component
+	/**
+	 * Set the overlapping level of a component
 	 * Default value = 1
 	 */
 
@@ -85,9 +115,8 @@ public class AccessPanel {
 		this.zLevel = zLevel;
 	}
 	
-	/*
-	 * 
-	 * set the component bounds
+	/**
+	 * Set the component bounds
 	 */
 
 	
@@ -99,27 +128,39 @@ public class AccessPanel {
 		this.height = height;
 	}
 	
-	/*
-	 * 
+	/**
+	 * draw a string
+	 */
+	
+	public void label(String msg, int x, int y) {
+		
+		g.drawString(msg, x, y);
+	}
+	
+	public void label(char msg[], int begin, int end, int x, int y) {
+		
+		int length = end - begin;
+		
+		if (length < 0 || end >= msg.length || end < 0|| begin < 0)
+			throw new IllegalArgumentException ("Invalid parameters in label function");
+		
+		g.drawChars(msg, begin, length, x, y);
+	}
+	
+	/**
 	 * set the component location in the main panel
 	 */
 
 	
 	public void setLocation(int x, int y) {
 		
-		if (!move) {
-			countMove = 0;
-			move = true;
-		}
-		
 		this.x = x;
 		this.y = y;
 		countMove++;
 	}
 	
-	/*
-	 * 
-	 * set the component size
+	/**
+	 * Set the component size
 	 */
 
 	
@@ -129,23 +170,23 @@ public class AccessPanel {
 		this.height = height;
 	}
 	
-	/*
+	/**
 	 * Add a component in another one adapting
 	 * it in the container's bounds
 	 */
 	
-	public void add(AccessPanel component) {
+	public void add(Sprite component) {
 		
 		int length = comp_added.length;
 		
-		AccessPanel[] comp_prov = new AccessPanel[length + 1];
+		Sprite[] comp_prov = new Sprite[length + 1];
 		
 		for (int i = 0; i < length; i++)
 			comp_prov[i] = comp_added[i];
 		
 		length++;
 		
-		comp_added = new AccessPanel[length];
+		comp_added = new Sprite[length];
 		
 		for (int i = 0; i < length; i++)
 			comp_added[i] = comp_prov[i];
@@ -155,11 +196,11 @@ public class AccessPanel {
 		sort();
 	}
 	
-	/*
+	/**
 	 * Remove a component from this one
 	 */
 	
-	public void remove(AccessPanel component) {
+	public void remove(Sprite component) {
 		
 		int length = comp_added.length;
 		
@@ -168,7 +209,7 @@ public class AccessPanel {
 				comp_added[i] = null;
 		}
 		
-		AccessPanel[] comp_prov = new AccessPanel[length - 1];
+		Sprite[] comp_prov = new Sprite[length - 1];
 		
 		int j = 0;
 		int w = 0;
@@ -180,13 +221,13 @@ public class AccessPanel {
 			w++;
 		}
 		
-		comp_added = new AccessPanel[length - 1];
+		comp_added = new Sprite[length - 1];
 		
 		for (int i = 0; i < length - 1; i++)
 			comp_added[i] = comp_prov[i];
 	}
 	
-	/*
+	/**
 	 * Sort the array comp_added basing on
 	 * the zLevel of each one
 	 */
@@ -200,7 +241,7 @@ public class AccessPanel {
 			for(int j = 0; j < comp_added.length - 1; j++) {
 				
 				if(comp_added[j].getZLevel() > comp_added[j+1].getZLevel()) {
-					AccessPanel k = comp_added[j];
+					Sprite k = comp_added[j];
                 			comp_added[j] = comp_added[j+1];
                				comp_added[j+1] = k;
                     			flag = true;
@@ -211,33 +252,38 @@ public class AccessPanel {
 		}
 	}
 	
-	/*
+	/**
+	 * Set the sprite image
+	 */
+	
+	public void setImage(BufferedImage img) {
+		
+		sprite = img;
+	}
+	
+	/**
 	 * Set a component as a background of another component
 	 */
 	
-	public void setBackground(AccessPanel component) {
+	public void setBackground(Sprite component) {
 		
 		component.setZLevel(0);
 		component.setBounds(this.x, this.y, this.width, this.height);
 		this.add(component);
 	}
 	
-	/*
+	/**
 	 * Rotate a component around its location
 	 */
 	
 	public void rotate(int phi) {
 		
-		if (!rotate) {
-			countRot = 0;
-			rotate = true;
-		}
 		phi %= 360;
 		this.phi += (float)(phi * Math.PI / 180);
 		countRot++;
 	}
 	
-	/*
+	/**
 	 * Rotate a component around a point
 	 */
 	
@@ -248,7 +294,7 @@ public class AccessPanel {
 		rotate(phi);
 	}
 	
-	/*
+	/**
 	 * Modify a pixel of the image
 	 */
 	
@@ -258,38 +304,22 @@ public class AccessPanel {
 		sprite.setRGB(x, y, color);
 	}
 	
-	/*
-	 * Draw a border with it's relative color
+	/**
+	 * crop the image keeping the old dimensions
 	 */
 	
-	public void setBorder(Color rgb) {
+	public void crop(int x, int y, int width, int height) {
 		
-		border = true;
-		border_color = rgb;
+		BufferedImage temp = sprite;
+		
+		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		
+		g = sprite.createGraphics();
+		
+		g.drawImage(temp, x, y, x + width, y, x, y + height, x + width, y + height, (ImageObserver) sprite);
 	}
 	
-	/*
-	 * Render the panel's sprite buffer
-	 */
-	
-	private void render() {
-		
-		if (this.sprite == null) {
-			this.sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-			
-			if (this.sprite == null) {
-				System.out.println("Sprite not rendered");
-				return;
-			}
-		}
-		else {
-			if (g != null)
-				g.dispose();
-			g = sprite.createGraphics();
-		}
-	}
-	
-	/*
+	/**
 	 * Override this method to draw something
 	 * in this panel
 	 * The components drawn here don't have any priority
@@ -299,7 +329,7 @@ public class AccessPanel {
 		
 	}
 	
-	/*
+	/**
 	 * Draw the component's
 	 */
 	
@@ -310,27 +340,19 @@ public class AccessPanel {
 		for (int i = 0; i < comp_added.length; i++) {
 			comp_added[i].paint(this.g);
 		}
-		
-		if (border) {
-			
-			this.g.setColor(border_color);
-			this.g.drawRect(1, 1, width - 2, height - 2);
-		}
 	}
 	
 	public void paint(Graphics2D g) {
 		
 		g.rotate(phi, xRot, yRot);
 		
-		/*
+		/**
 		 * Render the sprite buffer and draw the components
 		 */
 		
-		render();
-		
 		paintPanel();
 		
-		/*
+		/**
 		 * Draw the sprite image
 		 */
 		
@@ -340,4 +362,21 @@ public class AccessPanel {
 		g.rotate(-phi, xRot, yRot);
 	}
 	
+	/**
+	 * Update the image from the image file
+	 */
+	
+	public static BufferedImage fromImage(String path) {
+		
+		BufferedImage sprite;
+		
+		try {
+			sprite = ImageIO.read(new File(path)); 	// Input from the image file
+		} catch (IOException e) {
+			System.out.println("Image " + path + " not loaded");
+			sprite = null;
+		}
+		
+		return sprite;
+	}
 }

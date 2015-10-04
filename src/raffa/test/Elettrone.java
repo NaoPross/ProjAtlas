@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import raffa.atlasengine.*;
+import raffa.atlasengine.sprite.Sprite;
 
-public class Elettrone extends AccessPanel {
+public class Elettrone extends Sprite {
 	
 	Color giallo;
 
