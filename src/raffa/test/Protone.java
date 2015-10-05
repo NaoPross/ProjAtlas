@@ -22,6 +22,7 @@ public class Protone extends Sprite {
 		
 		g.setColor(blu);
 		g.fillOval(0, 0, width, height);
-		
+		//g.setColor(Color.black);
+		//g.drawString("Boomber", width / 3, height / 2);
 	}
 }

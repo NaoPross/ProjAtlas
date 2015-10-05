@@ -1,13 +1,18 @@
 package raffa.atlasengine.sprite;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import raffa.atlasengine.support.ArrayComponent;
 
 public class Sprite {
 	
@@ -16,6 +21,9 @@ public class Sprite {
 	protected float phi;
 	public boolean visible;
 	protected Sprite[] comp_added;
+	protected ArrayList<Label> label_added;
+	protected Color label_color;
+	protected Font label_font;
 	protected BufferedImage sprite;
 	
 	public static final int DEFAULT_Z_LEVEL = 0x1;
@@ -93,6 +101,9 @@ public class Sprite {
 		visible = true;
 		g = sprite.createGraphics();
 		comp_added = new Sprite[0];
+		label_added = new ArrayList<Label>();
+		label_color = Color.black;
+		label_font = new Font(Font.SANS_SERIF, Font.ITALIC, 18);
 	}
 	
 	/**
@@ -132,19 +143,37 @@ public class Sprite {
 	 * draw a string
 	 */
 	
-	public void label(String msg, int x, int y) {
+	public void label(String str, int x, int y) {
 		
-		g.drawString(msg, x, y);
+		Label temp = new Label();
+		temp.str = str;
+		temp.x = x;
+		temp.y = y;
+		label_added.add(temp);
 	}
 	
-	public void label(char msg[], int begin, int end, int x, int y) {
+	/**
+	 * set the font and color of the string
+	 */
+	
+	public void labelSettings(Font font, Color color) {
 		
-		int length = end - begin;
+		label_font = font;
+		label_color = color;
+	}
+	
+	/**
+	 * get the label parameters
+	 */
+	
+	public Font getLabelFont() {
 		
-		if (length < 0 || end >= msg.length || end < 0|| begin < 0)
-			throw new IllegalArgumentException ("Invalid parameters in label function");
+		return label_font;
+	}
+	
+	public Color getLabelColor() {
 		
-		g.drawChars(msg, begin, length, x, y);
+		return label_color;
 	}
 	
 	/**
@@ -171,85 +200,22 @@ public class Sprite {
 	}
 	
 	/**
-	 * Add a component in another one adapting
-	 * it in the container's bounds
+	 * Add a component to the panel
 	 */
 	
 	public void add(Sprite component) {
 		
-		int length = comp_added.length;
-		
-		Sprite[] comp_prov = new Sprite[length + 1];
-		
-		for (int i = 0; i < length; i++)
-			comp_prov[i] = comp_added[i];
-		
-		length++;
-		
-		comp_added = new Sprite[length];
-		
-		for (int i = 0; i < length; i++)
-			comp_added[i] = comp_prov[i];
-		
-		comp_added[length - 1] = component;
-		
-		sort();
+		comp_added = ArrayComponent.add(comp_added, component);
+		comp_added = ArrayComponent.sort(comp_added);
 	}
 	
 	/**
-	 * Remove a component from this one
+	 * Remove a specific component from the panel
 	 */
 	
 	public void remove(Sprite component) {
 		
-		int length = comp_added.length;
-		
-		for (int i = 0; i < length; i++) {
-			if (comp_added[i] == component)
-				comp_added[i] = null;
-		}
-		
-		Sprite[] comp_prov = new Sprite[length - 1];
-		
-		int j = 0;
-		int w = 0;
-		while (w < length - 1) {
-			if (comp_added[j] == null)
-				j++;
-			comp_prov[w] = comp_added[j];
-			j++;
-			w++;
-		}
-		
-		comp_added = new Sprite[length - 1];
-		
-		for (int i = 0; i < length - 1; i++)
-			comp_added[i] = comp_prov[i];
-	}
-	
-	/**
-	 * Sort the array comp_added basing on
-	 * the zLevel of each one
-	 */
-	
-	public void sort() {
-		
-		boolean flag = false;
-		
-		for (int i = 0; i < comp_added.length; i++) {
-			
-			for(int j = 0; j < comp_added.length - 1; j++) {
-				
-				if(comp_added[j].getZLevel() > comp_added[j+1].getZLevel()) {
-					Sprite k = comp_added[j];
-                			comp_added[j] = comp_added[j+1];
-               				comp_added[j+1] = k;
-                    			flag = true;
-                		}
-			}
-			
-			if (!flag) break;
-		}
+		comp_added = ArrayComponent.remove(comp_added, component);
 	}
 	
 	/**
@@ -340,6 +306,17 @@ public class Sprite {
 		for (int i = 0; i < comp_added.length; i++) {
 			comp_added[i].paint(this.g);
 		}
+		
+		g.setFont(label_font);
+		g.setColor(label_color);
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		
+		for (int i = 0; i < label_added.size(); i++) {
+			Label temp = label_added.get(i);
+			g.drawString(temp.str, temp.x, temp.y);
+		}
+		
+		label_added.clear();
 	}
 	
 	public void paint(Graphics2D g) {
@@ -378,5 +355,11 @@ public class Sprite {
 		}
 		
 		return sprite;
+	}
+	
+	public static class Label {
+		
+		String str;
+		int x, y;
 	}
 }

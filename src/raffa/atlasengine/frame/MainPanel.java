@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import javax.swing.JPanel;
 
 import raffa.atlasengine.sprite.Sprite;
+import raffa.atlasengine.support.ArrayComponent;
 
 public class MainPanel extends JPanel implements Runnable {
 	
@@ -88,127 +89,22 @@ public class MainPanel extends JPanel implements Runnable {
 	}
 	
 	/**
-	 * Sort the comp_added array basing
-	 * on the zLevel variable of each component
-	 */
-
-	public void sort() {
-		
-		boolean flag = false;
-		
-		for (int i = 0; i < comp_added.length; i++) {
-			
-			for(int j = 0; j < comp_added.length - 1; j++) {
-				
-				if(comp_added[j].getZLevel() > comp_added[j+1].getZLevel()) {
-					Sprite k = comp_added[j];
-                			comp_added[j] = comp_added[j+1];
-               				comp_added[j+1] = k;
-                    			flag = true;
-                		}
-			}
-			
-			if (!flag) break;
-		}
-	}
-	
-	/**
-	 * Add a new empty slot to the comp_added array
+	 * Add a component to the panel
 	 */
 	
-	private void addNullSlot() {
-		
-		int length = comp_added.length;
-		
-		Sprite[] comp_prov = new Sprite[length + 1];
-		
-		for (int i = 0; i < length; i++)
-			comp_prov[i] = comp_added[i];
-		
-		length++;
-		
-		comp_added = new Sprite[length];
-		
-		for (int i = 0; i < length; i++)
-			comp_added[i] = comp_prov[i];
-	}
-	
-	/**
-	 * Remove all the null slots from the comp_added array
-	 */
-	
-	private void removeNullSlots() {
-		
-		int countNull = 0;
-		
-		int length = comp_added.length;
-		
-		for (int i = 0; i < length; i++) {
-			if (comp_added[i] == null)
-				countNull++;
-		}
-		
-		length -= countNull;
-		
-		Sprite[] comp_prov = new Sprite[length];
-		
-		int j = 0;
-		int w = 0;
-		while (w < length) {
-			if (comp_added[j] == null)
-				j++;
-			comp_prov[w] = comp_added[j];
-			j++;
-			w++;
-		}
-		
-		comp_added = new Sprite[length];
-		
-		for (int i = 0; i < length; i++)
-			comp_added[i] = comp_prov[i];
-	}
-	
-	/**
-	 * Add a component to the comp_added array and sort it
-	 * If a slot of the array is null, the component will replace it
-	 */
-
 	public void add(Sprite component) {
 		
-		int countNull = 0;
-		
-		for (int i = 0; i < comp_added.length; i++) {
-			if (comp_added[i] == null)
-				countNull++;
-		}
-		
-		if (countNull == 0) {
-			addNullSlot();
-			comp_added[comp_added.length - 1] = component;
-		} else {
-			boolean notFound = true;
-			for (int i = 0; notFound; i++) {
-				if (comp_added[i] == null) {
-					comp_added[i] = component;
-					notFound = false;
-				}
-			}
-		}
-		
-		sort();
+		comp_added = ArrayComponent.add(comp_added, component);
+		comp_added = ArrayComponent.sort(comp_added);
 	}
 	
 	/**
-	 * Remove a component from the comp_added array
-	 * letting a null slot in it
+	 * Remove a specific component from the panel
 	 */
 	
 	public void remove(Sprite component) {
 		
-		for (int i = 0; i < comp_added.length; i++) {
-			if (comp_added[i] == component)
-				comp_added[i] = null;
-		}
+		comp_added = ArrayComponent.remove(comp_added, component);
 	}
 	
 	/**
@@ -264,7 +160,7 @@ public class MainPanel extends JPanel implements Runnable {
 			if (comp_added[i] !=  null && comp_added[i].visible)
 				comp_added[i].paint(bufferGraphics); // Paint the components
 			else {
-				removeNullSlots();
+				comp_added = ArrayComponent.removeNullSlots(comp_added);
 				return;
 			}
 		}

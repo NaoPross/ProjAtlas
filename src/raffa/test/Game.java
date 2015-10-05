@@ -29,6 +29,8 @@ public class Game extends MainPanel {
 		
 		super("Test grafico", 100, 50, 1000, 650);
 		sfondo = new Sprite(Sprite.fromImage("./Vogelberg.png"));
+		sfondo.label("Atlas engine try", 30, 20);
+		sfondo.labelSettings(sfondo.getLabelFont().deriveFont(1), new Color(50, 100, 120));
 		
 		audio = new Audio("./L'addio di Nancy.wav", true);
 		audio.setVolume(Audio.VOLUME_MEDIUM);
@@ -73,6 +75,9 @@ public class Game extends MainPanel {
 			ghosteon.setSize((int)(ghosteon.width * 0.995), (int)(ghosteon.height * 0.995));
 			ghosteon.setLocation(ghosteon.x + 2, ghosteon.y - 1);
 		}
+		
+		String pr = "Protone" + String.valueOf(atlas.countRot);
+		protone.label(pr, protone.width / 10, protone.height / 2);
 	}
 
 }
