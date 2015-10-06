@@ -16,19 +16,18 @@ import raffa.atlasengine.support.ArrayComponent;
 
 public class Sprite {
 	
-	protected Graphics2D g; // The BufferedImage Graphics2D variable
 	public int x, y, width, height, zLevel, xRot, yRot, countMove, countRot;
 	protected float phi;
 	public boolean visible;
 	protected Sprite[] comp_added;
 	protected ArrayList<Label> label_added;
-	protected Color label_color;
-	protected Font label_font;
 	protected BufferedImage sprite;
 	
 	public static final int DEFAULT_Z_LEVEL = 0x1;
 	public static final int DEFAULT_LOCATION = 0x0;
 	public static final int DEFAULT_SIZE = 0x64;
+	public static final Font DEFAULT_LABEL_FONT = new Font(Font.SANS_SERIF, Font.ITALIC, 18);
+	public static final Color DEFAULT_LABEL_COLOR = Color.BLACK;
 	
 	/**
 	 * Constructor without parameters
@@ -99,11 +98,8 @@ public class Sprite {
 		countMove = 0;
 		countRot = 0;
 		visible = true;
-		g = sprite.createGraphics();
 		comp_added = new Sprite[0];
 		label_added = new ArrayList<Label>();
-		label_color = Color.black;
-		label_font = new Font(Font.SANS_SERIF, Font.ITALIC, 18);
 	}
 	
 	/**
@@ -145,35 +141,18 @@ public class Sprite {
 	
 	public void label(String str, int x, int y) {
 		
+		label(str, x, y, DEFAULT_LABEL_FONT, DEFAULT_LABEL_COLOR);
+	}
+	
+	public void label(String str, int x, int y, Font font, Color color) {
+		
 		Label temp = new Label();
 		temp.str = str;
 		temp.x = x;
 		temp.y = y;
+		temp.font = font;
+		temp.color = color;
 		label_added.add(temp);
-	}
-	
-	/**
-	 * set the font and color of the string
-	 */
-	
-	public void labelSettings(Font font, Color color) {
-		
-		label_font = font;
-		label_color = color;
-	}
-	
-	/**
-	 * get the label parameters
-	 */
-	
-	public Font getLabelFont() {
-		
-		return label_font;
-	}
-	
-	public Color getLabelColor() {
-		
-		return label_color;
 	}
 	
 	/**
@@ -271,21 +250,6 @@ public class Sprite {
 	}
 	
 	/**
-	 * crop the image keeping the old dimensions
-	 */
-	
-	public void crop(int x, int y, int width, int height) {
-		
-		BufferedImage temp = sprite;
-		
-		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		
-		g = sprite.createGraphics();
-		
-		g.drawImage(temp, x, y, x + width, y, x, y + height, x + width, y + height, (ImageObserver) sprite);
-	}
-	
-	/**
 	 * Override this method to draw something
 	 * in this panel
 	 * The components drawn here don't have any priority
@@ -299,24 +263,34 @@ public class Sprite {
 	 * Draw the component's
 	 */
 	
-	private void paintPanel() {
+	private BufferedImage paintPanel() {
 		
-		paintIn(this.g);
+		int wTemp = (width > 0) ? width : 1;
+		int hTemp = (height > 0) ? height : 1;
+		
+		BufferedImage stemp = new BufferedImage(wTemp, hTemp, BufferedImage.TYPE_INT_ARGB);
+		
+		Graphics2D g = stemp.createGraphics();
+		
+		paintIn(g);
 		
 		for (int i = 0; i < comp_added.length; i++) {
-			comp_added[i].paint(this.g);
+			comp_added[i].paint(g);
 		}
 		
-		g.setFont(label_font);
-		g.setColor(label_color);
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		
 		for (int i = 0; i < label_added.size(); i++) {
-			Label temp = label_added.get(i);
-			g.drawString(temp.str, temp.x, temp.y);
+			Label ltemp = label_added.get(i);
+			g.setFont(ltemp.font);
+			g.setColor(ltemp.color);
+			g.drawString(ltemp.str, ltemp.x, ltemp.y);
 		}
 		
 		label_added.clear();
+		g.dispose();
+		
+		return stemp;
 	}
 	
 	public void paint(Graphics2D g) {
@@ -324,16 +298,16 @@ public class Sprite {
 		g.rotate(phi, xRot, yRot);
 		
 		/**
-		 * Render the sprite buffer and draw the components
-		 */
-		
-		paintPanel();
-		
-		/**
 		 * Draw the sprite image
 		 */
 		
 		g.drawImage(sprite, x, y, width, height , null);
+		
+		/**
+		 * Render the sprite buffer and draw the components
+		 */
+		
+		g.drawImage(paintPanel(), x, y, width, height, null);
 		
 		
 		g.rotate(-phi, xRot, yRot);
@@ -357,9 +331,30 @@ public class Sprite {
 		return sprite;
 	}
 	
+	/**
+	 * crop the image keeping the old dimensions
+	 */
+	
+	public static Sprite crop(Sprite sprite, int x, int y, int width, int height) {
+		
+		Sprite temp = sprite;
+		
+		BufferedImage spr = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		
+		Graphics2D g = spr.createGraphics();
+		
+		g.drawImage(temp.sprite, x, y, x + width, y, x, y + height, x + width, y + height, (ImageObserver) spr);
+		
+		temp.sprite = spr;
+		
+		return temp;
+	}
+	
 	public static class Label {
 		
 		String str;
 		int x, y;
+		Font font;
+		Color color;
 	}
 }

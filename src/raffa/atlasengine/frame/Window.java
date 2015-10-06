@@ -38,6 +38,10 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 		setFocusable(true);
 		addKeyListener(this);
 		addWindowListener(this);
+		
+		try {
+			Thread.sleep(100);
+		} catch (Exception e) {}
 	}
 	
 	/*
@@ -55,6 +59,7 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 		
 		MainPanel.isRunning = false;  // isRunning is set to false when window is closed
 		MainPanel.gameOver = true; // gameOver is set to true when window is closed
+		System.exit(0);
 	}
 
 	@Override

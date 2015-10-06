@@ -28,7 +28,6 @@ public class Data {
 	public static final int CONG_A = 69069;
 	public static final int CONG_C = 1234567;
 	public static final int CONG_M = (int)(Math.pow(2, 32) - 1);
-	public static final int[] SHR3_TAP = {17, 13, 5};
 	public static final int Z_NEW_A = 36969;
 	public static final int W_NEW_A = 18000;
 	public static final int NEW_B = 65535;
@@ -127,7 +126,7 @@ public class Data {
 	}
 	
 	/**
-	 * A KISS (Keep It Simple, Stupid!) pseudo random number generator
+	 * A xORshift pseudo random number generator
 	 */
 	
 	private static int bin_abs(int x) {
@@ -137,53 +136,13 @@ public class Data {
 		return x;
 	}
 	
-	private static int CONG(int seed) {
+	public static int SHR3(int seed) { // A modified version of the Linear Feedback Shift Register method
 		
-		seed = (CONG_A * seed + CONG_C) % CONG_M; // The Linear Congruential method
-		return seed;
-	}
-	
-	private static int SHR3(int seed) { // A modified version of the Linear Feedback Shift Register method
-		
-		seed ^= (seed << SHR3_TAP[0]);
-		seed ^= (seed >>> SHR3_TAP[1]);
-		seed ^= (seed << SHR3_TAP[2]);
+		seed ^= seed << 17;
+		seed ^= seed >>> 13;
+		seed ^= seed << 5;
 		
 		seed = bin_abs(seed);
-		
-		return seed;
-	}
-	
-	private static int zNew(int seed) {		// The New method
-		
-		seed = Z_NEW_A ^ (seed & NEW_B) + (seed >>> NEW_C);
-		
-		seed = bin_abs(seed);
-		
-		return seed;
-	}
-	
-	private static int wNew(int seed) {
-		
-		seed = W_NEW_A ^ (seed & NEW_B) + (seed >>> NEW_C);
-		
-		seed = bin_abs(seed);
-		
-		return seed;
-	}
-	
-	private static int MWC(int seed) { // A combination of zNew and wNew
-		
-		seed = (zNew(seed) << 16) + wNew(seed);
-		
-		seed = bin_abs(seed);
-		
-		return seed;
-	}
-	
-	public static int KISS(int seed) { // The KISS generator: a combination of MWC, Linear Congruential and SHR3
-		
-		seed = (MWC(seed) ^ CONG(seed)) + SHR3(seed);
 		
 		return seed;
 	}

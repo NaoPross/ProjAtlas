@@ -14,11 +14,13 @@ public class Game extends MainPanel {
 	 * in the main panel
 	 */
 	
-	Sprite sfondo, atlas, ghosteon;
+	Sprite sfondo, atlas, ghosteon, lab;
 	Elettrone elettrone;
 	Protone protone;
 	boolean instance = true;
 	Audio audio;
+	
+	public static final Color lab_rgb = new Color(20, 40, 80);
 	
 	public static void main(String[] args) {
 		
@@ -29,8 +31,8 @@ public class Game extends MainPanel {
 		
 		super("Test grafico", 100, 50, 1000, 650);
 		sfondo = new Sprite(Sprite.fromImage("./Vogelberg.png"));
-		sfondo.label("Atlas engine try", 30, 20);
-		sfondo.labelSettings(sfondo.getLabelFont().deriveFont(1), new Color(50, 100, 120));
+		
+		lab = new Sprite(30, 20, 200, 80);
 		
 		audio = new Audio("./L'addio di Nancy.wav", true);
 		audio.setVolume(Audio.VOLUME_MEDIUM);
@@ -48,6 +50,7 @@ public class Game extends MainPanel {
 		
 		
 		this.setBackground(sfondo);
+		this.add(lab);
 		this.add(elettrone);
 		this.add(protone);
 		this.add(atlas);
@@ -60,6 +63,8 @@ public class Game extends MainPanel {
 	
 	@Override
 	public void gameLoop() {
+		
+		lab.label("Atlas engine try  " + ghosteon.countRot, 20, 40, Sprite.DEFAULT_LABEL_FONT.deriveFont(25), lab_rgb);
 		
 		elettrone.setLocation(elettrone.x + 3, elettrone.y);
 		protone.setLocation(protone.x - 1, protone.y);
@@ -76,8 +81,8 @@ public class Game extends MainPanel {
 			ghosteon.setLocation(ghosteon.x + 2, ghosteon.y - 1);
 		}
 		
-		String pr = "Protone" + String.valueOf(atlas.countRot);
-		protone.label(pr, protone.width / 10, protone.height / 2);
+		String pr = String.valueOf(protone.countMove);
+		protone.label(pr, protone.width / 5, protone.height / 2);
 	}
 
 }
