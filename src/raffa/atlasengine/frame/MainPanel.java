@@ -1,5 +1,6 @@
 package raffa.atlasengine.frame;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -19,6 +20,7 @@ public class MainPanel extends JPanel implements Runnable {
 	
 	private Graphics2D g, bufferGraphics; // Instance the graphics component that draws the others
 	private Sprite[] comp_added; // Array of all the components added
+	private Sprite background;
 	
 	/**
 	 * The game status:
@@ -116,10 +118,20 @@ public class MainPanel extends JPanel implements Runnable {
 
 	public void setBackground(Sprite component) {
 		
-		component.setZLevel(0);
 		component.setBounds(0, 0, Window.width, Window.height);
-		//System.out.println(this.getWidth() + "  " + this.getHeight());
-		this.add(component);
+		this.background = component;
+	}
+	
+	@Override
+	public void setBackground(Color color) {
+		
+		
+		Sprite temp = new Sprite();
+		Graphics2D g = temp.getGraphics();
+		g.setColor(color);
+		g.fillRect(0, 0, Sprite.DEFAULT_SIZE, Sprite.DEFAULT_SIZE);
+		setBackground(temp);
+		
 	}
 	
 	/**
@@ -155,6 +167,9 @@ public class MainPanel extends JPanel implements Runnable {
 		} else {
 			bufferGraphics = (Graphics2D) buffer.getGraphics(); // Graphics component of the second buffer
 		}
+		
+		if (background != null)
+			background.paint(bufferGraphics);
 		
 		for (int i = 0; i < comp_added.length; i++) {
 			if (comp_added[i] !=  null && comp_added[i].visible)

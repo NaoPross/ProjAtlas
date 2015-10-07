@@ -115,12 +115,16 @@ public class Data {
 	
 	public static int[] getTime() {
 		
-		long t = System.currentTimeMillis() / 1000;
-		int[] time = new int[3];
+		long t = System.currentTimeMillis();
+		int[] time = new int[4];
+		
+		time[3] = (int)(t % 1000);
+		
+		t /= 1000;
 		
 		time[2] = (int)(t % 60); // current seconds
 		time[1] = (int)((t / 60) % 60); // current minutes
-		time[0] = (int)((t / 3600) % 24); // current hour
+		time[0] = 2 + (int)((t / 3600) % 24); // current hour
 		
 		return time;
 	}

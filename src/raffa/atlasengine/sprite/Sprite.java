@@ -16,7 +16,7 @@ import raffa.atlasengine.support.ArrayComponent;
 
 public class Sprite {
 	
-	public int x, y, width, height, zLevel, xRot, yRot, countMove, countRot;
+	protected int x, y, width, height, zLevel, xRot, yRot, countMove, countRot;
 	protected float phi;
 	public boolean visible;
 	protected Sprite[] comp_added;
@@ -35,7 +35,7 @@ public class Sprite {
 	
 	public Sprite() {
 		
-		sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		sprite = new BufferedImage(DEFAULT_SIZE, DEFAULT_SIZE, BufferedImage.TYPE_INT_ARGB);
 		this.x = DEFAULT_LOCATION;
 		this.y = DEFAULT_LOCATION;
 		this.width = DEFAULT_SIZE;
@@ -136,6 +136,30 @@ public class Sprite {
 	}
 	
 	/**
+	 * Get bounds
+	 */
+	
+	public int getX() {
+		
+		return x;
+	}
+	
+	public int getY() {
+		
+		return y;
+	}
+	
+	public int getWidth() {
+		
+		return width;
+	}
+	
+	public int getHeight() {
+		
+		return height;
+	}
+	
+	/**
 	 * draw a string
 	 */
 	
@@ -168,6 +192,31 @@ public class Sprite {
 	}
 	
 	/**
+	 * move the sprite
+	 */
+	
+	public void move(int x, int y) {
+		
+		this.x += x;
+		this.y += y;
+		countMove++;
+	}
+	
+	/**
+	 * Get the counters of movement and rotation
+	 */
+	
+	public int getCountMove() {
+		
+		return countMove;
+	}
+	
+	public int getCountRot() {
+		
+		return countRot;
+	}
+	
+	/**
 	 * Set the component size
 	 */
 
@@ -176,6 +225,16 @@ public class Sprite {
 		
 		this.width = width;
 		this.height = height;
+	}
+	
+	/**
+	 * Grow the component
+	 */
+	
+	public void grow(float wCoeff, float hCoeff) {
+		
+		width *= wCoeff;
+		height *= hCoeff;
 	}
 	
 	/**
@@ -215,6 +274,15 @@ public class Sprite {
 		component.setZLevel(0);
 		component.setBounds(this.x, this.y, this.width, this.height);
 		this.add(component);
+	}
+	
+	/**
+	 * Return a Graphics2D object for the sprite painting (permanent)
+	 */
+	
+	public Graphics2D getGraphics() {
+		
+		return sprite.createGraphics();
 	}
 	
 	/**
